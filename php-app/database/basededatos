@@ -1,0 +1,45 @@
+CREATE TABLE TUsuarioCliente (
+    nUsuarioClienteID INT PRIMARY KEY AUTO_INCREMENT,
+    cNombre VARCHAR(100),
+    cApellido VARCHAR(100),
+    cCorreo VARCHAR(100) UNIQUE,
+    cContrasena VARCHAR(255),
+    cTelefono VARCHAR(20),
+    dFechaRegistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE TCategoria (
+    nCategoriaID INT PRIMARY KEY AUTO_INCREMENT,
+    cNombreCategoria VARCHAR(100)
+);
+
+CREATE TABLE TTiendas (
+    nTiendaID INT PRIMARY KEY AUTO_INCREMENT,
+    cNombreComercial VARCHAR(100),
+    tDescripcion TEXT,
+    cUrlLogo VARCHAR(255)
+);
+
+CREATE TABLE TProductos (
+    nProductoID INT PRIMARY KEY AUTO_INCREMENT,
+    nTiendaFK INT,
+    nCategoriaFK INT,
+    cNombreProducto VARCHAR(100),
+    cDescripcionCorta VARCHAR(255),
+    cDescripcionLarga TEXT,
+    cUrlImagenPrincipal VARCHAR(255),
+    nPrecioUnitario DECIMAL(10,2),
+    nCantidadStock INT,
+
+    FOREIGN KEY (nTiendaFK) REFERENCES TTiendas(nTiendaID),
+    FOREIGN KEY (nCategoriaFK) REFERENCES TCategoria(nCategoriaID)
+);
+
+CREATE TABLE TFavoritos (
+    nFavoritoID INT PRIMARY KEY AUTO_INCREMENT,
+    nUsuarioFK INT,
+    nProductoFK INT,
+
+    FOREIGN KEY (nUsuarioFK) REFERENCES TUsuarioCliente(nUsuarioClienteID),
+    FOREIGN KEY (nProductoFK) REFERENCES TProductos(nProductoID)
+);
