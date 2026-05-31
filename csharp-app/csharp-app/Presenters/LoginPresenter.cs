@@ -33,8 +33,8 @@ namespace csharp_app.Presenters
             if (ok)
             {
                 _view.CerrarFormulario();
-                //var main = new MenuTiendaForm();
-                //main.ShowDialog();
+                var main = new MenuTiendaForm();
+                main.ShowDialog();
             }
             else
                 _view.MostrarError("Credenciales incorrectas.");

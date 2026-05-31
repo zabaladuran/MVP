@@ -1,6 +1,6 @@
 ﻿namespace csharp_app.Views
 {
-    partial class MenuTienda
+    partial class MenuTiendaForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            sideBar1 = new SideBarControl();
             SuspendLayout();
+            // 
+            // sideBar1
+            // 
+            sideBar1.BackColor = Color.White;
+            sideBar1.Location = new Point(12, 12);
+            sideBar1.Name = "sideBar1";
+            sideBar1.Size = new Size(305, 855);
+            sideBar1.TabIndex = 0;
+            sideBar1.Load += sideBar1_Load;
             // 
             // MenuTienda
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(902, 491);
+            ClientSize = new Size(1294, 879);
+            Controls.Add(sideBar1);
             Name = "MenuTienda";
             Text = "Form1";
             ResumeLayout(false);
         }
 
         #endregion
+
+        private SideBarControl sideBar1;
     }
 }

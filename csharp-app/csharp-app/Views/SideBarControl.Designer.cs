@@ -3,7 +3,7 @@ using System.Runtime.ConstrainedExecution;
 
 namespace csharp_app.Views
 {
-    partial class SideBar
+    partial class SideBarControl
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -19,6 +19,7 @@ namespace csharp_app.Views
         private Label lblNombreTienda;
         private Label lblEstadoTienda;
         private Label lblSepGestion;
+        private Label lblIconoMasTiendas;
         private Guna2Button btnDashboard;
         private Guna2Button btnInformacion;
         private Guna2Button btnProductos;
@@ -80,6 +81,7 @@ namespace csharp_app.Views
             lblRol = new Label();
             lblSepTienda = new Label();
             panelTienda = new Guna2Panel();
+            lblIconoMasTiendas = new Label();
             lblIconoTienda = new Label();
             lblNombreTienda = new Label();
             lblEstadoTienda = new Label();
@@ -177,6 +179,7 @@ namespace csharp_app.Views
             // panelTienda
             // 
             panelTienda.BorderRadius = 10;
+            panelTienda.Controls.Add(lblIconoMasTiendas);
             panelTienda.Controls.Add(lblIconoTienda);
             panelTienda.Controls.Add(lblNombreTienda);
             panelTienda.Controls.Add(lblEstadoTienda);
@@ -187,6 +190,18 @@ namespace csharp_app.Views
             panelTienda.ShadowDecoration.CustomizableEdges = customizableEdges2;
             panelTienda.Size = new Size(260, 65);
             panelTienda.TabIndex = 4;
+            // 
+            // lblIconoMasTiendas
+            // 
+            lblIconoMasTiendas.Cursor = Cursors.Hand;
+            lblIconoMasTiendas.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblIconoMasTiendas.ForeColor = Color.FromArgb(100, 100, 120);
+            lblIconoMasTiendas.Location = new Point(220, 18);
+            lblIconoMasTiendas.Name = "lblIconoMasTiendas";
+            lblIconoMasTiendas.Size = new Size(21, 24);
+            lblIconoMasTiendas.TabIndex = 0;
+            lblIconoMasTiendas.Text = "▼";
+            lblIconoMasTiendas.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblIconoTienda
             // 
@@ -390,13 +405,13 @@ namespace csharp_app.Views
             btnCerrar.TabIndex = 19;
             btnCerrar.Text = "🚪  Cerrar sesión";
             // 
-            // SideBar
+            // SideBarControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             Controls.Add(panelSidebar);
-            Name = "SideBar";
+            Name = "SideBarControl";
             Size = new Size(302, 835);
             panelSidebar.ResumeLayout(false);
             panelSidebar.PerformLayout();

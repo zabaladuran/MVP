@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace csharp_app.Views
 {
-    public partial class MenuTienda : Form
+    public partial class MenuTiendaForm : Form
     {
-        public MenuTienda()
+        public MenuTiendaForm()
         {
             InitializeComponent();
+        }
+
+        private void sideBar1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
