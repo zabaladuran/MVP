@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#4CAF50">
-    <title>Login</title>
+    <title>Registro</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
     <script src="pwa.js" defer></script>
@@ -45,6 +45,10 @@
             color: red;
             margin: 10px 0;
         }
+        .exito {
+            color: green;
+            margin: 10px 0;
+        }
         .link {
             text-align: center;
             margin-top: 15px;
@@ -58,7 +62,7 @@
 
 <body>
 
-<h1>Iniciar sesión</h1>
+<h1>Registro de Usuario</h1>
 
 <?php if(isset($_SESSION['error'])): ?>
     <p class="error">
@@ -68,13 +72,25 @@
 <?php endif; ?>
 
 <?php if(isset($_SESSION['exito'])): ?>
-    <p style="color: green;">
+    <p class="exito">
         <?= $_SESSION['exito']; ?>
     </p>
     <?php unset($_SESSION['exito']); ?>
 <?php endif; ?>
 
-<form action="?vista=login&accion=validar" method="POST">
+<form action="?vista=registro&accion=crear" method="POST">
+
+    <input
+        type="text"
+        name="nombre"
+        placeholder="Nombre"
+        required>
+
+    <input
+        type="text"
+        name="apellido"
+        placeholder="Apellido"
+        required>
 
     <input
         type="email"
@@ -88,14 +104,25 @@
         placeholder="Contraseña"
         required>
 
+    <input
+        type="password"
+        name="confirmPassword"
+        placeholder="Confirmar Contraseña"
+        required>
+
+    <input
+        type="tel"
+        name="telefono"
+        placeholder="Teléfono">
+
     <button type="submit">
-        Ingresar
+        Registrarse
     </button>
 
 </form>
 
 <div class="link">
-    <p>¿No tienes cuenta? <a href="?vista=registro">Regístrate aquí</a></p>
+    <p>¿Ya tienes cuenta? <a href="?vista=login">Inicia sesión aquí</a></p>
 </div>
 
 </body>
