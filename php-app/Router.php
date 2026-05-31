@@ -10,6 +10,8 @@ if ($vista === 'login') {
     $login = new LoginController();
     if ($accion === 'validar') {
         $login->login();
+    } elseif ($accion === 'logout') {
+        $login->logout();
     } else {
         $login->mostrarLogin();
     }
