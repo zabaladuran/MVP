@@ -21,7 +21,7 @@ namespace csharp_app.Views
         // ── ILoginForm ────────────────────────────────────────────
         public string Nombre => txtNombre.Text;
         public string Password => txtPassword.Text;
-        public event EventHandler LoginClick;
+        public event EventHandler? LoginClick;
 
         public LoginForm()
         {
@@ -94,7 +94,11 @@ namespace csharp_app.Views
         public void MostrarError(string mensaje) =>
             MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-        public void CerrarFormulario() => Close();
+        public void CerrarFormulario()
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
 
         // ── Win32 drag ────────────────────────────────────────────
         [System.Runtime.InteropServices.DllImport("user32.dll")]

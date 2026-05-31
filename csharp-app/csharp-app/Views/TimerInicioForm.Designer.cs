@@ -1,6 +1,6 @@
 ﻿namespace csharp_app.Views
 {
-    partial class TimerInicio
+    partial class TimerInicioForm
     {
         private System.ComponentModel.IContainer components = null;
         private Guna.UI2.WinForms.Guna2Panel panelMain;

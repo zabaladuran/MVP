@@ -3,11 +3,11 @@ using csharp_app.Presenters;
 
 namespace csharp_app.Views
 {
-    public partial class TimerInicio : Form
+    public partial class TimerInicioForm : Form
     {
         private int _progressValue;
 
-        public TimerInicio()
+        public TimerInicioForm()
         {
             InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
@@ -38,7 +38,12 @@ namespace csharp_app.Views
                 var presenter = new LoginPresenter(loginForm, service);
 
                 Hide();
-                loginForm.ShowDialog();
+                var result = loginForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                   //using var main = new MainForm();
+                    //main.ShowDialog();
+                }
                 Close();
             }
 
