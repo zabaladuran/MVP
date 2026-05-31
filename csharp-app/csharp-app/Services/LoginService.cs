@@ -1,6 +1,6 @@
 namespace csharp_app.Services
 {
-    public class UsuarioService : IUsuarioService
+    public class LoginService : ILoginService
     {
         public bool Autenticar(string nombre, string password)
         {

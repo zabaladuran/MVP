@@ -7,9 +7,9 @@ namespace csharp_app.Presenters
     public class LoginPresenter
     {
         private readonly ILoginForm _view;
-        private readonly IUsuarioService _service;
+        private readonly ILoginService _service;
 
-        public LoginPresenter(ILoginForm view, IUsuarioService service)
+        public LoginPresenter(ILoginForm view, ILoginService service)
         {
             _view = view;
             _service = service;

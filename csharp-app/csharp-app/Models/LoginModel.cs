@@ -1,6 +1,6 @@
 namespace csharp_app.Models
 {
-    public class UsuarioModel
+    public class LoginModel
     {
         public string Nombre { get; set; }
         public string PasswordHash { get; set; }

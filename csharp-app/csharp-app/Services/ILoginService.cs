@@ -1,6 +1,6 @@
 namespace csharp_app.Services
 {
-    public interface IUsuarioService
+    public interface ILoginService
     {
         bool Autenticar(string nombre, string password);
     }

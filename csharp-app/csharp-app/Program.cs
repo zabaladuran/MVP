@@ -16,11 +16,7 @@ namespace csharp_app
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            var form = new LoginForm();
-            var service = new UsuarioService();
-            var presenter = new LoginPresenter(form, service);
-
-            Application.Run(form);
+            Application.Run(new TimerInicio());
         }
     }
 }
