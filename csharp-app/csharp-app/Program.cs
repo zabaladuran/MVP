@@ -1,0 +1,26 @@
+using csharp_app.Views;
+using csharp_app.Services;
+using csharp_app.Presenters;
+
+namespace csharp_app
+{
+    internal static class Program
+    {
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
+
+            var form = new LoginForm();
+            var service = new UsuarioService();
+            var presenter = new LoginPresenter(form, service);
+
+            Application.Run(form);
+        }
+    }
+}
