@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
-
+using System.Runtime.InteropServices;
 namespace csharp_app.Views
 {
     partial class LoginForm

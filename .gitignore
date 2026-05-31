@@ -2,3 +2,12 @@
 .env
 /storage/*
 /.vs
+/.vs/
+.vs/
+bin/
+obj/
+*.user
+.vscode/
+*.suo
+*.userosscache
+*.sln.docstates
