@@ -25,6 +25,7 @@ namespace csharp_app.Views.Components
         private Guna2Panel panelOrders;
         private Label lblOrderTitle;
         private Label lblOrderSub;
+        private Label lblAviso;
         private DataGridView dgvPedidos;
         private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colCliente;
@@ -32,6 +33,9 @@ namespace csharp_app.Views.Components
         private DataGridViewTextBoxColumn colTotal;
         private DataGridViewTextBoxColumn colEstado;
         private DataGridViewTextBoxColumn colFecha;
+
+
+
 
         /// <summary> 
         /// Limpiar los recursos que se estén usando.
@@ -54,10 +58,115 @@ namespace csharp_app.Views.Components
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DashboardControl));
+            kpiCardControl4 = new KpiCardControl();
+            kpiCardControl1 = new KpiCardControl();
+            kpiCardControl2 = new KpiCardControl();
+            kpiCardControl3 = new KpiCardControl();
+            infoBanner1 = new InfoBanner();
+            sectionCard1 = new SectionCard();
+            orderList1 = new OrderList();
+            orderList2 = new OrderList();
+            SuspendLayout();
+            // 
+            // kpiCardControl4
+            // 
+            kpiCardControl4.BackColor = Color.White;
+            kpiCardControl4.Location = new Point(386, 94);
+            kpiCardControl4.Name = "kpiCardControl4";
+            kpiCardControl4.Size = new Size(171, 145);
+            kpiCardControl4.TabIndex = 3;
+            // 
+            // kpiCardControl1
+            // 
+            kpiCardControl1.BackColor = Color.White;
+            kpiCardControl1.Location = new Point(13, 94);
+            kpiCardControl1.Name = "kpiCardControl1";
+            kpiCardControl1.Size = new Size(171, 145);
+            kpiCardControl1.TabIndex = 4;
+            // 
+            // kpiCardControl2
+            // 
+            kpiCardControl2.BackColor = Color.White;
+            kpiCardControl2.Location = new Point(199, 94);
+            kpiCardControl2.Name = "kpiCardControl2";
+            kpiCardControl2.Size = new Size(171, 145);
+            kpiCardControl2.TabIndex = 5;
+            // 
+            // kpiCardControl3
+            // 
+            kpiCardControl3.BackColor = Color.White;
+            kpiCardControl3.Location = new Point(574, 94);
+            kpiCardControl3.Name = "kpiCardControl3";
+            kpiCardControl3.Size = new Size(171, 145);
+            kpiCardControl3.TabIndex = 6;
+            // 
+            // infoBanner1
+            // 
+            infoBanner1.BackColor = Color.FromArgb(239, 246, 255);
+            infoBanner1.BannerColor = Color.FromArgb(239, 246, 255);
+            infoBanner1.BorderColor = Color.FromArgb(191, 219, 254);
+            infoBanner1.Icon = (Image)resources.GetObject("infoBanner1.Icon");
+            infoBanner1.Location = new Point(13, 15);
+            infoBanner1.Name = "infoBanner1";
+            infoBanner1.Padding = new Padding(8);
+            infoBanner1.Size = new Size(732, 64);
+            infoBanner1.TabIndex = 7;
+            // 
+            // sectionCard1
+            // 
+            sectionCard1.BackColor = Color.Transparent;
+            sectionCard1.Location = new Point(13, 255);
+            sectionCard1.Name = "sectionCard1";
+            sectionCard1.Size = new Size(732, 135);
+            sectionCard1.TabIndex = 8;
+            sectionCard1.Load += sectionCard1_Load_1;
+            // 
+            // orderList1
+            // 
+            orderList1.BackColor = Color.Transparent;
+            orderList1.Location = new Point(-15, 406);
+            orderList1.Name = "orderList1";
+            orderList1.Size = new Size(118, 250);
+            orderList1.TabIndex = 9;
+            // 
+            // orderList2
+            // 
+            orderList2.BackColor = Color.Transparent;
+            orderList2.Location = new Point(-8, 390);
+            orderList2.Name = "orderList2";
+            orderList2.Size = new Size(750, 560);
+            orderList2.TabIndex = 10;
+            // 
+            // DashboardControl
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
+            Controls.Add(orderList2);
+            Controls.Add(orderList1);
+            Controls.Add(sectionCard1);
+            Controls.Add(infoBanner1);
+            Controls.Add(kpiCardControl3);
+            Controls.Add(kpiCardControl2);
+            Controls.Add(kpiCardControl1);
+            Controls.Add(kpiCardControl4);
+            Name = "DashboardControl";
+            Size = new Size(740, 657);
+            Load += DashboardControl_Load;
+            ResumeLayout(false);
         }
 
         #endregion
+        private KpiCardControl kpiCardControl4;
+        private KpiCardControl kpiCardControl5;
+        private SectionCard sectionCard1;
+        private OrderList orderList1;
+        private KpiCardControl kpiCardControl1;
+        private KpiCardControl kpiCardControl2;
+        private KpiCardControl kpiCardControl3;
+        private InfoBanner infoBanner1;
+        private OrderList orderCard1;
+        private OrderList orderList2;
     }
 }

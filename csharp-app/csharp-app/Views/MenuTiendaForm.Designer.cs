@@ -31,6 +31,7 @@ namespace csharp_app.Views
         private void InitializeComponent()
         {
             sideBar1 = new SideBarControl();
+            dashboardControl1 = new DashboardControl();
             SuspendLayout();
             // 
             // sideBar1
@@ -42,13 +43,22 @@ namespace csharp_app.Views
             sideBar1.TabIndex = 0;
             sideBar1.Load += sideBar1_Load;
             // 
-            // MenuTienda
+            // dashboardControl1
+            // 
+            dashboardControl1.AutoScroll = true;
+            dashboardControl1.Location = new Point(323, 106);
+            dashboardControl1.Name = "dashboardControl1";
+            dashboardControl1.Size = new Size(757, 437);
+            dashboardControl1.TabIndex = 1;
+            // 
+            // MenuTiendaForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1294, 879);
+            ClientSize = new Size(1086, 879);
+            Controls.Add(dashboardControl1);
             Controls.Add(sideBar1);
-            Name = "MenuTienda";
+            Name = "MenuTiendaForm";
             Text = "Form1";
             ResumeLayout(false);
         }
@@ -56,5 +66,6 @@ namespace csharp_app.Views
         #endregion
 
         private SideBarControl sideBar1;
+        private DashboardControl dashboardControl1;
     }
 }
