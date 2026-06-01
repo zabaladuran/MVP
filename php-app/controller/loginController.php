@@ -6,8 +6,6 @@ class LoginController
 {
     public function login()
     {
-        session_start();
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $correo = trim($_POST['correo']);
@@ -27,7 +25,7 @@ class LoginController
                     $_SESSION['nombre'] =
                         $usuario['cNombre'];
 
-                    header('Location: index.php');
+                    header('Location: index.php?vista=home');
                     exit;
 
                 } else {
@@ -53,8 +51,6 @@ class LoginController
 
     public function logout()
     {
-        session_start();
-
         session_destroy();
 
         header('Location: index.php');

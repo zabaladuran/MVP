@@ -6,8 +6,6 @@ class RegisterController
 {
     public function registro()
     {
-        session_start();
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $nombre = trim($_POST['nombre'] ?? '');

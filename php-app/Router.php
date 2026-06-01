@@ -23,7 +23,7 @@ if ($vista === 'login') {
         $registro->mostrarRegistro();
     }
 } elseif ($vista === 'home') {
-    require_once 'controller/homeController.php';
+    require_once 'controller/homenController.php';
     $controller = new HomeController();
     $controller->mostrarHome();
 } else {
