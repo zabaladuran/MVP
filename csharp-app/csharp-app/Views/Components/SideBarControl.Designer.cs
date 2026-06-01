@@ -1,7 +1,7 @@
 ﻿using Guna.UI2.WinForms;
 using System.Runtime.ConstrainedExecution;
 
-namespace csharp_app.Views
+namespace csharp_app.Views.Components
 {
     partial class SideBarControl
     {

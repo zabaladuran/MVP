@@ -1,4 +1,6 @@
-﻿namespace csharp_app.Views
+﻿using csharp_app.Views.Components;
+
+namespace csharp_app.Views
 {
     partial class MenuTiendaForm
     {
