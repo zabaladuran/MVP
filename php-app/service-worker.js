@@ -1,9 +1,8 @@
-const CACHE_NAME = 'mvp-pwa-v2';
+const CACHE_NAME = 'mvp-pwa-v6';
 const CACHE_URLS = [
   'manifest.json',
   'pwa.js',
-  'icons/icon-192.svg',
-  'icons/icon-512.svg'
+  'icons/shopp1.svg'
 ];
 
 self.addEventListener('install', event => {
