@@ -20,6 +20,10 @@ namespace csharp_app.Views.Components
         public delegate void SectionChangedEventHandler(object sender, string section);
         public event SectionChangedEventHandler SectionChanged;
 
+        // Delegado y evento para notificar cambio de tienda
+        public delegate void StoreChangedEventHandler(object sender, string storeName);
+        public event StoreChangedEventHandler StoreChanged;
+
         public SideBarControl()
         {
             InitializeComponent();
@@ -55,6 +59,7 @@ namespace csharp_app.Views.Components
             lblNombreTienda.Text = nombreTienda;
             // También actualiza el estado, ícono, etc.
             // Notifica al resto de la aplicación (por ejemplo, con un evento).
+            StoreChanged?.Invoke(this, nombreTienda);
         }
 
 
@@ -88,6 +93,11 @@ namespace csharp_app.Views.Components
             botonActivo.BorderThickness = 3;
             botonActivo.BorderColor = Color.FromArgb(30, 80, 180);
             // Aseguramos que el borde se vea en los 4 lados, pero puedes personalizarlo
+        }
+
+        public void HighlightDashboard()
+        {
+            ResaltarBoton(btnDashboard);
         }
 
         private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

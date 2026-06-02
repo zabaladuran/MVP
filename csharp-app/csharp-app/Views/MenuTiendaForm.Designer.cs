@@ -87,6 +87,7 @@ namespace csharp_app.Views
             productoControl1.Name = "productoControl1";
             productoControl1.Size = new Size(751, 750);
             productoControl1.TabIndex = 4;
+            productoControl1.Visible = false;
             // 
             // MenuTiendaForm
             // 

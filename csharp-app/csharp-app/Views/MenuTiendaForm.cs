@@ -19,9 +19,15 @@ namespace csharp_app.Views
             // Suscribirse al evento de cambio de sección
             sideBar1.SectionChanged += SideBar1_SectionChanged;
             
+            // Suscribirse al evento de cambio de tienda
+            sideBar1.StoreChanged += SideBar1_StoreChanged;
+            
             // Mostrar solo Dashboard por defecto
             dashboardControl1.Visible = true;
             productoControl1.Visible = false;
+            
+            // Resaltar el botón de Dashboard por defecto
+            sideBar1.HighlightDashboard();
         }
 
         private void SideBar1_SectionChanged(object sender, string section)
@@ -60,6 +66,23 @@ namespace csharp_app.Views
                     dashboardHeaderControl1.Title = "Configuración";
                     break;
             }
+        }
+
+        private void SideBar1_StoreChanged(object sender, string storeName)
+        {
+            // Ocultar todos los controles
+            dashboardControl1.Visible = false;
+            productoControl1.Visible = false;
+
+            // Mostrar el dashboard por defecto
+            dashboardControl1.Visible = true;
+            dashboardHeaderControl1.Title = "Dashboard";
+            
+            // Actualizar el nombre de la tienda
+            dashboardHeaderControl1.StoreName = storeName;
+            
+            // Resaltar el botón de Dashboard en el sidebar
+            sideBar1.HighlightDashboard();
         }
 
         private void sideBar1_Load(object sender, EventArgs e)
