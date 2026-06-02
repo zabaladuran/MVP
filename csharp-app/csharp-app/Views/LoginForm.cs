@@ -1,4 +1,7 @@
-﻿using Guna.UI2.WinForms;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using Guna.UI2.WinForms;
 using csharp_app.Views.Interface;
 
 namespace csharp_app.Views
@@ -47,6 +50,14 @@ namespace csharp_app.Views
             btnLogin.Click += (s, e) => LoginClick?.Invoke(this, EventArgs.Empty);
             btnCerrar.Click += (s, e) => Application.Exit();
 
+            // Evento para abrir registro
+            lblRegistrarse.Click += (s, e) =>
+            {
+                // Abre el formulario de registro (cambia el nombre si es diferente)
+                var registro = new RegisterForm();
+                registro.ShowDialog();
+            };
+
             AplicarTema();
 
             // Navegación con teclado
@@ -78,6 +89,7 @@ namespace csharp_app.Views
 
             btnLogin.FillColor = Claro.Acento;
             btnLogin.HoverState.FillColor = Claro.AcentoHover;
+            lblRegistrarse.ForeColor = Claro.Acento;
 
             panelCard.Invalidate();
             Invalidate();
@@ -107,19 +119,7 @@ namespace csharp_app.Views
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
-        private void lblIcono_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblIcono_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panelCard_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void lblIcono_Click_1(object sender, EventArgs e) { }
+        private void panelCard_Paint(object sender, PaintEventArgs e) { }
     }
 }

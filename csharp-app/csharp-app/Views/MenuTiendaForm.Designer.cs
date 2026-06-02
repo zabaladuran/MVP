@@ -34,7 +34,7 @@ namespace csharp_app.Views
             dashboardControl1 = new DashboardControl();
             dashboardHeaderControl1 = new DashboardHeaderControl();
             subscriptionBadgeControl1 = new SubscriptionBadgeControl();
-            productoControl1 = new ProductoControl();
+            productoControl1 = new ProductControl();
             SuspendLayout();
             // 
             // sideBar1
@@ -110,6 +110,6 @@ namespace csharp_app.Views
         private DashboardControl dashboardControl1;
         private DashboardHeaderControl dashboardHeaderControl1;
         private SubscriptionBadgeControl subscriptionBadgeControl1;
-        private ProductoControl productoControl1;
+        private ProductControl productoControl1;
     }
 }

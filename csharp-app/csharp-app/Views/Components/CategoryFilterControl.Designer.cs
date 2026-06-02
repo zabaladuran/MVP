@@ -2,7 +2,7 @@
 
 namespace csharp_app.Views.Components
 {
-    partial class CategoryFilter
+    partial class CategoryFilterControl
     {
         private System.ComponentModel.IContainer components = null;
         private Guna2ComboBox cmbCategories;

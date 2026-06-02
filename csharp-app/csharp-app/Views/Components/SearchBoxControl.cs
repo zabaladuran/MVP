@@ -7,14 +7,14 @@ using Guna.UI2.WinForms;
 namespace csharp_app.Views.Components
 {
     [ToolboxItem(true)]
-    public partial class SearchBox : UserControl
+    public partial class SearchBoxControl : UserControl
     {
         private string _placeholder = "Buscar productos...";
         private int _cornerRadius = 8;
 
         public event EventHandler SearchTextChanged;
 
-        public SearchBox()
+        public SearchBoxControl()
         {
             InitializeComponent();
             ConfigurePlaceholder();

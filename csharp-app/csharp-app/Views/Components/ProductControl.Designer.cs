@@ -1,6 +1,6 @@
 ﻿namespace csharp_app.Views.Components
 {
-    partial class ProductoControl
+    partial class ProductControl
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -31,10 +31,10 @@
             kpiCardControl1 = new KpiCardControl();
             kpiCardControl2 = new KpiCardControl();
             kpiCardControl3 = new KpiCardControl();
-            searchBox1 = new SearchBox();
-            addProductButton1 = new AddProductButton();
-            categoryFilter1 = new CategoryFilter();
-            categoryFilter2 = new CategoryFilter();
+            searchBox1 = new SearchBoxControl();
+            addProductButton1 = new AddProductButtonControl();
+            categoryFilter1 = new CategoryFilterControl();
+            categoryFilter2 = new CategoryFilterControl();
             productListControl1 = new ProductListControl();
             productCardControl1 = new ProductCardControl();
             SuspendLayout();
@@ -150,10 +150,10 @@
         private KpiCardControl kpiCardControl1;
         private KpiCardControl kpiCardControl2;
         private KpiCardControl kpiCardControl3;
-        private SearchBox searchBox1;
-        private AddProductButton addProductButton1;
-        private CategoryFilter categoryFilter2;
-        public CategoryFilter categoryFilter1;
+        private SearchBoxControl searchBox1;
+        private AddProductButtonControl addProductButton1;
+        private CategoryFilterControl categoryFilter2;
+        public CategoryFilterControl categoryFilter1;
         private ProductListControl productListControl1;
         private ProductCardControl productCardControl1;
     }

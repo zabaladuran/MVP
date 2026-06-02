@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace csharp_app.Views.Components
 {
-    public partial class ProductoControl : UserControl
+    public partial class ProductControl : UserControl
     {
-        public ProductoControl()
+        public ProductControl()
         {
             InitializeComponent();
         }

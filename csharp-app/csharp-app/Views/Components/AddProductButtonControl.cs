@@ -7,7 +7,7 @@ using Guna.UI2.WinForms;
 namespace csharp_app.Views.Components
 {
     [ToolboxItem(true)]
-    public partial class AddProductButton : UserControl
+    public partial class AddProductButtonControl : UserControl
     {
         private string _buttonText = "Nuevo producto";
         private Color _buttonColor = Color.FromArgb(99, 102, 241);
@@ -17,7 +17,7 @@ namespace csharp_app.Views.Components
 
         public event EventHandler ButtonClick;
 
-        public AddProductButton()
+        public AddProductButtonControl()
         {
             InitializeComponent();
             btnAdd.Click += BtnAdd_Click;

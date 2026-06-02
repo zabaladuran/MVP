@@ -2,7 +2,7 @@
 
 namespace csharp_app.Views.Components
 {
-    partial class SearchBox
+    partial class SearchBoxControl
     {
         private System.ComponentModel.IContainer components = null;
         private Guna2TextBox txtSearch;

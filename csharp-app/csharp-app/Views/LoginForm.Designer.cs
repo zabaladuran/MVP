@@ -1,14 +1,14 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
-using System.Runtime.InteropServices;
+
 namespace csharp_app.Views
 {
     partial class LoginForm
     {
         private System.ComponentModel.IContainer components = null;
 
-        // Declaración de controles
+        // Controles
         private Guna2Panel panelCard;
         private Guna2Panel panelCirculo;
         private Guna2Panel lineaDecorativa;
@@ -18,6 +18,7 @@ namespace csharp_app.Views
         private Label lblUsuario;
         private Label lblPass;
         private Label lblVersion;
+        private Label lblRegistrarse;   // ← nuevo
         private Guna2TextBox txtNombre;
         private Guna2TextBox txtPassword;
         private Guna2Button btnLogin;
@@ -32,223 +33,221 @@ namespace csharp_app.Views
 
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            panelCard = new Guna2Panel();
-            lblTitulo = new Label();
-            lblSubtitulo = new Label();
-            lineaDecorativa = new Guna2Panel();
-            panelCirculo = new Guna2Panel();
-            lblIcono = new Label();
-            lblUsuario = new Label();
-            txtNombre = new Guna2TextBox();
-            lblPass = new Label();
-            txtPassword = new Guna2TextBox();
-            btnLogin = new Guna2Button();
-            lblVersion = new Label();
-            btnCerrar = new Guna2Button();
-            panelCard.SuspendLayout();
-            panelCirculo.SuspendLayout();
-            SuspendLayout();
+            this.panelCard = new Guna2Panel();
+            this.lblTitulo = new Label();
+            this.lblSubtitulo = new Label();
+            this.lineaDecorativa = new Guna2Panel();
+            this.panelCirculo = new Guna2Panel();
+            this.lblIcono = new Label();
+            this.lblUsuario = new Label();
+            this.txtNombre = new Guna2TextBox();
+            this.lblPass = new Label();
+            this.txtPassword = new Guna2TextBox();
+            this.btnLogin = new Guna2Button();
+            this.lblVersion = new Label();
+            this.lblRegistrarse = new Label();   // ← nuevo
+            this.btnCerrar = new Guna2Button();
+            this.panelCard.SuspendLayout();
+            this.panelCirculo.SuspendLayout();
+            this.SuspendLayout();
+
             // 
             // panelCard
             // 
-            panelCard.Controls.Add(lblTitulo);
-            panelCard.Controls.Add(lblSubtitulo);
-            panelCard.Controls.Add(lineaDecorativa);
-            panelCard.Controls.Add(panelCirculo);
-            panelCard.Controls.Add(lblUsuario);
-            panelCard.Controls.Add(txtNombre);
-            panelCard.Controls.Add(lblPass);
-            panelCard.Controls.Add(txtPassword);
-            panelCard.Controls.Add(btnLogin);
-            panelCard.Controls.Add(lblVersion);
-            panelCard.CustomizableEdges = customizableEdges11;
-            panelCard.FillColor = Color.White;
-            panelCard.Location = new Point(50, 40);
-            panelCard.Name = "panelCard";
-            panelCard.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            panelCard.Size = new Size(420, 540);
-            panelCard.TabIndex = 0;
-            panelCard.Paint += panelCard_Paint;
+            this.panelCard.Controls.Add(this.lblTitulo);
+            this.panelCard.Controls.Add(this.lblSubtitulo);
+            this.panelCard.Controls.Add(this.lineaDecorativa);
+            this.panelCard.Controls.Add(this.panelCirculo);
+            this.panelCard.Controls.Add(this.lblUsuario);
+            this.panelCard.Controls.Add(this.txtNombre);
+            this.panelCard.Controls.Add(this.lblPass);
+            this.panelCard.Controls.Add(this.txtPassword);
+            this.panelCard.Controls.Add(this.btnLogin);
+            this.panelCard.Controls.Add(this.lblRegistrarse);   // ← nuevo
+            this.panelCard.Controls.Add(this.lblVersion);
+            this.panelCard.FillColor = Color.White;
+            this.panelCard.Location = new Point(50, 40);
+            this.panelCard.Name = "panelCard";
+            this.panelCard.Size = new Size(420, 560);   // altura aumentada de 540 a 560
+            this.panelCard.TabIndex = 0;
+            this.panelCard.Paint += new PaintEventHandler(this.panelCard_Paint);
+
             // 
             // lblTitulo
             // 
-            lblTitulo.BackColor = Color.Transparent;
-            lblTitulo.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
-            lblTitulo.ForeColor = Color.FromArgb(25, 25, 50);
-            lblTitulo.Location = new Point(20, 120);
-            lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(380, 42);
-            lblTitulo.TabIndex = 1;
-            lblTitulo.Text = "Bienvenido";
-            lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblTitulo.BackColor = Color.Transparent;
+            this.lblTitulo.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            this.lblTitulo.ForeColor = Color.FromArgb(25, 25, 50);
+            this.lblTitulo.Location = new Point(20, 120);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new Size(380, 42);
+            this.lblTitulo.TabIndex = 1;
+            this.lblTitulo.Text = "Bienvenido";
+            this.lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
+
             // 
             // lblSubtitulo
             // 
-            lblSubtitulo.BackColor = Color.Transparent;
-            lblSubtitulo.Font = new Font("Segoe UI", 10F);
-            lblSubtitulo.ForeColor = Color.FromArgb(130, 130, 165);
-            lblSubtitulo.Location = new Point(20, 168);
-            lblSubtitulo.Name = "lblSubtitulo";
-            lblSubtitulo.Size = new Size(380, 22);
-            lblSubtitulo.TabIndex = 2;
-            lblSubtitulo.Text = "Ingresa tus credenciales para continuar";
-            lblSubtitulo.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblSubtitulo.BackColor = Color.Transparent;
+            this.lblSubtitulo.Font = new Font("Segoe UI", 10F);
+            this.lblSubtitulo.ForeColor = Color.FromArgb(130, 130, 165);
+            this.lblSubtitulo.Location = new Point(20, 168);
+            this.lblSubtitulo.Name = "lblSubtitulo";
+            this.lblSubtitulo.Size = new Size(380, 22);
+            this.lblSubtitulo.TabIndex = 2;
+            this.lblSubtitulo.Text = "Ingresa tus credenciales para continuar";
+            this.lblSubtitulo.TextAlign = ContentAlignment.MiddleCenter;
+
             // 
             // lineaDecorativa
             // 
-            lineaDecorativa.CustomizableEdges = customizableEdges1;
-            lineaDecorativa.FillColor = Color.FromArgb(99, 102, 241);
-            lineaDecorativa.Location = new Point(185, 198);
-            lineaDecorativa.Name = "lineaDecorativa";
-            lineaDecorativa.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            lineaDecorativa.Size = new Size(50, 3);
-            lineaDecorativa.TabIndex = 3;
+            this.lineaDecorativa.FillColor = Color.FromArgb(99, 102, 241);
+            this.lineaDecorativa.Location = new Point(185, 198);
+            this.lineaDecorativa.Name = "lineaDecorativa";
+            this.lineaDecorativa.Size = new Size(50, 3);
+            this.lineaDecorativa.TabIndex = 3;
+
             // 
             // panelCirculo
             // 
-            panelCirculo.Controls.Add(lblIcono);
-            panelCirculo.CustomizableEdges = customizableEdges3;
-            panelCirculo.FillColor = Color.FromArgb(99, 102, 241);
-            panelCirculo.Location = new Point(170, 30);
-            panelCirculo.Name = "panelCirculo";
-            panelCirculo.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            panelCirculo.Size = new Size(80, 80);
-            panelCirculo.TabIndex = 0;
+            this.panelCirculo.Controls.Add(this.lblIcono);
+            this.panelCirculo.FillColor = Color.FromArgb(99, 102, 241);
+            this.panelCirculo.Location = new Point(170, 30);
+            this.panelCirculo.Name = "panelCirculo";
+            this.panelCirculo.Size = new Size(80, 80);
+            this.panelCirculo.TabIndex = 0;
+
             // 
             // lblIcono
             // 
-            lblIcono.BackColor = Color.Transparent;
-            lblIcono.Font = new Font("Segoe UI Emoji", 26F);
-            lblIcono.ForeColor = Color.White;
-            lblIcono.Location = new Point(-40, 0);
-            lblIcono.Name = "lblIcono";
-            lblIcono.Size = new Size(168, 90);
-            lblIcono.TabIndex = 0;
-            lblIcono.Text = "👤";
-            lblIcono.TextAlign = ContentAlignment.MiddleCenter;
-            lblIcono.Click += lblIcono_Click_1;
+            this.lblIcono.BackColor = Color.Transparent;
+            this.lblIcono.Font = new Font("Segoe UI Emoji", 26F);
+            this.lblIcono.ForeColor = Color.White;
+            this.lblIcono.Location = new Point(-40, 0);
+            this.lblIcono.Name = "lblIcono";
+            this.lblIcono.Size = new Size(168, 90);
+            this.lblIcono.TabIndex = 0;
+            this.lblIcono.Text = "👤";
+            this.lblIcono.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblIcono.Click += new EventHandler(this.lblIcono_Click_1);
+
             // 
             // lblUsuario
             // 
-            lblUsuario.BackColor = Color.Transparent;
-            lblUsuario.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblUsuario.ForeColor = Color.FromArgb(120, 120, 150);
-            lblUsuario.Location = new Point(31, 218);
-            lblUsuario.Name = "lblUsuario";
-            lblUsuario.Size = new Size(358, 18);
-            lblUsuario.TabIndex = 4;
-            lblUsuario.Text = "Usuario";
+            this.lblUsuario.BackColor = Color.Transparent;
+            this.lblUsuario.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            this.lblUsuario.ForeColor = Color.FromArgb(120, 120, 150);
+            this.lblUsuario.Location = new Point(31, 218);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new Size(358, 18);
+            this.lblUsuario.TabIndex = 4;
+            this.lblUsuario.Text = "Usuario";
+
             // 
             // txtNombre
             // 
-            txtNombre.BorderColor = Color.FromArgb(210, 210, 230);
-            txtNombre.CustomizableEdges = customizableEdges5;
-            txtNombre.DefaultText = "";
-            txtNombre.FillColor = Color.FromArgb(247, 247, 252);
-            txtNombre.Font = new Font("Segoe UI", 11F);
-            txtNombre.ForeColor = Color.FromArgb(25, 25, 50);
-            txtNombre.Location = new Point(31, 240);
-            txtNombre.Margin = new Padding(3, 4, 3, 4);
-            txtNombre.Name = "txtNombre";
-            txtNombre.PlaceholderText = "Escribe tu usuario";
-            txtNombre.SelectedText = "";
-            txtNombre.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            txtNombre.Size = new Size(358, 48);
-            txtNombre.TabIndex = 5;
+            this.txtNombre.BorderColor = Color.FromArgb(210, 210, 230);
+            this.txtNombre.DefaultText = "";
+            this.txtNombre.FillColor = Color.FromArgb(247, 247, 252);
+            this.txtNombre.Font = new Font("Segoe UI", 11F);
+            this.txtNombre.ForeColor = Color.FromArgb(25, 25, 50);
+            this.txtNombre.Location = new Point(31, 240);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.PlaceholderText = "Escribe tu usuario";
+            this.txtNombre.Size = new Size(358, 48);
+            this.txtNombre.TabIndex = 5;
+
             // 
             // lblPass
             // 
-            lblPass.BackColor = Color.Transparent;
-            lblPass.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblPass.ForeColor = Color.FromArgb(120, 120, 150);
-            lblPass.Location = new Point(31, 306);
-            lblPass.Name = "lblPass";
-            lblPass.Size = new Size(358, 18);
-            lblPass.TabIndex = 6;
-            lblPass.Text = "Contraseña";
+            this.lblPass.BackColor = Color.Transparent;
+            this.lblPass.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            this.lblPass.ForeColor = Color.FromArgb(120, 120, 150);
+            this.lblPass.Location = new Point(31, 306);
+            this.lblPass.Name = "lblPass";
+            this.lblPass.Size = new Size(358, 18);
+            this.lblPass.TabIndex = 6;
+            this.lblPass.Text = "Contraseña";
+
             // 
             // txtPassword
             // 
-            txtPassword.BorderColor = Color.FromArgb(210, 210, 230);
-            txtPassword.CustomizableEdges = customizableEdges7;
-            txtPassword.DefaultText = "";
-            txtPassword.FillColor = Color.FromArgb(247, 247, 252);
-            txtPassword.Font = new Font("Segoe UI", 11F);
-            txtPassword.ForeColor = Color.FromArgb(25, 25, 50);
-            txtPassword.Location = new Point(31, 328);
-            txtPassword.Margin = new Padding(3, 4, 3, 4);
-            txtPassword.Name = "txtPassword";
-            txtPassword.PlaceholderText = "Escribe tu contraseña";
-            txtPassword.SelectedText = "";
-            txtPassword.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            txtPassword.Size = new Size(358, 48);
-            txtPassword.TabIndex = 7;
-            txtPassword.UseSystemPasswordChar = true;
+            this.txtPassword.BorderColor = Color.FromArgb(210, 210, 230);
+            this.txtPassword.DefaultText = "";
+            this.txtPassword.FillColor = Color.FromArgb(247, 247, 252);
+            this.txtPassword.Font = new Font("Segoe UI", 11F);
+            this.txtPassword.ForeColor = Color.FromArgb(25, 25, 50);
+            this.txtPassword.Location = new Point(31, 328);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PlaceholderText = "Escribe tu contraseña";
+            this.txtPassword.Size = new Size(358, 48);
+            this.txtPassword.TabIndex = 7;
+            this.txtPassword.UseSystemPasswordChar = true;
+
             // 
             // btnLogin
             // 
-            btnLogin.CustomizableEdges = customizableEdges9;
-            btnLogin.FillColor = Color.FromArgb(99, 102, 241);
-            btnLogin.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(31, 404);
-            btnLogin.Name = "btnLogin";
-            btnLogin.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            btnLogin.Size = new Size(358, 50);
-            btnLogin.TabIndex = 8;
-            btnLogin.Text = "Ingresar";
+            this.btnLogin.FillColor = Color.FromArgb(99, 102, 241);
+            this.btnLogin.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            this.btnLogin.ForeColor = Color.White;
+            this.btnLogin.Location = new Point(31, 404);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new Size(358, 50);
+            this.btnLogin.TabIndex = 8;
+            this.btnLogin.Text = "Ingresar";
+
             // 
-            // lblVersion
+            // lblRegistrarse (nuevo)
             // 
-            lblVersion.BackColor = Color.Transparent;
-            lblVersion.Font = new Font("Segoe UI", 8F);
-            lblVersion.ForeColor = Color.FromArgb(130, 130, 165);
-            lblVersion.Location = new Point(20, 500);
-            lblVersion.Name = "lblVersion";
-            lblVersion.Size = new Size(380, 20);
-            lblVersion.TabIndex = 9;
-            lblVersion.Text = "v1.0.0 · Sistema de gestión";
-            lblVersion.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblRegistrarse.BackColor = Color.Transparent;
+            this.lblRegistrarse.Font = new Font("Segoe UI", 9F);
+            this.lblRegistrarse.ForeColor = Color.FromArgb(99, 102, 241);
+            this.lblRegistrarse.Location = new Point(20, 470);
+            this.lblRegistrarse.Name = "lblRegistrarse";
+            this.lblRegistrarse.Size = new Size(380, 22);
+            this.lblRegistrarse.TabIndex = 10;
+            this.lblRegistrarse.Text = "¿No tienes cuenta? Regístrate aquí";
+            this.lblRegistrarse.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblRegistrarse.Cursor = Cursors.Hand;
+
+            // 
+            // lblVersion (ajustada posición)
+            // 
+            this.lblVersion.BackColor = Color.Transparent;
+            this.lblVersion.Font = new Font("Segoe UI", 8F);
+            this.lblVersion.ForeColor = Color.FromArgb(130, 130, 165);
+            this.lblVersion.Location = new Point(20, 510);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new Size(380, 20);
+            this.lblVersion.TabIndex = 9;
+            this.lblVersion.Text = "v1.0.0 · Sistema de gestión";
+            this.lblVersion.TextAlign = ContentAlignment.MiddleCenter;
+
             // 
             // btnCerrar
             // 
-            btnCerrar.CustomizableEdges = customizableEdges13;
-            btnCerrar.FillColor = Color.Transparent;
-            btnCerrar.Font = new Font("Segoe UI", 10F);
-            btnCerrar.ForeColor = Color.FromArgb(140, 140, 170);
-            btnCerrar.HoverState.FillColor = Color.FromArgb(220, 220, 220);
-            btnCerrar.Location = new Point(478, 10);
-            btnCerrar.Name = "btnCerrar";
-            btnCerrar.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            btnCerrar.Size = new Size(32, 32);
-            btnCerrar.TabIndex = 1;
-            btnCerrar.Text = "✕";
+            this.btnCerrar.FillColor = Color.Transparent;
+            this.btnCerrar.Font = new Font("Segoe UI", 10F);
+            this.btnCerrar.ForeColor = Color.FromArgb(140, 140, 170);
+            this.btnCerrar.HoverState.FillColor = Color.FromArgb(220, 220, 220);
+            this.btnCerrar.Location = new Point(478, 10);
+            this.btnCerrar.Name = "btnCerrar";
+            this.btnCerrar.Size = new Size(32, 32);
+            this.btnCerrar.TabIndex = 1;
+            this.btnCerrar.Text = "✕";
+
             // 
             // LoginForm
             // 
-            BackColor = Color.FromArgb(241, 242, 250);
-            ClientSize = new Size(520, 620);
-            Controls.Add(panelCard);
-            Controls.Add(btnCerrar);
-            Name = "LoginForm";
-            StartPosition = FormStartPosition.CenterScreen;
-            panelCard.ResumeLayout(false);
-            panelCirculo.ResumeLayout(false);
-            ResumeLayout(false);
+            this.BackColor = Color.FromArgb(241, 242, 250);
+            this.ClientSize = new Size(520, 620);
+            this.Controls.Add(this.panelCard);
+            this.Controls.Add(this.btnCerrar);
+            this.Name = "LoginForm";
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.panelCard.ResumeLayout(false);
+            this.panelCirculo.ResumeLayout(false);
+            this.ResumeLayout(false);
         }
     }
 }

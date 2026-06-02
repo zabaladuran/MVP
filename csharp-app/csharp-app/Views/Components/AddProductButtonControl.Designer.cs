@@ -2,7 +2,7 @@
 
 namespace csharp_app.Views.Components
 {
-    partial class AddProductButton
+    partial class AddProductButtonControl
     {
         private System.ComponentModel.IContainer components = null;
         private Guna2Button btnAdd;

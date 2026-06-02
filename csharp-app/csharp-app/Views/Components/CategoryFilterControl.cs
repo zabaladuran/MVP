@@ -7,14 +7,14 @@ using Guna.UI2.WinForms;
 namespace csharp_app.Views.Components
 {
     [ToolboxItem(true)]
-    public partial class CategoryFilter : UserControl
+    public partial class CategoryFilterControl : UserControl
     {
         private string _comboText = "Todas las categorías";
 
         public event EventHandler SelectedCategoryChanged;
         public event EventHandler AllButtonClicked;
 
-        public CategoryFilter()
+        public CategoryFilterControl()
         {
             InitializeComponent();
             cmbCategories.Text = _comboText;
