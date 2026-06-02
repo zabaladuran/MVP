@@ -1,6 +1,6 @@
 ﻿namespace csharp_app.Views.Components
 {
-    partial class OrderList
+    partial class OrderListControl
     {
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Panel panelHeader;

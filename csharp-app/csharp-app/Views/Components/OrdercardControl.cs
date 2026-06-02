@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace csharp_app.Views.Components
 {
     [ToolboxItem(true)]
-    public partial class OrderCard : UserControl
+    public partial class OrdercardControl : UserControl
     {
         private string _status = "Pendiente";
         private int _cornerRadius = 8;
@@ -23,7 +23,7 @@ namespace csharp_app.Views.Components
         private static readonly Color DefaultBg = Color.FromArgb(241, 245, 249);
         private static readonly Color DefaultFg = Color.FromArgb(30, 41, 59);
 
-        public OrderCard()
+        public OrdercardControl()
         {
             InitializeComponent();
             DoubleBuffered = true;

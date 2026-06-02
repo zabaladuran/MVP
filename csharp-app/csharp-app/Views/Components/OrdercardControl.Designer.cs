@@ -1,6 +1,6 @@
 ﻿namespace csharp_app.Views.Components
 {
-    partial class OrderCard
+    partial class OrdercardControl
     {
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Label lblId;

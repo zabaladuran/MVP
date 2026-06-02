@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace csharp_app.Views.Components
 {
     [ToolboxItem(true)]
-    public partial class SectionCard : UserControl
+    public partial class SectionCardControl : UserControl
     {
         private string _title = "Pedidos recientes";
         private string _subtitle = "Los datos aquí mostrados corresponden únicamente a la tienda seleccionada en el selector superior.";
@@ -25,7 +25,7 @@ namespace csharp_app.Views.Components
         private static readonly Font DefaultSubtitleFont = new Font("Segoe UI", 9F);
         private static readonly Color DefaultSubtitleColor = Color.FromArgb(110, 110, 130);
 
-        public SectionCard()
+        public SectionCardControl()
         {
             InitializeComponent();
             DoubleBuffered = true;

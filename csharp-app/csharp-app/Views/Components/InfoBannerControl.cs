@@ -4,14 +4,14 @@ using System.Drawing.Drawing2D;
 namespace csharp_app.Views.Components
 {
     [ToolboxItem(true)]
-    public partial class InfoBanner : UserControl
+    public partial class InfoBannerControl : UserControl
     {
         private Color _bannerColor = Color.FromArgb(239, 246, 255);
         private Color _borderColor = Color.FromArgb(191, 219, 254);
         private int _cornerRadius = 8;
         private bool _autoHeight = true;
 
-        public InfoBanner()
+        public InfoBannerControl()
         {
             InitializeComponent();
             DoubleBuffered = true;

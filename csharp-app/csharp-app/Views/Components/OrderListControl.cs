@@ -6,12 +6,12 @@ using System.Windows.Forms;
 namespace csharp_app.Views.Components
 {
     [ToolboxItem(true)]
-    public partial class OrderList : UserControl
+    public partial class OrderListControl : UserControl
     {
         private Color _borderColor = Color.FromArgb(220, 220, 232);
         private int _cornerRadius = 8;
 
-        public OrderList()
+        public OrderListControl()
         {
             InitializeComponent();
             DoubleBuffered = true;
@@ -20,7 +20,7 @@ namespace csharp_app.Views.Components
 
         // ── API pública ───────────────────────────────────────────────────────
 
-        public void AddOrder(OrderCard order)
+        public void AddOrder(OrdercardControl order)
         {
             if (order == null) return;
             order.Margin = new Padding(0, 0, 0, 8);

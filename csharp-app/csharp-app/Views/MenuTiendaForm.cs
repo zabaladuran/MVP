@@ -21,5 +21,15 @@ namespace csharp_app.Views
         {
 
         }
+
+        private void dashboardHeaderControl1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dashboardControl1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

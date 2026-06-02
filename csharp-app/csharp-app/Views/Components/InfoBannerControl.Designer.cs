@@ -1,6 +1,6 @@
 ﻿namespace csharp_app.Views.Components
 {
-    partial class InfoBanner
+    partial class InfoBannerControl
     {
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.PictureBox picIcon;

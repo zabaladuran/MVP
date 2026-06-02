@@ -63,10 +63,10 @@ namespace csharp_app.Views.Components
             kpiCardControl1 = new KpiCardControl();
             kpiCardControl2 = new KpiCardControl();
             kpiCardControl3 = new KpiCardControl();
-            infoBanner1 = new InfoBanner();
-            sectionCard1 = new SectionCard();
-            orderList1 = new OrderList();
-            orderCard1 = new OrderCard();
+            infoBanner1 = new InfoBannerControl();
+            sectionCard1 = new SectionCardControl();
+            orderList1 = new OrderListControl();
+            orderCard1 = new OrdercardControl();
             SuspendLayout();
             // 
             // kpiCardControl4
@@ -154,19 +154,18 @@ namespace csharp_app.Views.Components
             Controls.Add(kpiCardControl4);
             Name = "DashboardControl";
             Size = new Size(675, 531);
-            Load += DashboardControl_Load;
             ResumeLayout(false);
         }
 
         #endregion
         private KpiCardControl kpiCardControl4;
         private KpiCardControl kpiCardControl5;
-        private SectionCard sectionCard1;
+        private SectionCardControl sectionCard1;
         private KpiCardControl kpiCardControl1;
         private KpiCardControl kpiCardControl2;
         private KpiCardControl kpiCardControl3;
-        private InfoBanner infoBanner1;
-        private OrderList orderList1;
-        private OrderCard orderCard1;
+        private InfoBannerControl infoBanner1;
+        private OrderListControl orderList1;
+        private OrdercardControl orderCard1;
     }
 }

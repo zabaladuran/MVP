@@ -1,6 +1,6 @@
 ﻿namespace csharp_app.Views.Components
 {
-    partial class SectionCard
+    partial class SectionCardControl
     {
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Label lblTitle;
