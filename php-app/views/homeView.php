@@ -60,29 +60,50 @@
                         <p class="eyebrow">Colección</p>
                         <h2>Productos destacados</h2>
                     </div>
-                    <a href="#" class="link-secondary">Ver todo</a>
+                    <a href="?vista=home" class="link-secondary">Ver todo</a>
                 </div>
 
-                <div class="product-grid">
-                    <article class="product-card">
-                        <div class="product-image image-1"></div>
-                        <h3>Producto 1</h3>
-                        <p>Calidad premium y diseño moderno para uso diario.</p>
-                        <button class="button button-tertiary">Ver producto</button>
-                    </article>
-                    <article class="product-card">
-                        <div class="product-image image-2"></div>
-                        <h3>Producto 2</h3>
-                        <p>La elección perfecta para tus compras con envío garantizado.</p>
-                        <button class="button button-tertiary">Ver producto</button>
-                    </article>
-                    <article class="product-card">
-                        <div class="product-image image-3"></div>
-                        <h3>Producto 3</h3>
-                        <p>Diseño elegante y cómodo para tu estilo de vida activo.</p>
-                        <button class="button button-tertiary">Ver producto</button>
-                    </article>
-                </div>
+                <form method="GET" class="filters">
+                    <input type="hidden" name="vista" value="home">
+                    <div class="filter-group">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" name="categoria">
+                            <option value="">Todas las categorías</option>
+                            <?php foreach ($categorias as $categoria) : ?>
+                                <option value="<?= htmlspecialchars($categoria['nCategoriaID'], ENT_QUOTES, 'UTF-8'); ?>" <?= ($categoriaSeleccionada == $categoria['nCategoriaID']) ? 'selected' : ''; ?>>
+                                    <?= htmlspecialchars($categoria['cNombreCategoria'], ENT_QUOTES, 'UTF-8'); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="busqueda">Buscar</label>
+                        <input
+                            id="busqueda"
+                            name="busqueda"
+                            type="text"
+                            placeholder="Buscar producto..."
+                            value="<?= htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8'); ?>">
+                    </div>
+                    <button type="submit" class="button button-primary">Filtrar</button>
+                </form>
+
+                <?php if (empty($productos)) : ?>
+                    <p>No se encontraron productos con esos criterios.</p>
+                <?php else : ?>
+                    <div class="product-grid">
+                        <?php foreach ($productos as $producto) : ?>
+                            <article class="product-card">
+                                <div class="product-image" style="background-image: url('<?= htmlspecialchars($producto['cUrlImagenPrincipal'] ?: 'icons/shopp1.svg', ENT_QUOTES, 'UTF-8'); ?>');"></div>
+                                <h3><?= htmlspecialchars($producto['cNombreProducto'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                                <p><?= htmlspecialchars($producto['cDescripcionCorta'] ?: 'Sin descripción corta', ENT_QUOTES, 'UTF-8'); ?></p>
+                                <p><strong>Precio:</strong> $<?= number_format($producto['nPrecioUnitario'], 2); ?></p>
+                                <p><strong>Categoría:</strong> <?= htmlspecialchars($producto['cNombreCategoria'] ?: 'General', ENT_QUOTES, 'UTF-8'); ?></p>
+                                <a href="?vista=producto&accion=detalle&id=<?= htmlspecialchars($producto['nProductoID'], ENT_QUOTES, 'UTF-8'); ?>" class="button button-tertiary">Ver producto</a>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </section>
         </main>
     </div>

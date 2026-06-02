@@ -26,6 +26,16 @@ if ($vista === 'login') {
     require_once 'controller/homenController.php';
     $controller = new HomeController();
     $controller->mostrarHome();
+} elseif ($vista === 'producto') {
+    require_once 'controller/ProductController.php';
+    $controller = new ProductController();
+
+    if ($accion === 'detalle' && isset($_GET['id'])) {
+        $controller->mostrarDetalle($_GET['id']);
+    } else {
+        header('Location: ?vista=home');
+        exit;
+    }
 } else {
     $login = new LoginController();
     $login->mostrarLogin();
