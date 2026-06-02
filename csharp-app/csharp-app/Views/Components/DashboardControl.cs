@@ -56,5 +56,20 @@ namespace csharp_app.Views.Components
         {
 
         }
+
+        private void orderList1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void infoBanner1_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void orderCard1_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -46,16 +46,16 @@ namespace csharp_app.Views
             // dashboardControl1
             // 
             dashboardControl1.AutoScroll = true;
-            dashboardControl1.Location = new Point(323, 106);
+            dashboardControl1.Location = new Point(323, 12);
             dashboardControl1.Name = "dashboardControl1";
-            dashboardControl1.Size = new Size(757, 437);
+            dashboardControl1.Size = new Size(767, 855);
             dashboardControl1.TabIndex = 1;
             // 
             // MenuTiendaForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1086, 879);
+            ClientSize = new Size(1102, 879);
             Controls.Add(dashboardControl1);
             Controls.Add(sideBar1);
             Name = "MenuTiendaForm";

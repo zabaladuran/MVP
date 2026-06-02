@@ -66,7 +66,7 @@ namespace csharp_app.Views.Components
             infoBanner1 = new InfoBanner();
             sectionCard1 = new SectionCard();
             orderList1 = new OrderList();
-            orderList2 = new OrderList();
+            orderCard1 = new OrderCard();
             SuspendLayout();
             // 
             // kpiCardControl4
@@ -96,7 +96,7 @@ namespace csharp_app.Views.Components
             // kpiCardControl3
             // 
             kpiCardControl3.BackColor = Color.White;
-            kpiCardControl3.Location = new Point(574, 94);
+            kpiCardControl3.Location = new Point(571, 94);
             kpiCardControl3.Name = "kpiCardControl3";
             kpiCardControl3.Size = new Size(171, 145);
             kpiCardControl3.TabIndex = 6;
@@ -112,11 +112,12 @@ namespace csharp_app.Views.Components
             infoBanner1.Padding = new Padding(8);
             infoBanner1.Size = new Size(732, 64);
             infoBanner1.TabIndex = 7;
+            infoBanner1.Load += infoBanner1_Load_1;
             // 
             // sectionCard1
             // 
             sectionCard1.BackColor = Color.Transparent;
-            sectionCard1.Location = new Point(13, 255);
+            sectionCard1.Location = new Point(13, 257);
             sectionCard1.Name = "sectionCard1";
             sectionCard1.Size = new Size(732, 135);
             sectionCard1.TabIndex = 8;
@@ -124,26 +125,26 @@ namespace csharp_app.Views.Components
             // 
             // orderList1
             // 
-            orderList1.BackColor = Color.Transparent;
-            orderList1.Location = new Point(-15, 406);
+            orderList1.BackColor = Color.White;
+            orderList1.Location = new Point(13, 395);
             orderList1.Name = "orderList1";
-            orderList1.Size = new Size(118, 250);
+            orderList1.Size = new Size(729, 367);
             orderList1.TabIndex = 9;
             // 
-            // orderList2
+            // orderCard1
             // 
-            orderList2.BackColor = Color.Transparent;
-            orderList2.Location = new Point(-8, 390);
-            orderList2.Name = "orderList2";
-            orderList2.Size = new Size(750, 560);
-            orderList2.TabIndex = 10;
+            orderCard1.BackColor = Color.White;
+            orderCard1.Location = new Point(13, 470);
+            orderCard1.Name = "orderCard1";
+            orderCard1.Size = new Size(664, 60);
+            orderCard1.TabIndex = 10;
             // 
             // DashboardControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            Controls.Add(orderList2);
+            Controls.Add(orderCard1);
             Controls.Add(orderList1);
             Controls.Add(sectionCard1);
             Controls.Add(infoBanner1);
@@ -152,7 +153,7 @@ namespace csharp_app.Views.Components
             Controls.Add(kpiCardControl1);
             Controls.Add(kpiCardControl4);
             Name = "DashboardControl";
-            Size = new Size(740, 657);
+            Size = new Size(675, 531);
             Load += DashboardControl_Load;
             ResumeLayout(false);
         }
@@ -161,12 +162,11 @@ namespace csharp_app.Views.Components
         private KpiCardControl kpiCardControl4;
         private KpiCardControl kpiCardControl5;
         private SectionCard sectionCard1;
-        private OrderList orderList1;
         private KpiCardControl kpiCardControl1;
         private KpiCardControl kpiCardControl2;
         private KpiCardControl kpiCardControl3;
         private InfoBanner infoBanner1;
-        private OrderList orderCard1;
-        private OrderList orderList2;
+        private OrderList orderList1;
+        private OrderCard orderCard1;
     }
 }
