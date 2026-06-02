@@ -16,18 +16,21 @@ namespace csharp_app.Views.Components
 
         private ContextMenuStrip menuTiendas;
 
+        // Delegado y evento para notificar cambio de sección
+        public delegate void SectionChangedEventHandler(object sender, string section);
+        public event SectionChangedEventHandler SectionChanged;
 
         public SideBarControl()
         {
             InitializeComponent();
-            btnDashboard.Click += (s, e) => { ResaltarBoton(btnDashboard); };
-            btnInformacion.Click += (s, e) => { ResaltarBoton(btnInformacion); };
-            btnProductos.Click += (s, e) => { ResaltarBoton(btnProductos); };
-            btnTrabajadores.Click += (s, e) => { ResaltarBoton(btnTrabajadores); };
-            btnPedidosNav.Click += (s, e) => { ResaltarBoton(btnPedidosNav); };
-            btnTransacciones.Click += (s, e) => { ResaltarBoton(btnTransacciones); };
-            btnPQRS.Click += (s, e) => { ResaltarBoton(btnPQRS); };
-            btnConfiguracion.Click += (s, e) => { ResaltarBoton(btnConfiguracion); };
+            btnDashboard.Click += (s, e) => { ResaltarBoton(btnDashboard); SectionChanged?.Invoke(this, "Dashboard"); };
+            btnInformacion.Click += (s, e) => { ResaltarBoton(btnInformacion); SectionChanged?.Invoke(this, "Informacion"); };
+            btnProductos.Click += (s, e) => { ResaltarBoton(btnProductos); SectionChanged?.Invoke(this, "Productos"); };
+            btnTrabajadores.Click += (s, e) => { ResaltarBoton(btnTrabajadores); SectionChanged?.Invoke(this, "Trabajadores"); };
+            btnPedidosNav.Click += (s, e) => { ResaltarBoton(btnPedidosNav); SectionChanged?.Invoke(this, "Pedidos"); };
+            btnTransacciones.Click += (s, e) => { ResaltarBoton(btnTransacciones); SectionChanged?.Invoke(this, "Transacciones"); };
+            btnPQRS.Click += (s, e) => { ResaltarBoton(btnPQRS); SectionChanged?.Invoke(this, "PQRS"); };
+            btnConfiguracion.Click += (s, e) => { ResaltarBoton(btnConfiguracion); SectionChanged?.Invoke(this, "Configuracion"); };
 
             ConfigurarMenuTiendas();
 

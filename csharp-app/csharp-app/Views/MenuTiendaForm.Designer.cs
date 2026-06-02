@@ -34,6 +34,7 @@ namespace csharp_app.Views
             dashboardControl1 = new DashboardControl();
             dashboardHeaderControl1 = new DashboardHeaderControl();
             subscriptionBadgeControl1 = new SubscriptionBadgeControl();
+            productoControl1 = new ProductoControl();
             SuspendLayout();
             // 
             // sideBar1
@@ -79,11 +80,20 @@ namespace csharp_app.Views
             subscriptionBadgeControl1.TabIndex = 3;
             subscriptionBadgeControl1.TextColor = Color.FromArgb(30, 30, 50);
             // 
+            // productoControl1
+            // 
+            productoControl1.AutoScroll = true;
+            productoControl1.Location = new Point(327, 117);
+            productoControl1.Name = "productoControl1";
+            productoControl1.Size = new Size(751, 750);
+            productoControl1.TabIndex = 4;
+            // 
             // MenuTiendaForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1090, 879);
+            Controls.Add(productoControl1);
             Controls.Add(subscriptionBadgeControl1);
             Controls.Add(dashboardHeaderControl1);
             Controls.Add(dashboardControl1);
@@ -99,5 +109,6 @@ namespace csharp_app.Views
         private DashboardControl dashboardControl1;
         private DashboardHeaderControl dashboardHeaderControl1;
         private SubscriptionBadgeControl subscriptionBadgeControl1;
+        private ProductoControl productoControl1;
     }
 }
