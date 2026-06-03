@@ -1,0 +1,147 @@
+﻿/* sidebar.css */
+
+.avatar-circle {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #dcdaf0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sep-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #8c8ca0;
+    letter-spacing: 0.06em;
+    margin: 4px 8px 6px;
+    padding: 0;
+}
+
+.tienda-selector {
+    background: #f5f4fc;
+    border: 1px solid #e8e5f5;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.tienda-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #323246;
+    border-radius: 8px;
+}
+
+.tienda-btn:hover {
+    background: #ebe5fc;
+}
+
+.tienda-btn i:first-child {
+    color: #6366f1;
+    font-size: 16px;
+}
+
+.tienda-btn div:nth-child(2) {
+    flex: 1;
+    text-align: left;
+}
+
+.tienda-menu {
+    border-top: 1px solid #e8e5f5;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+}
+
+.tienda-opt {
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: #666;
+    border-radius: 6px;
+}
+
+.tienda-opt:hover {
+    background: #ebe5fc;
+    color: #323246;
+}
+
+.tienda-opt.active {
+    background: #d9d0f5;
+    color: #534ab7;
+    font-weight: 600;
+}
+
+.badge-activa {
+    background: #22c55e;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.tienda-panel {
+    background: #f5f4fc;
+    border-radius: 10px;
+    padding: 10px 14px;
+    user-select: none;
+    z-index: 1000;
+    position: relative;
+    overflow: visible !important;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #323246;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+    transition: background 0.15s;
+}
+
+    .nav-btn:hover {
+        background: #f0f0fa;
+    }
+
+    .nav-btn.active {
+        background: #e6e0ff;
+        color: #1e50b4;
+        font-weight: 600;
+        border-left: 3px solid #1e50b4;
+    }
+
+.btn-cerrar {
+    background: #faf5f5;
+    border: 1px solid #f0dada;
+    border-radius: 8px;
+    padding: 11px;
+    font-size: 14px;
+    color: #b43c3c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+    .btn-cerrar:hover {
+        background: #f0e6e6;
+    }

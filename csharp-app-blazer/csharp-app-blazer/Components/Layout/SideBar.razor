@@ -1,0 +1,116 @@
+﻿<nav class="sidebar d-flex flex-column" style="width:260px; min-height:100vh; background:#fff; border-right:1px solid #ebebf0; padding:20px 12px;">
+
+    @* Perfil de usuario *@
+    <div class="d-flex align-items-center gap-3 mb-3 px-2">
+        <div class="avatar-circle">
+            <i class="bi bi-person-fill" style="font-size:22px; color:#6366f1;"></i>
+        </div>
+        <div>
+            <p class="mb-0 fw-semibold" style="font-size:14px; color:#14141e;">@NombreUsuario</p>
+            <p class="mb-0" style="font-size:12px; color:#6e6e82;">@Rol</p>
+        </div>
+    </div>
+
+    @* Tienda activa *@
+    <p class="sep-label">TIENDA ACTIVA</p>
+
+    <div class="tienda-selector">
+        <button class="tienda-btn" @onclick="ToggleMenuTiendas" type="button">
+            <i class="bi bi-shop"></i>
+            <div>
+                <div>@TiendaActual</div>
+                <span class="badge-activa">Activa</span>
+            </div>
+            <i class="bi @(mostrarMenuTiendas ? "bi-chevron-up" : "bi-chevron-down")"></i>
+        </button>
+
+        @if (mostrarMenuTiendas)
+        {
+            <div class="tienda-menu">
+                @foreach (var tienda in Tiendas)
+                {
+                    <button class="tienda-opt @(tienda == TiendaActual ? "active" : "")" 
+                            @onclick="() => CambiarTienda(tienda)">
+                        @tienda
+                    </button>
+                }
+            </div>
+        }
+    </div>
+
+
+
+
+
+    @* Dashboard *@
+    <NavItem Seccion="Dashboard" Icono="ti ti-chart-bar" Texto="Dashboard"
+             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+
+    @* Gestión *@
+    <p class="sep-label mt-2">GESTIÓN</p>
+    <NavItem Seccion="Informacion" Icono="ti ti-info-circle" Texto="Información"
+             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+    <NavItem Seccion="Productos" Icono="ti ti-box" Texto="Productos"
+             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+    <NavItem Seccion="Trabajadores" Icono="ti ti-users" Texto="Trabajadores"
+             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+
+    @* Ventas *@
+    <p class="sep-label mt-2">VENTAS</p>
+    <NavItem Seccion="Pedidos" Icono="ti ti-shopping-cart" Texto="Pedidos"
+             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+    <NavItem Seccion="Transacciones" Icono="ti ti-credit-card" Texto="Transacciones"
+             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+
+    @* Soporte *@
+    <p class="sep-label mt-2">SOPORTE</p>
+    <NavItem Seccion="PQRS" Icono="ti ti-clipboard-list" Texto="PQRS"
+             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+    <NavItem Seccion="Configuracion" Icono="ti ti-settings" Texto="Configuración"
+             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+
+    @* Cerrar sesión *@
+    <div class="mt-auto pt-3">
+        <button class="btn-cerrar w-100" @onclick="CerrarSesion">
+            <i class="ti ti-door-exit me-2"></i> Cerrar sesión
+        </button>
+    </div>
+
+</nav>
+
+@code {
+    [Parameter] public string NombreUsuario { get; set; } = "Carlos Pérez";
+    [Parameter] public string Rol { get; set; } = "Administrador";
+    [Parameter] public List<string> Tiendas { get; set; } = new() { "Tienda Norte", "Tienda Centro", "Tienda Sur" };
+    [Parameter] public EventCallback<string> OnSectionChanged { get; set; }
+    [Parameter] public EventCallback<string> OnStoreChanged { get; set; }
+    [Parameter] public EventCallback OnCerrarSesion { get; set; }
+
+    private string SeccionActiva { get; set; } = "Dashboard";
+    private string TiendaActual { get; set; } = "Tienda Norte";
+    private bool mostrarMenuTiendas = false;
+
+    private async Task NavClick(string seccion)
+    {
+        SeccionActiva = seccion;
+        await OnSectionChanged.InvokeAsync(seccion);
+    }
+
+    private void ToggleMenuTiendas()
+    {
+        mostrarMenuTiendas = !mostrarMenuTiendas;
+    }
+
+    private async Task CambiarTienda(string tienda)
+    {
+        TiendaActual = tienda;
+        mostrarMenuTiendas = false;
+        StateHasChanged();
+        await OnStoreChanged.InvokeAsync(tienda);
+    }
+
+    private async Task CerrarSesion()
+    {
+        await OnCerrarSesion.InvokeAsync();
+    }
+}

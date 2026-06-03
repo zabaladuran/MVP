@@ -1,0 +1,15 @@
+﻿@* Components/NavItem.razor *@
+
+<button class="nav-btn w-100 text-start @(Seccion == SeccionActiva ? "active" : "")"
+        @onclick="() => OnClick.InvokeAsync(Seccion)">
+    <i class="@Icono me-2" style="font-size:17px;"></i>
+    @Texto
+</button>
+
+@code {
+    [Parameter] public string Seccion { get; set; } = "";
+    [Parameter] public string Icono { get; set; } = "";
+    [Parameter] public string Texto { get; set; } = "";
+    [Parameter] public string SeccionActiva { get; set; } = "";
+    [Parameter] public EventCallback<string> OnClick { get; set; }
+}
