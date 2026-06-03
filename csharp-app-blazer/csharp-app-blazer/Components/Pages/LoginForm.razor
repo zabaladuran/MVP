@@ -1,0 +1,123 @@
+﻿@page "/login"
+@using csharp_app_blazer.Models
+@inject NavigationManager Navigation
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center"
+     style="background-color: #f1f2fa;">
+
+    <div class="card border-0 shadow-sm p-4"
+         style="width: 420px; border-radius: 16px;">
+
+        @if (!string.IsNullOrEmpty(errorMensaje))
+        {
+            <div class="alert alert-danger alert-dismissible py-2 px-3 mb-3" role="alert">
+                <small>@errorMensaje</small>
+                <button type="button" class="btn-close btn-sm" @onclick="() => errorMensaje = string.Empty"></button>
+            </div>
+        }
+
+        <div class="d-flex justify-content-center mb-3">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                 style="width:72px; height:72px; background-color:#6366f1;">
+                <i class="bi bi-person-fill fs-2 text-white"></i>
+            </div>
+        </div>
+
+        <h1 class="text-center fs-4 fw-semibold mb-1">Bienvenido</h1>
+        <p class="text-center text-muted small mb-2">Ingresa tus credenciales para continuar</p>
+
+        <div class="mx-auto mb-4"
+             style="width:48px; height:3px; background-color:#6366f1; border-radius:2px;">
+        </div>
+
+        <EditForm Model="Input" OnValidSubmit="HandleLogin">
+            <DataAnnotationsValidator />
+
+            <div class="mb-3">
+                <label class="form-label small fw-semibold text-secondary">Usuario</label>
+                <InputText @bind-Value="Input.Usuario"
+                           class="form-control"
+                           placeholder="Escribe tu usuario"
+                           @onkeydown="OnUsuarioKeyDown" />
+                <ValidationMessage For="() => Input.Usuario" class="text-danger small" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small fw-semibold text-secondary">Contraseña</label>
+                <InputText @bind-Value="Input.Password"
+                           type="password"
+                           class="form-control"
+                           placeholder="Escribe tu contraseña"
+                           @onkeydown="OnPasswordKeyDown" />
+                <ValidationMessage For="() => Input.Password" class="text-danger small" />
+            </div>
+
+            <button type="submit"
+                    class="btn w-100 text-white fw-semibold py-2 mt-2"
+                    style="background-color:#6366f1; border-radius:8px;"
+                    disabled="@cargando">
+                @if (cargando)
+                {
+                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                }
+                Ingresar
+            </button>
+
+        </EditForm>
+
+        <p class="text-center mt-3 mb-1 small"
+               style="color:#6366f1; cursor:pointer;"
+               @onclick="IrARegistro">
+            ¿No tienes cuenta? Regístrate aquí
+        </p>
+
+        <p class="text-center text-muted mb-0" style="font-size: 11px;">
+            v1.0.0 · Sistema de gestión
+        </p>
+
+    </div>
+</div>
+
+@code {
+    private LoginViewModel Input { get; set; } = new();
+    private string errorMensaje = string.Empty;
+    private bool cargando = false;
+
+    private async Task HandleLogin()
+    {
+        cargando = true;
+        errorMensaje = string.Empty;
+
+        // Aquí conectas tu servicio de autenticación:
+        // var resultado = await AuthService.LoginAsync(Input.Usuario, Input.Password);
+        // if (!resultado.Exitoso)
+        // {
+        //     errorMensaje = resultado.Mensaje;
+        //     cargando = false;
+        //     return;
+        // }
+        // Navigation.NavigateTo("/dashboard");
+
+        await Task.Delay(500); // Quitar al conectar el servicio real
+        cargando = false;
+    }
+
+    private void OnUsuarioKeyDown(KeyboardEventArgs e)
+    {
+        // El foco al siguiente campo lo maneja Bootstrap/browser con Tab
+        // Enter avanza al campo contraseña via JS si se necesita
+    }
+
+    private void OnPasswordKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            // Submit se dispara automáticamente por el EditForm
+        }
+    }
+
+    private void IrARegistro()
+    {
+        Navigation.NavigateTo("/registro");
+    }
+}

@@ -1,0 +1,315 @@
+﻿@page "/registro"
+@using csharp_app_blazer.Models
+
+<div class="container py-4" style="max-width: 800px;">
+
+    <div class="bg-primary text-white px-4 py-3 rounded-top mb-4">
+        <h1 class="fs-5 fw-semibold mb-0">Registro de Administrador de Tienda</h1>
+    </div>
+
+    @if (registroExitoso)
+    {
+        <div class="alert alert-success">
+            ✓ Registro completado exitosamente.
+        </div>
+    }
+
+    <EditForm Model="Input" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+
+        @* Sección 1: Datos Personales *@
+        <fieldset class="border rounded p-3 mb-4">
+            <legend class="float-none w-auto px-2 fs-6 fw-semibold text-dark">
+                Datos Personales del Administrador
+            </legend>
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.Nombre" class="form-control" placeholder="Nombre *" />
+                    <ValidationMessage For="() => Input.Nombre" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.Apellido" class="form-control" placeholder="Apellido *" />
+                    <ValidationMessage For="() => Input.Apellido" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.Documento" class="form-control" placeholder="Documento *" />
+                    <ValidationMessage For="() => Input.Documento" class="text-danger small" />
+                </div>
+
+                <div class="col-md-8">
+                    <InputText @bind-Value="Input.Correo" class="form-control" placeholder="Correo electrónico *" />
+                    <ValidationMessage For="() => Input.Correo" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.Telefono" class="form-control" placeholder="Teléfono" />
+                </div>
+
+                <div class="col-md-6">
+                    <InputText @bind-Value="Input.Password" type="password" class="form-control" placeholder="Contraseña *" />
+                    <ValidationMessage For="() => Input.Password" class="text-danger small" />
+                </div>
+
+                <div class="col-md-6">
+                    <InputText @bind-Value="Input.ConfirmarPassword" type="password" class="form-control" placeholder="Confirmar contraseña *" />
+                    <ValidationMessage For="() => Input.ConfirmarPassword" class="text-danger small" />
+                </div>
+
+            </div>
+        </fieldset>
+
+        @* Sección 2: Dirección Administrador *@
+        <fieldset class="border rounded p-3 mb-4">
+            <legend class="float-none w-auto px-2 fs-6 fw-semibold text-dark">
+                Dirección del Administrador
+            </legend>
+            <div class="row g-3">
+
+                <div class="col-md-8">
+                    <InputText @bind-Value="Input.Nomenclatura" class="form-control" placeholder="Nomenclatura (Calle, #, etc) *" />
+                    <ValidationMessage For="() => Input.Nomenclatura" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.Barrio" class="form-control" placeholder="Barrio" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.CodigoPostal" class="form-control" placeholder="Código Postal" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputSelect @bind-Value="Input.Departamento" class="form-select"
+                                 @onchange="OnDepartamentoChange">
+                        <option value="">Seleccionar departamento</option>
+                        @foreach (var dep in Departamentos)
+                        {
+                            <option value="@dep">@dep</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="() => Input.Departamento" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputSelect @bind-Value="Input.Municipio" class="form-select">
+                        <option value="">Seleccionar municipio</option>
+                        @foreach (var mun in MunicipiosFiltrados)
+                        {
+                            <option value="@mun">@mun</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="() => Input.Municipio" class="text-danger small" />
+                </div>
+
+                <div class="col-12">
+                    <InputText @bind-Value="Input.Notas" class="form-control" placeholder="Notas adicionales" />
+                </div>
+
+            </div>
+        </fieldset>
+
+        @* Sección 3: Datos de la Tienda *@
+        <fieldset class="border rounded p-3 mb-4">
+            <legend class="float-none w-auto px-2 fs-6 fw-semibold text-dark">
+                Datos de la Tienda
+            </legend>
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.NombreComercial" class="form-control" placeholder="Nombre Comercial *" />
+                    <ValidationMessage For="() => Input.NombreComercial" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.Descripcion" class="form-control" placeholder="Descripción" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.UrlLogo" class="form-control" placeholder="URL del Logo" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.CorreoTienda" class="form-control" placeholder="Correo de atención *" />
+                    <ValidationMessage For="() => Input.CorreoTienda" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.TelefonoTienda" class="form-control" placeholder="Teléfono de atención *" />
+                    <ValidationMessage For="() => Input.TelefonoTienda" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.RazonSocial" class="form-control" placeholder="Razón Social *" />
+                    <ValidationMessage For="() => Input.RazonSocial" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputSelect @bind-Value="Input.Plan" class="form-select">
+                        <option value="">Plan de suscripción *</option>
+                        @foreach (var plan in Planes)
+                        {
+                            <option value="@plan">@plan</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="() => Input.Plan" class="text-danger small" />
+                </div>
+
+            </div>
+        </fieldset>
+
+        @* Sección 4: Dirección de la Tienda *@
+        <fieldset class="border rounded p-3 mb-4">
+            <legend class="float-none w-auto px-2 fs-6 fw-semibold text-dark">
+                Dirección de la Tienda
+            </legend>
+            <div class="row g-3">
+
+                <div class="col-md-8">
+                    <InputText @bind-Value="Input.TiendaNomenclatura" class="form-control" placeholder="Nomenclatura *" />
+                    <ValidationMessage For="() => Input.TiendaNomenclatura" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.TiendaBarrio" class="form-control" placeholder="Barrio *" />
+                    <ValidationMessage For="() => Input.TiendaBarrio" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputText @bind-Value="Input.TiendaCodigoPostal" class="form-control" placeholder="Código Postal *" />
+                    <ValidationMessage For="() => Input.TiendaCodigoPostal" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputSelect @bind-Value="Input.TiendaDepartamento" class="form-select"
+                                 @onchange="OnTiendaDepartamentoChange">
+                        <option value="">Departamento *</option>
+                        @foreach (var dep in Departamentos)
+                        {
+                            <option value="@dep">@dep</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="() => Input.TiendaDepartamento" class="text-danger small" />
+                </div>
+
+                <div class="col-md-4">
+                    <InputSelect @bind-Value="Input.TiendaMunicipio" class="form-select">
+                        <option value="">Municipio *</option>
+                        @foreach (var mun in TiendaMunicipiosFiltrados)
+                        {
+                            <option value="@mun">@mun</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="() => Input.TiendaMunicipio" class="text-danger small" />
+                </div>
+
+                <div class="col-12">
+                    <InputText @bind-Value="Input.TiendaNotas" class="form-control" placeholder="Notas adicionales" />
+                </div>
+
+            </div>
+        </fieldset>
+
+        <div class="d-flex justify-content-end gap-2 mt-2">
+            <a href="/" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+
+    </EditForm>
+</div>
+
+@code {
+    private RegisterViewModel Input { get; set; } = new();
+    private bool registroExitoso = false;
+
+    private List<string> Departamentos { get; set; } = new();
+    private List<string> MunicipiosFiltrados { get; set; } = new();
+    private List<string> TiendaMunicipiosFiltrados { get; set; } = new();
+    private List<string> Planes { get; set; } = new() { "Básico", "Profesional", "Empresarial" };
+
+    private Dictionary<string, List<string>> MunicipiosPorDepartamento { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        InitializarDatos();
+    }
+
+    private void InitializarDatos()
+    {
+        // Inicializar departamentos (ejemplo para Colombia)
+        Departamentos = new()
+        {
+            "Amazonas", "Antioquia", "Arauca", "Atlántico", "Bolívar", "Boyacá",
+            "Caldas", "Caquetá", "Casanare", "Cauca", "Cesar", "Chocó",
+            "Córdoba", "Cundinamarca", "Guainía", "Guaviare", "Huila", "La Guajira",
+            "Magdalena", "Meta", "Nariño", "Norte de Santander", "Putumayo",
+            "Quindío", "Risaralda", "Santander", "Sucre", "Tolima", "Valle del Cauca",
+            "Vaupés", "Vichada"
+        };
+
+        // Inicializar municipios por departamento (ejemplo simplificado)
+        MunicipiosPorDepartamento = new()
+        {
+            { "Antioquia", new() { "Medellín", "Envigado", "Itagüí", "Bello", "Sabaneta" } },
+            { "Cundinamarca", new() { "Bogotá", "Soacha", "Zipaquirá", "Facatativá", "Ubaté" } },
+            { "Valle del Cauca", new() { "Cali", "Palmira", "Buenaventura", "Tulúa", "Cartago" } }
+        };
+    }
+
+    private void OnDepartamentoChange(ChangeEventArgs e)
+    {
+        var departamento = e.Value?.ToString() ?? string.Empty;
+        Input.Departamento = departamento;
+
+        if (MunicipiosPorDepartamento.TryGetValue(departamento, out var municipios))
+        {
+            MunicipiosFiltrados = municipios;
+        }
+        else
+        {
+            MunicipiosFiltrados = new();
+        }
+
+        Input.Municipio = string.Empty;
+    }
+
+    private void OnTiendaDepartamentoChange(ChangeEventArgs e)
+    {
+        var departamento = e.Value?.ToString() ?? string.Empty;
+        Input.TiendaDepartamento = departamento;
+
+        if (MunicipiosPorDepartamento.TryGetValue(departamento, out var municipios))
+        {
+            TiendaMunicipiosFiltrados = municipios;
+        }
+        else
+        {
+            TiendaMunicipiosFiltrados = new();
+        }
+
+        Input.TiendaMunicipio = string.Empty;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            // TODO: Implementar lógica de guardado en base de datos
+            // await RegistroService.RegistrarAdministrador(Input);
+            
+            registroExitoso = true;
+            
+            // Limpiar formulario después de 2 segundos
+            await Task.Delay(2000);
+            Input = new();
+            registroExitoso = false;
+        }
+        catch (Exception ex)
+        {
+            // TODO: Manejar errores
+            Console.WriteLine($"Error al registrar: {ex.Message}");
+        }
+    }
+}
