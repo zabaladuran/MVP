@@ -1,22 +1,125 @@
+version: '3.8'
+
+# Por defecto usa .env.local
+# Para producción: docker-compose --env-file .env.production up -d
+
 services:
-  app:
-    build: .
+  # Base de datos compartida
+  mysql:
+    image: mysql:8.0
+    container_name: mvp_database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_CHARACTER_SET_SERVER: ${MYSQL_CHARACTER_SET_SERVER:-utf8mb4}
+      MYSQL_COLLATION_SERVER: ${MYSQL_COLLATION_SERVER:-utf8mb4_unicode_ci}
     ports:
-      - "8080:80"
+      - "3306:3306"
     volumes:
-      - .:/var/www/html
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - mvp_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Aplicación PHP
+  php-app:
+    build: ./php-app
+    container_name: mvp_php_app
+    ports:
+      - "${PHP_PORT_1}:80"
+      - "${PHP_PORT_2}:80"
+      - "${PHP_PORT_3}:80"
+    volumes:
+      - ./php-app:/var/www/html
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      ENVIRONMENT: ${ENVIRONMENT}
+      DEBUG: ${DEBUG}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - mvp_network
+
+  # Aplicación C# (ASP.NET o Windows Forms ejecutándose en contenedor)
+  csharp-app:
+    build: ./csharp-app
+    container_name: mvp_csharp_app
+    ports:
+      - "${CSHARP_PORT_1}:5000"
+      - "${CSHARP_PORT_2}:5000"
+      - "${CSHARP_PORT_3}:5000"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      ASPNETCORE_URLS: http://+:5000
+      ENVIRONMENT: ${ENVIRONMENT}
+      DEBUG: ${DEBUG}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - mvp_network
+
+  # Aplicación Android (emulador o servicio backend)
+  android-app:
+    build: ./android-app
+    container_name: mvp_android_app
+    ports:
+      - "${ANDROID_ADB_PORT_1}:5037"
+      - "${ANDROID_ADB_PORT_2}:5037"
+      - "${ANDROID_ADB_PORT_3}:5037"
+      - "${ANDROID_API_PORT_1}:8080"
+      - "${ANDROID_API_PORT_2}:8080"
+      - "${ANDROID_API_PORT_3}:8080"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      ENVIRONMENT: ${ENVIRONMENT}
+      DEBUG: ${DEBUG}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - mvp_network
+
+  # PhpMyAdmin para gestionar la base de datos
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: mvp_phpmyadmin
+    ports:
+      - "${PHPMYADMIN_PORT_1}:80"
+      - "${PHPMYADMIN_PORT_2}:80"
+      - "${PHPMYADMIN_PORT_3}:80"
+    environment:
+      PMA_HOST: ${DB_HOST}
+      PMA_PORT: ${DB_PORT}
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     depends_on:
       - mysql
+    networks:
+      - mvp_network
 
-  mysql:
-    image: mysql:8
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: appdb
+volumes:
+  mysql_data:
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8081:80"
-    environment:
-      PMA_HOST: mysql
+networks:
+  mvp_network:
+    driver: bridge

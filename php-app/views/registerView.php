@@ -11,53 +11,8 @@
     <title>Registro</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icons/shopp1.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="views/CSS/registerCss.css">
     <script src="pwa.js" defer></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 50px;
-        }
-        form {
-            max-width: 400px;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0 15px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .error {
-            color: red;
-            margin: 10px 0;
-        }
-        .exito {
-            color: green;
-            margin: 10px 0;
-        }
-        .link {
-            text-align: center;
-            margin-top: 15px;
-        }
-        a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-    </style>
 </head>
 
 <body>
