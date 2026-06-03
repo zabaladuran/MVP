@@ -1,6 +1,8 @@
-﻿@page "/login"
-@using csharp_app_blazer.Models
+﻿@using csharp_app_blazer.Models
 @inject NavigationManager Navigation
+@page "/"
+@page "/login"
+@layout Layout.EmptyLayout
 
 <div class="min-vh-100 d-flex align-items-center justify-content-center"
      style="background-color: #f1f2fa;">
@@ -65,11 +67,9 @@
 
         </EditForm>
 
-        <p class="text-center mt-3 mb-1 small"
-               style="color:#6366f1; cursor:pointer;"
-               @onclick="IrARegistro">
+        <a href="/registro" class="d-block text-center mt-3 small" style="color:#6366f1;">
             ¿No tienes cuenta? Regístrate aquí
-        </p>
+        </a>
 
         <p class="text-center text-muted mb-0" style="font-size: 11px;">
             v1.0.0 · Sistema de gestión
