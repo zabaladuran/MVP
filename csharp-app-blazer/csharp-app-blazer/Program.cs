@@ -1,4 +1,4 @@
-using csharp_app_docker.Components;
+using csharp_app_blazer.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
