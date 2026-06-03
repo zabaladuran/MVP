@@ -95,7 +95,7 @@
                         <?php foreach ($productos as $producto) : ?>
                             <article class="product-card">
                                 <div class="product-image" style="background-image: url('<?= htmlspecialchars($producto['cUrlImagenPrincipal'] ?: 'icons/shopp1.svg', ENT_QUOTES, 'UTF-8'); ?>');"></div>
-                                <h3><?= htmlspecialchars($producto['cNombreProducto'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                                <h3><?= htmlspecialchars($producto['cNombreProducto'] ?? $producto['cDescripcionCorta'] ?? 'Sin nombre', ENT_QUOTES, 'UTF-8'); ?></h3>
                                 <p><?= htmlspecialchars($producto['cDescripcionCorta'] ?: 'Sin descripción corta', ENT_QUOTES, 'UTF-8'); ?></p>
                                 <p><strong>Precio:</strong> $<?= number_format($producto['nPrecioUnitario'], 2); ?></p>
                                 <p><strong>Categoría:</strong> <?= htmlspecialchars($producto['cNombreCategoria'] ?: 'General', ENT_QUOTES, 'UTF-8'); ?></p>

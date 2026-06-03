@@ -27,14 +27,13 @@ class ProductModel
 
         if (!empty($busqueda)) {
             $sql .= " AND (
-                        p.cNombreProducto LIKE :busqueda OR
                         p.cDescripcionCorta LIKE :busqueda OR
                         p.cDescripcionLarga LIKE :busqueda
                      )";
             $params[':busqueda'] = '%' . $busqueda . '%';
         }
 
-        $sql .= " ORDER BY p.cNombreProducto ASC";
+        $sql .= " ORDER BY COALESCE(p.cNombreProducto, p.cDescripcionCorta) ASC";
 
         $stmt = $this->db->prepare($sql);
 
@@ -44,7 +43,19 @@ class ProductModel
 
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Decodificar JSON de especificaciones si existe
+        foreach ($rows as &$row) {
+            if (!empty($row['jEspecificaciones'])) {
+                $decoded = json_decode($row['jEspecificaciones'], true);
+                $row['especificaciones'] = $decoded ?: [];
+            } else {
+                $row['especificaciones'] = [];
+            }
+        }
+
+        return $rows;
     }
 
     public function obtenerCategorias()
@@ -74,6 +85,17 @@ class ProductModel
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            if (!empty($row['jEspecificaciones'])) {
+                $decoded = json_decode($row['jEspecificaciones'], true);
+                $row['especificaciones'] = $decoded ?: [];
+            } else {
+                $row['especificaciones'] = [];
+            }
+        }
+
+        return $row;
     }
 }

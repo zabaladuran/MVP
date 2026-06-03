@@ -21,18 +21,17 @@ CREATE TABLE TTiendas (
 );
 
 CREATE TABLE TProductos (
-    nProductoID INT PRIMARY KEY AUTO_INCREMENT,
-    nTiendaFK INT,
-    nCategoriaFK INT,
-    cNombreProducto VARCHAR(100),
-    cDescripcionCorta VARCHAR(255),
-    cDescripcionLarga TEXT,
-    cUrlImagenPrincipal VARCHAR(255),
-    nPrecioUnitario DECIMAL(10,2),
-    nCantidadStock INT,
-
-    FOREIGN KEY (nTiendaFK) REFERENCES TTiendas(nTiendaID),
-    FOREIGN KEY (nCategoriaFK) REFERENCES TCategoria(nCategoriaID)
+  nProductoID INT PRIMARY KEY AUTO_INCREMENT,
+  nTiendaFK INT,
+  cDescripcionCorta VARCHAR(255),
+  cDescripcionLarga TEXT,
+  cUrlImagenPrincipal VARCHAR(255),
+  nCategoriaFK INT,
+  jEspecificaciones JSON,
+  nPrecioUnitario DECIMAL(19,4),
+  nCantidadStock INT,
+  FOREIGN KEY (nTiendaFK) REFERENCES TTiendas(nTiendaID),
+  FOREIGN KEY (nCategoriaFK) REFERENCES TCategoria(nCategoriaID)
 );
 
 CREATE TABLE TFavoritos (

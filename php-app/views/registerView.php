@@ -62,7 +62,7 @@
 
 <body>
 
-<h1>Registro de Usuario</h1>
+
 
 <?php if(isset($_SESSION['error'])): ?>
     <p class="error">
@@ -79,6 +79,7 @@
 <?php endif; ?>
 
 <form action="?vista=registro&accion=crear" method="POST">
+    <h1>Registro de Usuario</h1>
 
     <input
         type="text"
@@ -118,12 +119,13 @@
     <button type="submit">
         Registrarse
     </button>
+    <div class="link">
+    <p>¿Ya tienes cuenta? <a href="?vista=login">Inicia sesión aquí</a></p>
+    </div>
+
 
 </form>
 
-<div class="link">
-    <p>¿Ya tienes cuenta? <a href="?vista=login">Inicia sesión aquí</a></p>
-</div>
 
 </body>
 </html>

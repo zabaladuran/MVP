@@ -30,13 +30,27 @@
                 <div class="detail-image" style="background-image: url('<?= htmlspecialchars($producto['cUrlImagenPrincipal'] ?: 'icons/shopp1.svg', ENT_QUOTES, 'UTF-8'); ?>');"></div>
                 <div class="detail-content">
                     <span class="eyebrow">Detalle del producto</span>
-                    <h1><?= htmlspecialchars($producto['cNombreProducto'], ENT_QUOTES, 'UTF-8'); ?></h1>
+                    <h1><?= htmlspecialchars($producto['cNombreProducto'] ?? $producto['cDescripcionCorta'] ?? 'Sin nombre', ENT_QUOTES, 'UTF-8'); ?></h1>
                     <p class="detail-category">Categoría: <?= htmlspecialchars($producto['cNombreCategoria'] ?: 'Sin categoría', ENT_QUOTES, 'UTF-8'); ?></p>
                     <p class="detail-price">Precio: $<?= number_format($producto['nPrecioUnitario'], 2); ?></p>
                     <p class="detail-stock">Stock disponible: <?= htmlspecialchars($producto['nCantidadStock'], ENT_QUOTES, 'UTF-8'); ?></p>
                     <p class="detail-description">
                         <?= nl2br(htmlspecialchars($producto['cDescripcionLarga'] ?: $producto['cDescripcionCorta'], ENT_QUOTES, 'UTF-8')); ?>
                     </p>
+
+                    <?php if (!empty($producto['especificaciones'])) : ?>
+                        <div class="product-specs">
+                            <h3>Especificaciones</h3>
+                            <ul>
+                                <?php foreach ($producto['especificaciones'] as $clave => $valor) : ?>
+                                    <li>
+                                        <strong><?= htmlspecialchars($clave, ENT_QUOTES, 'UTF-8'); ?>:</strong>
+                                        <?= htmlspecialchars(is_scalar($valor) ? $valor : json_encode($valor), ENT_QUOTES, 'UTF-8'); ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
 
                     <div class="detail-actions">
                         <a href="?vista=home" class="button button-secondary">Volver al catálogo</a>
