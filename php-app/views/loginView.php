@@ -19,22 +19,21 @@
 
 
 
-<?php if(isset($_SESSION['error'])): ?>
-    <p class="error">
-        <?= $_SESSION['error']; ?>
-    </p>
-    <?php unset($_SESSION['error']); ?>
-<?php endif; ?>
-
-<?php if(isset($_SESSION['exito'])): ?>
-    <p class="exito">
-        <?= $_SESSION['exito']; ?>
-    </p>
-    <?php unset($_SESSION['exito']); ?>
-<?php endif; ?>
-
 <form action="?vista=login&accion=validar" method="POST">
     <h1>Iniciar sesión</h1>
+        <?php if(isset($_SESSION['error'])): ?>
+        <p class="error">
+            <?= $_SESSION['error']; ?>
+        </p>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
+    <?php if(isset($_SESSION['exito'])): ?>
+        <p class="exito">
+            <?= $_SESSION['exito']; ?>
+        </p>
+        <?php unset($_SESSION['exito']); ?>
+    <?php endif; ?>
 
     <input
         type="email"
@@ -51,7 +50,7 @@
     <button type="submit">
         Ingresar
     </button>
-    
+
     <div class="link">
     <p>¿No tienes cuenta? <a href="?vista=registro">Regístrate aquí</a></p>
     </div>

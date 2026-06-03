@@ -19,6 +19,12 @@ class HomeController
             $_SESSION['usuario_id']
         );
 
+        if (!$usuario) {
+            session_destroy();
+            header('Location: ?vista=login');
+            exit;
+        }
+
         $categoriaSeleccionada = trim($_GET['categoria'] ?? '');
         $busqueda = trim($_GET['busqueda'] ?? '');
 

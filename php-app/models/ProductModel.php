@@ -33,7 +33,7 @@ class ProductModel
             $params[':busqueda'] = '%' . $busqueda . '%';
         }
 
-        $sql .= " ORDER BY COALESCE(p.cNombreProducto, p.cDescripcionCorta) ASC";
+        $sql .= " ORDER BY COALESCE(p.cDescripcionCorta, p.cDescripcionLarga) ASC";
 
         $stmt = $this->db->prepare($sql);
 

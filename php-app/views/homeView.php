@@ -30,7 +30,7 @@
             <section class="hero">
                 <div class="hero-copy">
                     <p class="eyebrow">Bienvenido a tu tienda</p>
-                    <h1>Hola, <?= htmlspecialchars($usuario['cNombre'] . ' ' . $usuario['cApellido'], ENT_QUOTES, 'UTF-8'); ?></h1>
+                    <h1>Hola, <?= htmlspecialchars(($usuario['cNombre'] ?? '') . ' ' . ($usuario['cApellido'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></h1>
                     <p class="hero-text">Explora los productos más populares, ofertas exclusivas y disfruta de una experiencia de compra rápida y segura.</p>
                     <a href="#catalogo" class="button button-primary">Ver catálogo</a>
                 </div>
