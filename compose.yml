@@ -52,14 +52,14 @@ services:
     networks:
       - mvp_network
 
-  # Aplicación C# (ASP.NET o Windows Forms ejecutándose en contenedor)
-  csharp-app:
-    build: ./csharp-app
-    container_name: mvp_csharp_app
+  # Aplicación C# Blazor (Web)
+  csharp-app-blazer:
+    build: ./csharp-app-blazer
+    container_name: mvp_csharp_blazer
     ports:
-      - "${CSHARP_PORT_1}:5000"
-      - "${CSHARP_PORT_2}:5000"
-      - "${CSHARP_PORT_3}:5000"
+      - "${BLAZER_PORT_1}:5000"
+      - "${BLAZER_PORT_2}:5000"
+      - "${BLAZER_PORT_3}:5000"
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
@@ -67,8 +67,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       ASPNETCORE_URLS: http://+:5000
-      ENVIRONMENT: ${ENVIRONMENT}
-      DEBUG: ${DEBUG}
+      ASPNETCORE_ENVIRONMENT: Container
     depends_on:
       mysql:
         condition: service_healthy

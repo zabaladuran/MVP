@@ -10,8 +10,8 @@ Este proyecto utiliza Docker Compose para ejecutar 3 aplicaciones simultáneamen
 ├─────────────────────────────────────────────────────┤
 │                                                     │
 │  ┌──────────────┐  ┌──────────────┐  ┌───────────┐  │
-│  │  PHP App     │  │  C# App      │  │ Android   │  │
-│  │  :8000       │  │  :5000       │  │ App :5037 │  │
+│  │  PHP App     │  │  C# Blazor   │  │ Android   │  │
+│  │  :8000       │  │  :5010       │  │ App :5037 │  │
 │  └──────────────┘  └──────────────┘  └───────────┘  │
 │         │                 │                │        │
 │         └─────────────────┼────────────────┘        │
@@ -65,7 +65,7 @@ Para más detalles sobre:
 docker-compose ps
 ```
 
-Deberías ver 5 contenedores (mysql, php-app, csharp-app, android-app, phpmyadmin).
+Deberías ver 5 contenedores (mysql, php-app, csharp-app-blazer, android-app, phpmyadmin).
 
 ### 3. Acceder a las aplicaciones
 
@@ -76,10 +76,10 @@ Cada aplicación tiene 3 puertos disponibles (en caso de que alguno esté ocupad
 - http://localhost:8001
 - http://localhost:8002
 
-**C# App:**
-- http://localhost:5000
-- http://localhost:5001
-- http://localhost:5002
+**C# Blazor App:**
+- http://localhost:5010
+- http://localhost:5011
+- http://localhost:5012
 
 **Android App:**
 - http://localhost:5037 (ADB)
@@ -207,7 +207,7 @@ docker-compose up -d
 Docker Compose crea automáticamente una red interna (`mvp_network`) donde los contenedores se comunican usando el nombre del servicio como hostname:
 
 - `php-app` se conecta a `mysql:3306`
-- `csharp-app` se conecta a `mysql:3306`
+- `csharp-app-blazer` se conecta a `mysql:3306`
 - `android-app` se conecta a `mysql:3306`
 
 No necesitas usar direcciones IP, los nombres de los servicios se resuelven automáticamente.
