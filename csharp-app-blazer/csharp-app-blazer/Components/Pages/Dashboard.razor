@@ -1,0 +1,122 @@
+﻿@page "/dashboard"
+@layout Layout.MainLayout
+
+<div class="p-4" style="background:#f8f8fc; min-height:100vh;">
+
+    @* Header *@
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <h2 class="fw-semibold mb-1" style="font-size:22px; color:#14141e;">
+                Dashboard · @TiendaActual
+            </h2>
+            <p class="text-muted mb-0" style="font-size:13px;">Resumen general de la tienda</p>
+        </div>
+        <div class="px-3 py-2 rounded-3 border" style="font-size:13px; color:#333; background:#fff;">
+            Suscripción vence: @SuscripcionVence
+        </div>
+    </div>
+
+    @* Mensaje de información *@
+    <div class="d-flex align-items-center gap-2 rounded-3 p-3 mb-4"
+         style="background:#eef4ff; border:1px solid #c7d9f8; font-size:14px; color:#1a4a8a;">
+        <i class="ti ti-info-circle" style="font-size:18px;"></i>
+        <span>@MensajeInfo</span>
+    </div>
+
+    @* Tarjetas de métricas *@
+    <div class="row g-3 mb-4">
+        @foreach (var metrica in Metricas)
+        {
+            <div class="col-6 col-md-3">
+                <div class="bg-white rounded-3 border p-3" style="border-color:#ebebf0 !important;">
+                    <p class="text-muted mb-1" style="font-size:12px;">@metrica.Titulo</p>
+                    <p class="fw-semibold mb-1" style="font-size:28px; color:#14141e;">
+                        @metrica.Valor
+                    </p>
+                    <p class="mb-0" style="font-size:12px; color:#8c8ca0;">@metrica.Subtitulo</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    @* Tabla de pedidos recientes *@
+    <div class="bg-white rounded-3 border p-4" style="border-color:#ebebf0 !important;">
+
+        <h3 class="fw-semibold mb-1" style="font-size:16px; color:#14141e;">
+            Pedidos recientes — @TiendaActual
+        </h3>
+        <p class="text-muted mb-4" style="font-size:13px;">
+            Los datos aquí mostrados corresponden únicamente a la tienda seleccionada en el selector superior.
+        </p>
+
+        <table class="table table-borderless align-middle" style="font-size:14px;">
+            <thead>
+                <tr style="border-bottom:1px solid #ebebf0; color:#6e6e82;">
+                    <th class="fw-semibold pb-3">Comprobante</th>
+                    <th class="fw-semibold pb-3">Cliente</th>
+                    <th class="fw-semibold pb-3">Total</th>
+                    <th class="fw-semibold pb-3">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!PedidosRecientes.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">
+                            No hay pedidos recientes
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var pedido in PedidosRecientes)
+                    {
+                        <tr style="border-bottom:1px solid #f3f3f6;">
+                            <td style="color:#6366f1; font-weight:500;">@pedido.Comprobante</td>
+                            <td>@pedido.Cliente</td>
+                            <td>@pedido.Total.ToString("C0")</td>
+                            <td>
+                                <span class="badge-estado @ObtenerClaseEstado(pedido.Estado)">
+                                    @pedido.Estado
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@code {
+    [Parameter] public string TiendaActual { get; set; } = "Tienda Norte";
+
+    private string SuscripcionVence { get; set; } = "31 dic 2025";
+    private string MensajeInfo { get; set; } = "Mensaje de información";
+
+    private List<MetricaItem> Metricas { get; set; } = new()
+    {
+        new("Título", 0, "pruebaaa"),
+        new("Título", 0, "pruebaaa"),
+        new("Título", 0, "pruebaaa"),
+        new("Título", 0, "pruebaaa"),
+    };
+
+    private List<PedidoItem> PedidosRecientes { get; set; } = new()
+    {
+        new("#00000", "Cliente", 0, "Pendiente"),
+    };
+
+    private string ObtenerClaseEstado(string estado) => estado switch
+    {
+        "Pendiente" => "estado-pendiente",
+        "Completado" => "estado-completado",
+        "Cancelado" => "estado-cancelado",
+        _ => "estado-default"
+    };
+
+    @* Modelos locales *@
+    private record MetricaItem(string Titulo, decimal Valor, string Subtitulo);
+    private record PedidoItem(string Comprobante, string Cliente, decimal Total, string Estado);
+}
