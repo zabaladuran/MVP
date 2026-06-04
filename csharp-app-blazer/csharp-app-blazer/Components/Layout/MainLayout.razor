@@ -1,17 +1,32 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="d-flex" style="min-height: 100vh;">
+<div class="d-flex flex-column" style="min-height: 100vh;">
+    
+    <!-- PWA Navbar -->
+    <nav class="navbar navbar-light bg-light border-bottom" style="padding: 0.5rem 1rem;">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+            <span class="navbar-brand mb-0 h5">Tienda MVP</span>
+            <div class="d-flex gap-2 align-items-center">
+                <PWAInstallButton />
+                <a href="/pwa-info" class="btn btn-outline-info btn-sm" title="Información sobre PWA">
+                    <span>ℹ️</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
-    <SideBar NombreUsuario="Carlos Pérez"
-             Rol="Administrador"
-             Tiendas='new List<string> { "Tienda Norte", "Tienda Centro", "Tienda Sur" }'
-             OnSectionChanged="OnSeccionCambiada"
-             OnStoreChanged="OnTiendaCambiada"
-             OnCerrarSesion="OnCerrar" />
+    <div class="d-flex flex-grow-1">
+        <SideBar NombreUsuario="Carlos Pérez"
+                 Rol="Administrador"
+                 Tiendas='new List<string> { "Tienda Norte", "Tienda Centro", "Tienda Sur" }'
+                 OnSectionChanged="OnSeccionCambiada"
+                 OnStoreChanged="OnTiendaCambiada"
+                 OnCerrarSesion="OnCerrar" />
 
-    <main class="flex-grow-1 p-4" style="background:#f8f8fc;">
-        @Body
-    </main>
+        <main class="flex-grow-1 p-4" style="background:#f8f8fc;">
+            @Body
+        </main>
+    </div>
 
 </div>
 

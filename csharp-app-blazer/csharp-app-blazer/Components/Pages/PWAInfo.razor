@@ -1,0 +1,116 @@
+@page "/pwa-info"
+@layout Layout.MainLayout
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <h1 class="card-title mb-4">
+                        <span>📱</span> Progressive Web App (PWA)
+                    </h1>
+
+                    <div class="alert alert-info" role="alert">
+                        <strong>¿Qué es una PWA?</strong>
+                        Una Progressive Web App es una aplicación web que funciona como una aplicación nativa,
+                        incluso sin conexión a internet.
+                    </div>
+
+                    <h2 class="h4 mt-4 mb-3">Características Principales</h2>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <h5 class="mb-1">📵 Funciona Sin Conexión</h5>
+                            <p class="mb-0">Accede a funciones básicas incluso sin internet. Los datos se sincronizarán automáticamente cuando reconectes.</p>
+                        </div>
+                        <div class="list-group-item">
+                            <h5 class="mb-1">💾 Caché Inteligente</h5>
+                            <p class="mb-0">Los archivos se guardan localmente en tu dispositivo para cargas más rápidas.</p>
+                        </div>
+                        <div class="list-group-item">
+                            <h5 class="mb-1">⬇️ Instalable</h5>
+                            <p class="mb-0">Instala la app directamente en tu pantalla de inicio sin necesidad de app store.</p>
+                        </div>
+                        <div class="list-group-item">
+                            <h5 class="mb-1">🔔 Notificaciones Push</h5>
+                            <p class="mb-0">Recibe notificaciones importantes incluso cuando la app no está abierta.</p>
+                        </div>
+                        <div class="list-group-item">
+                            <h5 class="mb-1">⚡ Rendimiento Optimizado</h5>
+                            <p class="mb-0">Carga rápida y experiencia fluida en cualquier dispositivo.</p>
+                        </div>
+                    </div>
+
+                    <h2 class="h4 mt-4 mb-3">Cómo Instalar</h2>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item">
+                            <strong>En tu navegador</strong>, busca el icono de instalación (generalmente en la barra de direcciones o en el menú).
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Haz clic</strong> en "Instalar" o "Agregar a la pantalla de inicio".
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Confirma</strong> la instalación en el diálogo que aparece.
+                        </li>
+                        <li class="list-group-item">
+                            <strong>¡Listo!</strong> La app aparecerá en tu pantalla de inicio como una aplicación nativa.
+                        </li>
+                    </ol>
+
+                    <h2 class="h4 mt-4 mb-3">Navegadores Compatibles</h2>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">✅ Completamente Soportado</h5>
+                                    <ul class="small mb-0">
+                                        <li>Chrome/Chromium</li>
+                                        <li>Edge</li>
+                                        <li>Firefox</li>
+                                        <li>Android Browser</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">⚠️ Soporte Parcial</h5>
+                                    <ul class="small mb-0">
+                                        <li>Safari (iOS 11.3+)</li>
+                                        <li>Samsung Internet</li>
+                                        <li>Opera</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="h4 mt-4 mb-3">Requisitos de Instalación</h2>
+                    <ul>
+                        <li>✅ HTTPS habilitado (la app solo funciona con conexiones seguras)</li>
+                        <li>✅ Manifest.json configurado</li>
+                        <li>✅ Service Worker registrado</li>
+                        <li>✅ Iconos de aplicación (192x192 y 512x512 píxeles)</li>
+                    </ul>
+
+                    <div class="alert alert-warning mt-4">
+                        <strong>💡 Consejo:</strong> Para la mejor experiencia, asegúrate de que tu navegador tiene el soporte PWA habilitado.
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="/" class="btn btn-primary">
+                            ← Volver al Inicio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Page initialization if needed
+    }
+}

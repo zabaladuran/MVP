@@ -1,0 +1,162 @@
+/* PWA Specific Styles */
+
+/* Support for notch/safe area on mobile */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* Navbar adjustments for PWA */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    color: #667eea !important;
+}
+
+/* PWA Install Button */
+.pwa-install-button {
+    display: inline-block;
+}
+
+.pwa-install-button button {
+    white-space: nowrap;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.pwa-install-button button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.pwa-install-button button:active {
+    transform: translateY(0);
+}
+
+/* Offline indicator */
+body.offline {
+    position: relative;
+}
+
+body.offline::before {
+    content: '📵 Sin conexión';
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 16px;
+    background: #ff6b6b;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* PWA Notification Styles */
+.pwa-notification {
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.pwa-notification-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.pwa-notification-warning {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.pwa-notification-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+/* Full screen mode adjustments */
+@media (display-mode: fullscreen) {
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+}
+
+/* Standalone mode adjustments */
+@media (display-mode: standalone) {
+    body {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* Mobile viewport optimization */
+@media (max-width: 576px) {
+    .pwa-install-button {
+        width: 100%;
+    }
+    
+    .pwa-install-button button {
+        width: 100%;
+    }
+    
+    .navbar {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    body.offline::before {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+    }
+}
+
+/* Prevent text selection on double tap in mobile */
+@media (hover: none) and (pointer: coarse) {
+    body {
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+    }
+    
+    button, a, input {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+}
+
+/* Print styles for PWA */
+@media print {
+    .navbar,
+    .sidebar,
+    .pwa-install-button {
+        display: none;
+    }
+}

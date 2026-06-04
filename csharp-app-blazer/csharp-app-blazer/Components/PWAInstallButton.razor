@@ -1,0 +1,63 @@
+@using Microsoft.JSInterop
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<div class="pwa-install-button" id="pwa-install-container" style="display: none;">
+    <button class="btn btn-primary btn-sm" @onclick="InstallPWA" style="gap: 8px; display: flex; align-items: center;">
+        <span>⬇️</span>
+        <span>Instalar App</span>
+    </button>
+</div>
+
+@code {
+    private IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                module = await JS.InvokeAsync<IJSObjectReference>("import", "./app.js");
+                
+                // Listen for PWA prompt ready event
+                await JS.InvokeVoidAsync("eval", @"
+                    document.addEventListener('pwa-prompt-ready', () => {
+                        const container = document.getElementById('pwa-install-container');
+                        if (container) {
+                            container.style.display = 'block';
+                        }
+                    });
+                ");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading PWA module: {ex.Message}");
+            }
+        }
+    }
+
+    private async Task InstallPWA()
+    {
+        try
+        {
+            await JS.InvokeAsync<bool>("installPWA");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error installing PWA: {ex.Message}");
+        }
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (module is not null)
+        {
+            try
+            {
+                await module.DisposeAsync();
+            }
+            catch { }
+        }
+    }
+}

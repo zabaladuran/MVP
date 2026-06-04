@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sin conexión - Tienda MVP</title>
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .offline-container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+        }
+        
+        .offline-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .suggestions {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 4px;
+        }
+        
+        .suggestions h3 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .suggestions ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #666;
+        }
+        
+        .suggestions li {
+            margin-bottom: 8px;
+        }
+        
+        .btn-retry {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .status-info {
+            color: #999;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📵</div>
+        <h1>Sin Conexión a Internet</h1>
+        <p>Parece que no tienes conexión a internet en este momento.</p>
+        
+        <div class="suggestions">
+            <h3>¿Qué puedes hacer?</h3>
+            <ul>
+                <li>Verifica tu conexión WiFi o datos móviles</li>
+                <li>Intenta reconectarte</li>
+                <li>Algunas funciones pueden estar disponibles sin conexión</li>
+                <li>Los datos se sincronizarán cuando vuelvas a estar en línea</li>
+            </ul>
+        </div>
+        
+        <button class="btn-retry" onclick="window.location.reload()">
+            Intentar de Nuevo
+        </button>
+        
+        <div class="status-info">
+            <p>Estado: <strong id="connection-status">Sin conexión</strong></p>
+            <p id="auto-retry-info"></p>
+        </div>
+    </div>
+    
+    <script>
+        // Check connection status and auto-retry
+        function checkConnection() {
+            if (navigator.onLine) {
+                window.location.reload();
+            }
+        }
+        
+        // Update status
+        function updateStatus() {
+            const status = navigator.onLine ? 'Conectado' : 'Sin conexión';
+            document.getElementById('connection-status').textContent = status;
+        }
+        
+        // Check every 3 seconds
+        const interval = setInterval(checkConnection, 3000);
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            clearInterval(interval);
+        });
+        
+        // Listen for online event
+        window.addEventListener('online', () => {
+            updateStatus();
+            document.getElementById('auto-retry-info').textContent = 'Reconexión detectada... recargando...';
+            setTimeout(() => window.location.reload(), 1000);
+        });
+        
+        // Listen for offline event
+        window.addEventListener('offline', updateStatus);
+        
+        updateStatus();
+    </script>
+</body>
+</html>
