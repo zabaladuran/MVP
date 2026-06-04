@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#4CAF50">
     <title>Login</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icons/shopp1.svg" type="image/svg+xml">
+    <link rel="manifest" href="android-app/manifest.json">
+    <link rel="icon" href="android-app/icons/shopp1.svg" type="image/svg+xml">
     <link rel="stylesheet" href="views/CSS/loginCss.css">
-    <script src="pwa.js" defer></script>
+    <script src="android-app/pwa.js" defer></script>
 </head>
 
 <body>

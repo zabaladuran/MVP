@@ -1,0 +1,33 @@
+android-app/
+  Dockerfile
+  manifest.json
+  pwa.js
+  service-worker.js
+  icons/
+    shopp1.svg
+
+php-app/
+  Dockerfile
+  index.php
+  Router.php
+  service-worker.js
+  controller/
+    homenController.php
+    loginController.php
+    ProductController.php
+    registerController.php
+  models/
+    (archivos de modelo dentro de la carpeta)
+  database/
+    (archivos de base de datos dentro de la carpeta)
+  icons/
+    shopp1.svg
+  views/
+    homeView.php
+    loginView.php
+    productDetailView.php
+    registerView.php
+    CSS/
+      homeCss1.css
+      loginCss.css
+      registerCss.css

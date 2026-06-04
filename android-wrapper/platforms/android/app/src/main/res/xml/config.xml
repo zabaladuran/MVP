@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.mvp.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MVPWrapper</name>
+    <description>Wrapper app para la PWA local del proyecto MVP.</description>
+    <author email="dev@example.com" href="https://example.com">MVP</author>
+    <content src="http://192.168.101.10:8000/" />
+    <access origin="*" />
+    <allow-navigation href="http://192.168.101.10:8000/*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="intent://*/*" />
+    <allow-intent href="market://*/*" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="AndroidLaunchMode" value="singleTask" />
+</widget>
