@@ -10,6 +10,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddSingleton<DbConnectionFactory>();
 builder.Services.AddScoped<IRegistroService, RegistroService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 var app = builder.Build();
 

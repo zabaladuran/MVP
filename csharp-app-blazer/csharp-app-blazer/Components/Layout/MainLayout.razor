@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@using csharp_app_blazer.Services
+@inject IDashboardService DashboardService
 
 <div class="d-flex flex-column" style="min-height: 100vh;">
     
@@ -18,7 +20,7 @@
     <div class="d-flex flex-grow-1">
         <SideBar NombreUsuario="Carlos Pérez"
                  Rol="Administrador"
-                 Tiendas='new List<string> { "Tienda Norte", "Tienda Centro", "Tienda Sur" }'
+                 Tiendas="@TiendasDisponibles"
                  OnStoreChanged="OnTiendaCambiada" />
 
         <main class="flex-grow-1 p-4" style="background:#f8f8fc;">
@@ -31,7 +33,16 @@
 </div>
 
 @code {
-    private string TiendaActual { get; set; } = "Tienda Norte";
+    private string TiendaActual { get; set; } = "TechZone Colombia";
+    private List<string> TiendasDisponibles { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var tiendas = await DashboardService.ObtenerTiendasAsync();
+        TiendasDisponibles = tiendas.Select(t => t.Nombre).ToList();
+        if (TiendasDisponibles.Any())
+            TiendaActual = TiendasDisponibles[0];
+    }
 
     private void OnTiendaCambiada(string tienda)
     {
