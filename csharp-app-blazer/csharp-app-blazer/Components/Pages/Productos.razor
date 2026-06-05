@@ -161,7 +161,7 @@
 </div>
 
 @code {
-    [Parameter] public string TiendaActual { get; set; } = "Tienda Norte";
+    [CascadingParameter(Name = "TiendaActual")] public string TiendaActual { get; set; } = "Tienda Norte";
 
     private string SuscripcionVence = "31 dic 2025";
     private string textoBusqueda = "";

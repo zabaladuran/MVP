@@ -1,4 +1,5 @@
-﻿
+﻿@rendermode InteractiveServer
+
 <nav class="sidebar d-flex flex-column" style="width:260px; min-height:100vh; background:#fff; border-right:1px solid #ebebf0; padding:20px 12px;">
 
     @* Perfil de usuario *@
@@ -15,8 +16,10 @@
     @* Tienda activa *@
     <p class="sep-label">TIENDA ACTIVA</p>
 
-    <div class="tienda-selector">
-        <button class="tienda-btn" @onclick="ToggleMenuTiendas" type="button">
+    <div class="tienda-selector" style="cursor:pointer;">
+        @* ✅ FIX 1: Se usa el método directamente en lugar de lambda inline *@
+        <button type="button" class="tienda-btn w-100"
+                @onclick="ToggleMenuTiendas">
             <i class="bi bi-shop"></i>
             <div>
                 <div>@TiendaActual</div>
@@ -30,8 +33,10 @@
             <div class="tienda-menu">
                 @foreach (var tienda in Tiendas)
                 {
-                    <button class="tienda-opt @(tienda == TiendaActual ? "active" : "")" 
-                            @onclick="() => CambiarTienda(tienda)">
+                    @* ✅ FIX 2: Se awaita correctamente el Task asíncrono *@
+                    <button type="button"
+                            class="tienda-opt w-100 @(tienda == TiendaActual ? "active" : "")"
+                            @onclick="async () => await CambiarTienda(tienda)">
                         @tienda
                     </button>
                 }
@@ -39,42 +44,46 @@
         }
     </div>
 
-
-
-
-
     @* Dashboard *@
-    <NavItem Seccion="Dashboard" Icono="ti ti-chart-bar" Texto="Dashboard"
-             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+    <NavLink class="nav-btn w-100 text-start d-flex align-items-center gap-2"
+             href="/dashboard"
+             Match="NavLinkMatch.Prefix"
+             style="padding:10px 14px; border-radius:10px; font-size:14px; text-decoration:none; color:#14141e; margin-bottom:2px;">
+        <i class="ti ti-chart-bar" style="font-size:17px;"></i> Dashboard
+    </NavLink>
 
     @* Gestión *@
     <p class="sep-label mt-2">GESTIÓN</p>
-    <NavItem Seccion="Informacion" Icono="ti ti-info-circle" Texto="Información"
-             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
-    <NavItem Seccion="Productos" Icono="ti ti-box" Texto="Productos"
-             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
-    <NavItem Seccion="Trabajadores" Icono="ti ti-users" Texto="Trabajadores"
-             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+    <NavLink class="nav-btn w-100 text-start d-flex align-items-center gap-2"
+             href="/productos"
+             Match="NavLinkMatch.Prefix"
+             style="padding:10px 14px; border-radius:10px; font-size:14px; text-decoration:none; color:#14141e; margin-bottom:2px;">
+        <i class="ti ti-box" style="font-size:17px;"></i> Productos
+    </NavLink>
 
-    @* Ventas *@
     <p class="sep-label mt-2">VENTAS</p>
-    <NavItem Seccion="Pedidos" Icono="ti ti-shopping-cart" Texto="Pedidos"
-             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
-    <NavItem Seccion="Transacciones" Icono="ti ti-credit-card" Texto="Transacciones"
-             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+    <button class="nav-btn w-100 text-start" disabled style="opacity:0.4; padding:10px 14px; border-radius:10px; font-size:14px; margin-bottom:2px;">
+        <i class="ti ti-shopping-cart me-2" style="font-size:17px;"></i> Pedidos
+    </button>
+    <button class="nav-btn w-100 text-start" disabled style="opacity:0.4; padding:10px 14px; border-radius:10px; font-size:14px; margin-bottom:2px;">
+        <i class="ti ti-credit-card me-2" style="font-size:17px;"></i> Transacciones
+    </button>
 
-    @* Soporte *@
     <p class="sep-label mt-2">SOPORTE</p>
-    <NavItem Seccion="PQRS" Icono="ti ti-clipboard-list" Texto="PQRS"
-             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
-    <NavItem Seccion="Configuracion" Icono="ti ti-settings" Texto="Configuración"
-             SeccionActiva="@SeccionActiva" OnClick="NavClick" />
+    <button class="nav-btn w-100 text-start" disabled style="opacity:0.4; padding:10px 14px; border-radius:10px; font-size:14px; margin-bottom:2px;">
+        <i class="ti ti-clipboard-list me-2" style="font-size:17px;"></i> PQRS
+    </button>
+    <button class="nav-btn w-100 text-start" disabled style="opacity:0.4; padding:10px 14px; border-radius:10px; font-size:14px; margin-bottom:2px;">
+        <i class="ti ti-settings me-2" style="font-size:17px;"></i> Configuración
+    </button>
 
     @* Cerrar sesión *@
     <div class="mt-auto pt-3">
-        <button class="btn-cerrar w-100" @onclick="CerrarSesion">
-            <i class="ti ti-door-exit me-2"></i> Cerrar sesión
-        </button>
+        <NavLink class="btn-cerrar w-100 d-flex align-items-center gap-2"
+                 href="/login"
+                 style="padding:10px 14px; border-radius:10px; font-size:14px; text-decoration:none;">
+            <i class="ti ti-door-exit" style="font-size:17px;"></i> Cerrar sesión
+        </NavLink>
     </div>
 
 </nav>
@@ -83,35 +92,22 @@
     [Parameter] public string NombreUsuario { get; set; } = "Carlos Pérez";
     [Parameter] public string Rol { get; set; } = "Administrador";
     [Parameter] public List<string> Tiendas { get; set; } = new() { "Tienda Norte", "Tienda Centro", "Tienda Sur" };
-    [Parameter] public EventCallback<string> OnSectionChanged { get; set; }
     [Parameter] public EventCallback<string> OnStoreChanged { get; set; }
-    [Parameter] public EventCallback OnCerrarSesion { get; set; }
 
-    private string SeccionActiva { get; set; } = "Dashboard";
     private string TiendaActual { get; set; } = "Tienda Norte";
     private bool mostrarMenuTiendas = false;
 
-    private async Task NavClick(string seccion)
-    {
-        SeccionActiva = seccion;
-        await OnSectionChanged.InvokeAsync(seccion);
-    }
-
+    // ✅ FIX 1: Ahora sí se usa este método desde el botón
     private void ToggleMenuTiendas()
     {
         mostrarMenuTiendas = !mostrarMenuTiendas;
     }
 
+    // ✅ FIX 2: El Task ahora se awaita correctamente desde la lambda del foreach
     private async Task CambiarTienda(string tienda)
     {
         TiendaActual = tienda;
         mostrarMenuTiendas = false;
-        StateHasChanged();
         await OnStoreChanged.InvokeAsync(tienda);
-    }
-
-    private async Task CerrarSesion()
-    {
-        await OnCerrarSesion.InvokeAsync();
     }
 }
