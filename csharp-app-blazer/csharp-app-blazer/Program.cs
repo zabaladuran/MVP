@@ -1,10 +1,14 @@
 using csharp_app_blazer.Components;
+using csharp_app_blazer.Data;
+using csharp_app_blazer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddSingleton<DbConnectionFactory>();
+builder.Services.AddScoped<IRegistroService, RegistroService>();
 
 var app = builder.Build();
 

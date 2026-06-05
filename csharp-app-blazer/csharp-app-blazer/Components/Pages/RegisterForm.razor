@@ -1,5 +1,8 @@
 ﻿@page "/registro"
 @using csharp_app_blazer.Models
+@using csharp_app_blazer.Services
+@inject IRegistroService RegistroService
+@inject NavigationManager Navigation
 @layout Layout.EmptyLayout
 
 <div class="container py-4" style="max-width: 800px;">
@@ -8,10 +11,18 @@
         <h1 class="fs-5 fw-semibold mb-0">Registro de Administrador de Tienda</h1>
     </div>
 
-    @if (registroExitoso)
+    @if (!string.IsNullOrEmpty(mensajeExito))
     {
-        <div class="alert alert-success">
-            ✓ Registro completado exitosamente.
+        <div class="alert alert-success alert-dismissible py-2 px-3" role="alert">
+            <small>@mensajeExito</small>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(errorMensaje))
+    {
+        <div class="alert alert-danger alert-dismissible py-2 px-3" role="alert">
+            <small>@errorMensaje</small>
+            <button type="button" class="btn-close btn-sm" @onclick="() => errorMensaje = string.Empty"></button>
         </div>
     }
 
@@ -215,7 +226,13 @@
 
         <div class="d-flex justify-content-end gap-2 mt-2">
             <a href="/" class="btn btn-secondary">Cancelar</a>
-            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="submit" class="btn btn-success" disabled="@cargando">
+                @if (cargando)
+                {
+                    <span class="spinner-border spinner-border-sm me-1" role="status"></span>
+                }
+                Guardar
+            </button>
         </div>
 
     </EditForm>
@@ -223,7 +240,9 @@
 
 @code {
     private RegisterViewModel Input { get; set; } = new();
-    private bool registroExitoso = false;
+    private string mensajeExito = string.Empty;
+    private string errorMensaje = string.Empty;
+    private bool cargando = false;
 
     private List<string> Departamentos { get; set; } = new();
     private List<string> MunicipiosFiltrados { get; set; } = new();
@@ -232,31 +251,38 @@
 
     private Dictionary<string, List<string>> MunicipiosPorDepartamento { get; set; } = new();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        InitializarDatos();
+        await CargarDepartamentos();
     }
 
-    private void InitializarDatos()
+    private async Task CargarDepartamentos()
     {
-        // Inicializar departamentos (ejemplo para Colombia)
-        Departamentos = new()
+        try
         {
-            "Amazonas", "Antioquia", "Arauca", "Atlántico", "Bolívar", "Boyacá",
-            "Caldas", "Caquetá", "Casanare", "Cauca", "Cesar", "Chocó",
-            "Córdoba", "Cundinamarca", "Guainía", "Guaviare", "Huila", "La Guajira",
-            "Magdalena", "Meta", "Nariño", "Norte de Santander", "Putumayo",
-            "Quindío", "Risaralda", "Santander", "Sucre", "Tolima", "Valle del Cauca",
-            "Vaupés", "Vichada"
-        };
+            var deps = await RegistroService.ObtenerDepartamentos();
+            Departamentos = deps.Select(d => d.Nombre).ToList();
 
-        // Inicializar municipios por departamento (ejemplo simplificado)
-        MunicipiosPorDepartamento = new()
+            MunicipiosPorDepartamento = new();
+            foreach (var dep in deps)
+            {
+                var muns = await RegistroService.ObtenerMunicipios(dep.Id);
+                MunicipiosPorDepartamento[dep.Nombre] = muns.Select(m => m.Nombre).ToList();
+            }
+        }
+        catch
         {
-            { "Antioquia", new() { "Medellín", "Envigado", "Itagüí", "Bello", "Sabaneta" } },
-            { "Cundinamarca", new() { "Bogotá", "Soacha", "Zipaquirá", "Facatativá", "Ubaté" } },
-            { "Valle del Cauca", new() { "Cali", "Palmira", "Buenaventura", "Tulúa", "Cartago" } }
-        };
+            Departamentos = new()
+            {
+                "Antioquia", "Cundinamarca", "Valle del Cauca"
+            };
+            MunicipiosPorDepartamento = new()
+            {
+                { "Antioquia", new() { "Medellín", "Envigado" } },
+                { "Cundinamarca", new() { "Bogotá", "Soacha" } },
+                { "Valle del Cauca", new() { "Cali", "Palmira" } }
+            };
+        }
     }
 
     private void OnDepartamentoChange(ChangeEventArgs e)
@@ -295,22 +321,32 @@
 
     private async Task HandleValidSubmit()
     {
+        cargando = true;
+        errorMensaje = string.Empty;
+        mensajeExito = string.Empty;
+
         try
         {
-            // TODO: Implementar lógica de guardado en base de datos
-            // await RegistroService.RegistrarAdministrador(Input);
-            
-            registroExitoso = true;
-            
-            // Limpiar formulario después de 2 segundos
-            await Task.Delay(2000);
-            Input = new();
-            registroExitoso = false;
+            var resultado = await RegistroService.RegistrarAdministrador(Input);
+
+            if (resultado.Exitoso)
+            {
+                mensajeExito = resultado.Mensaje;
+                await Task.Delay(2000);
+                Navigation.NavigateTo("/login");
+            }
+            else
+            {
+                errorMensaje = resultado.Mensaje;
+            }
         }
         catch (Exception ex)
         {
-            // TODO: Manejar errores
-            Console.WriteLine($"Error al registrar: {ex.Message}");
+            errorMensaje = $"Error de conexión: {ex.Message}";
+        }
+        finally
+        {
+            cargando = false;
         }
     }
 }
