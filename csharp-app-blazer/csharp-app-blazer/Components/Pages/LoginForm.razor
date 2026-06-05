@@ -1,4 +1,6 @@
 ﻿@using csharp_app_blazer.Models
+@using csharp_app_blazer.Services
+@inject IAuthService AuthService
 @inject NavigationManager Navigation
 @page "/"
 @page "/login"
@@ -88,18 +90,27 @@
         cargando = true;
         errorMensaje = string.Empty;
 
-        // Aquí conectas tu servicio de autenticación:
-        // var resultado = await AuthService.LoginAsync(Input.Usuario, Input.Password);
-        // if (!resultado.Exitoso)
-        // {
-        //     errorMensaje = resultado.Mensaje;
-        //     cargando = false;
-        //     return;
-        // }
-        // Navigation.NavigateTo("/dashboard");
+        try
+        {
+            var resultado = await AuthService.LoginAsync(Input.Usuario, Input.Password);
 
-        await Task.Delay(500); // Quitar al conectar el servicio real
-        cargando = false;
+            if (!resultado.Exitoso)
+            {
+                errorMensaje = resultado.Mensaje;
+                cargando = false;
+                return;
+            }
+
+            Navigation.NavigateTo("/dashboard");
+        }
+        catch (Exception ex)
+        {
+            errorMensaje = $"Error de conexión: {ex.Message}";
+        }
+        finally
+        {
+            cargando = false;
+        }
     }
 
     private void OnUsuarioKeyDown(KeyboardEventArgs e)

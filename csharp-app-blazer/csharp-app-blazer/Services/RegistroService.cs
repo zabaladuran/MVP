@@ -76,9 +76,9 @@ namespace csharp_app_blazer.Services
                 var depTiendaId = await ObtenerOInsertarDepartamento(cmd, model.TiendaDepartamento);
                 var munTiendaId = await ObtenerOInsertarMunicipio(cmd, model.TiendaMunicipio, depTiendaId);
                 var dirTiendaId = await InsertarDireccion(cmd, model.TiendaNomenclatura, model.TiendaBarrio ?? "", model.TiendaNotas ?? "", model.TiendaCodigoPostal ?? "", munTiendaId);
-                var usuarioId = await InsertarUsuarioCliente(cmd, model.Nombre, model.Apellido, model.Documento, model.Correo, model.Telefono ?? "", model.Password, dirAdminId);
-                await InsertarDireccionCliente(cmd, usuarioId, dirAdminId, "Casa", $"{model.Nombre} {model.Apellido}", model.Telefono ?? "");
-                await InsertarTienda(cmd, model.NombreComercial, model.Descripcion ?? "", model.UrlLogo ?? "", model.CorreoTienda, model.TelefonoTienda, model.RazonSocial, dirTiendaId, model.TiendaCodigoPostal ?? "", model.Plan);
+                var tiendaId = await InsertarTienda(cmd, model.NombreComercial, model.Descripcion ?? "", model.UrlLogo ?? "", model.CorreoTienda, model.TelefonoTienda, model.RazonSocial, dirTiendaId, model.TiendaCodigoPostal ?? "", model.Plan);
+                var trabajadorId = await InsertarTrabajador(cmd, model.Documento, model.Nombre, model.Apellido, model.Correo, model.Telefono ?? "", model.Password, dirAdminId);
+                await InsertarTrabajadorTienda(cmd, tiendaId, trabajadorId);
 
                 tx.Commit();
                 return new RegistroResultado { Exitoso = true, Mensaje = "Registro completado exitosamente." };
@@ -145,38 +145,7 @@ namespace csharp_app_blazer.Services
             return Convert.ToInt32(await cmd.ExecuteScalarAsync());
         }
 
-        private async Task<int> InsertarUsuarioCliente(MySqlCommand cmd, string nombre, string apellido, string documento, string correo, string telefono, string password, int direccionId)
-        {
-            cmd.CommandText = @"INSERT INTO TUsuarioCliente (cNombre, cApellido, cDocumento, cContrasena, cCorreo, cTelefono, nDireccionFK)
-                                VALUES (@nombre, @apellido, @documento, @password, @correo, @telefono, @direccionId);
-                                SELECT LAST_INSERT_ID();";
-            cmd.Parameters.Clear();
-            cmd.Parameters.Add(new MySqlParameter("@nombre", nombre));
-            cmd.Parameters.Add(new MySqlParameter("@apellido", apellido));
-            cmd.Parameters.Add(new MySqlParameter("@documento", documento));
-            cmd.Parameters.Add(new MySqlParameter("@password", BCryptPasswordHash(password)));
-            cmd.Parameters.Add(new MySqlParameter("@correo", correo));
-            cmd.Parameters.Add(new MySqlParameter("@telefono", telefono));
-            cmd.Parameters.Add(new MySqlParameter("@direccionId", direccionId));
-
-            return Convert.ToInt32(await cmd.ExecuteScalarAsync());
-        }
-
-        private async Task InsertarDireccionCliente(MySqlCommand cmd, int clienteId, int direccionId, string etiqueta, string nombreRecibidor, string telefono)
-        {
-            cmd.CommandText = @"INSERT INTO TDireccionCliente (nClienteFK, nDireccionFK, cEtiqueta, cNombreRecibidor, cTelefonoRecibidor)
-                                VALUES (@clienteId, @direccionId, @etiqueta, @nombreRecibidor, @telefono)";
-            cmd.Parameters.Clear();
-            cmd.Parameters.Add(new MySqlParameter("@clienteId", clienteId));
-            cmd.Parameters.Add(new MySqlParameter("@direccionId", direccionId));
-            cmd.Parameters.Add(new MySqlParameter("@etiqueta", etiqueta));
-            cmd.Parameters.Add(new MySqlParameter("@nombreRecibidor", nombreRecibidor));
-            cmd.Parameters.Add(new MySqlParameter("@telefono", telefono));
-
-            await cmd.ExecuteNonQueryAsync();
-        }
-
-        private async Task InsertarTienda(MySqlCommand cmd, string nombreComercial, string descripcion, string urlLogo, string correo, string telefono, string razonSocial, int direccionId, string codigoPostal, string plan)
+        private async Task<int> InsertarTienda(MySqlCommand cmd, string nombreComercial, string descripcion, string urlLogo, string correo, string telefono, string razonSocial, int direccionId, string codigoPostal, string plan)
         {
             var planId = plan switch
             {
@@ -197,6 +166,33 @@ namespace csharp_app_blazer.Services
             cmd.Parameters.Add(new MySqlParameter("@direccionId", direccionId));
             cmd.Parameters.Add(new MySqlParameter("@codigoPostal", codigoPostal));
             cmd.Parameters.Add(new MySqlParameter("@planId", planId));
+
+            cmd.CommandText += "; SELECT LAST_INSERT_ID();";
+            return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+        }
+
+        private async Task<int> InsertarTrabajador(MySqlCommand cmd, string identificacion, string nombre, string apellido, string correo, string telefono, string password, int direccionId)
+        {
+            cmd.CommandText = @"INSERT INTO TTrabajador (cIdentificacion, cNombre, cApellido, cCorreo, cPassword, cTelefono, nRolFK)
+                                VALUES (@identificacion, @nombre, @apellido, @correo, @password, @telefono, 2);
+                                SELECT LAST_INSERT_ID();";
+            cmd.Parameters.Clear();
+            cmd.Parameters.Add(new MySqlParameter("@identificacion", identificacion));
+            cmd.Parameters.Add(new MySqlParameter("@nombre", nombre));
+            cmd.Parameters.Add(new MySqlParameter("@apellido", apellido));
+            cmd.Parameters.Add(new MySqlParameter("@correo", correo));
+            cmd.Parameters.Add(new MySqlParameter("@password", BCryptPasswordHash(password)));
+            cmd.Parameters.Add(new MySqlParameter("@telefono", telefono));
+
+            return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+        }
+
+        private async Task InsertarTrabajadorTienda(MySqlCommand cmd, int tiendaId, int trabajadorId)
+        {
+            cmd.CommandText = "INSERT INTO TTrabajadorTienda (nTiendaFK, nTrabajadorFK) VALUES (@tiendaId, @trabajadorId)";
+            cmd.Parameters.Clear();
+            cmd.Parameters.Add(new MySqlParameter("@tiendaId", tiendaId));
+            cmd.Parameters.Add(new MySqlParameter("@trabajadorId", trabajadorId));
 
             await cmd.ExecuteNonQueryAsync();
         }

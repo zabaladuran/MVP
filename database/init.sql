@@ -132,6 +132,7 @@ CREATE TABLE IF NOT EXISTS TTrabajador (
   cIdentificacion VARCHAR(255),
   cNombre VARCHAR(255),
   cApellido VARCHAR(255),
+  cCorreo VARCHAR(255),
   cPassword VARCHAR(255),
   cTelefono VARCHAR(255),
   nRolFK INT,
@@ -433,14 +434,14 @@ INSERT IGNORE INTO TProductos (nProductoID, nTiendaFK, cDescripcionCorta, cDescr
 (35, 6, 'Set Ollas Antiadherentes 10pz', 'Juego de 10 piezas: ollas y sartenes antiadherentes con tapa de vidrio, aptas para inducción', '/productos/set-ollas.jpg', 18, '{"piezas": "10", "material": "Aluminio antiadherente", "apto": "Inducción, gas, eléctrica"}', 549900.0000, 18);
 
 -- Trabajadores
-INSERT IGNORE INTO TTrabajador (nTrabajadorID, cIdentificacion, cNombre, cApellido, cPassword, cTelefono, nRolFK) VALUES
-(1, '1111111111', 'Admin', 'Sistema', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6000000000', 1),
-(2, '2222222222', 'Laura', 'Castro', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6015550102', 2),
-(3, '3333333333', 'Andrés', 'López', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6015550103', 3),
-(4, '4444444444', 'Diana', 'Pérez', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6015550104', 4),
-(5, '5555555555', 'Jorge', 'Mora', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6024440102', 2),
-(6, '6666666666', 'Sofía', 'Arias', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6024440103', 3),
-(7, '7777777777', 'Miguel', 'Rueda', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6013330203', 3);
+INSERT IGNORE INTO TTrabajador (nTrabajadorID, cIdentificacion, cNombre, cApellido, cCorreo, cPassword, cTelefono, nRolFK) VALUES
+(1, '1111111111', 'Admin', 'Sistema', 'admin@tienda.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6000000000', 1),
+(2, '2222222222', 'Laura', 'Castro', 'laura@techzone.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6015550102', 2),
+(3, '3333333333', 'Andrés', 'López', 'andres@techzone.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6015550103', 3),
+(4, '4444444444', 'Diana', 'Pérez', 'diana@modaexpress.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6015550104', 4),
+(5, '5555555555', 'Jorge', 'Mora', 'jorge@deportestotal.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6024440102', 2),
+(6, '6666666666', 'Sofía', 'Arias', 'sofia@deportestotal.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6024440103', 3),
+(7, '7777777777', 'Miguel', 'Rueda', 'miguel@gamerzone.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6013330203', 3);
 
 -- Trabajadores por tienda
 INSERT IGNORE INTO TTrabajadorTienda (nID, nTiendaFK, nTrabajadorFK) VALUES
