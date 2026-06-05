@@ -35,10 +35,10 @@
                    class="form-control"
                    style="max-width:220px; font-size:13px;"
                    placeholder="Buscar productos..."
-                   @bind="textoBusqueda"
-                   @bind:event="oninput" />
+                   @oninput="OnBuscarInput"
+                   value="@textoBusqueda" />
 
-            <select class="form-select" style="max-width:160px; font-size:13px;" @bind="filtroCategoria">
+            <select class="form-select" style="max-width:160px; font-size:13px;" @onchange="OnFiltrarCategoria" value="@filtroCategoria">
                 <option value="">Todas las categorías</option>
                 @foreach (var cat in Categorias)
                 {
@@ -46,7 +46,7 @@
                 }
             </select>
 
-            <select class="form-select" style="max-width:160px; font-size:13px;" @bind="filtroStock">
+            <select class="form-select" style="max-width:160px; font-size:13px;" @onchange="OnFiltrarStock" value="@filtroStock">
                 <option value="">Todo el stock</option>
                 <option value="disponible">Disponible</option>
                 <option value="agotado">Agotado</option>
@@ -147,6 +147,21 @@
          (filtroStock == "disponible" && p.Stock > 0) ||
          (filtroStock == "agotado" && p.Stock == 0))
     );
+
+    private void OnBuscarInput(ChangeEventArgs e)
+    {
+        textoBusqueda = e.Value?.ToString() ?? "";
+    }
+
+    private void OnFiltrarCategoria(ChangeEventArgs e)
+    {
+        filtroCategoria = e.Value?.ToString() ?? "";
+    }
+
+    private void OnFiltrarStock(ChangeEventArgs e)
+    {
+        filtroStock = e.Value?.ToString() ?? "";
+    }
 
     protected override async Task OnParametersSetAsync()
     {

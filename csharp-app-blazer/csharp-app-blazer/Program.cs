@@ -13,6 +13,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
 
+builder.Services.AddSingleton<TokenStore>();
+builder.Services.AddScoped<AuthStateService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

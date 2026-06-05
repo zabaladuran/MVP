@@ -79,11 +79,11 @@
 
     @* Cerrar sesión *@
     <div class="mt-auto pt-3">
-        <NavLink class="btn-cerrar w-100 d-flex align-items-center gap-2"
-                 href="/login"
-                 style="padding:10px 14px; border-radius:10px; font-size:14px; text-decoration:none;">
+        <button type="button" class="btn-cerrar w-100 d-flex align-items-center gap-2"
+                @onclick="OnCerrarSesion"
+                style="padding:10px 14px; border-radius:10px; font-size:14px; text-decoration:none; border:none; background:transparent; cursor:pointer;">
             <i class="ti ti-door-exit" style="font-size:17px;"></i> Cerrar sesión
-        </NavLink>
+        </button>
     </div>
 
 </nav>
@@ -93,6 +93,7 @@
     [Parameter] public string Rol { get; set; } = "Administrador";
     [Parameter] public List<string> Tiendas { get; set; } = new() { "Tienda Norte", "Tienda Centro", "Tienda Sur" };
     [Parameter] public EventCallback<string> OnStoreChanged { get; set; }
+    [Parameter] public EventCallback OnCerrarSesion { get; set; }
 
     private string TiendaActual { get; set; } = "Tienda Norte";
     private bool mostrarMenuTiendas = false;

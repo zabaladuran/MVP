@@ -1,6 +1,9 @@
 ﻿@inherits LayoutComponentBase
 @using csharp_app_blazer.Services
 @inject IDashboardService DashboardService
+@inject AuthStateService AuthState
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
 
 <div class="d-flex flex-column" style="min-height: 100vh;">
     
@@ -18,14 +21,27 @@
     </nav>
 
     <div class="d-flex flex-grow-1">
-        <SideBar NombreUsuario="Carlos Pérez"
+        <SideBar NombreUsuario="@ObtenerNombreUsuario()"
                  Rol="Administrador"
                  Tiendas="@TiendasDisponibles"
-                 OnStoreChanged="OnTiendaCambiada" />
+                 OnStoreChanged="OnTiendaCambiada"
+                 OnCerrarSesion="CerrarSesion" />
 
         <main class="flex-grow-1 p-4" style="background:#f8f8fc;">
             <CascadingValue Value="@TiendaActual" Name="TiendaActual">
-                @Body
+                @if (inicializado)
+                {
+                    @Body
+                }
+                else
+                {
+                    <div class="d-flex align-items-center justify-content-center" style="min-height:60vh;">
+                        <div class="text-center">
+                            <div class="spinner-border text-primary" role="status"></div>
+                            <p class="mt-2 text-muted">Cargando...</p>
+                        </div>
+                    </div>
+                }
             </CascadingValue>
         </main>
     </div>
@@ -35,17 +51,80 @@
 @code {
     private string TiendaActual { get; set; } = "TechZone Colombia";
     private List<string> TiendasDisponibles { get; set; } = new();
+    private bool inicializado = false;
 
     protected override async Task OnInitializedAsync()
     {
-        var tiendas = await DashboardService.ObtenerTiendasAsync();
-        TiendasDisponibles = tiendas.Select(t => t.Nombre).ToList();
-        if (TiendasDisponibles.Any())
-            TiendaActual = TiendasDisponibles[0];
+        await InicializarApp();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !inicializado)
+        {
+            await InicializarApp();
+            StateHasChanged();
+        }
+    }
+
+    private async Task InicializarApp()
+    {
+        if (inicializado) return;
+
+        try
+        {
+            // Si ya está autenticado en memoria, no llamar a JS
+            if (!AuthState.EstaAutenticado)
+            {
+                var restaurado = await AuthState.RestaurarSesionAsync(JS);
+            }
+        }
+        catch
+        {
+            // JS interop no disponible aún — OnAfterRenderAsync reintentará
+        }
+
+        var uri = Navigation.Uri.ToLowerInvariant();
+        bool esRutaPublica = uri.Contains("/pwa-info") || uri.Contains("/login") || uri.Contains("/registro");
+
+        if (!AuthState.EstaAutenticado && !esRutaPublica)
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        try
+        {
+            var tiendas = await DashboardService.ObtenerTiendasAsync();
+            TiendasDisponibles = tiendas.Select(t => t.Nombre).ToList();
+            if (TiendasDisponibles.Any())
+                TiendaActual = TiendasDisponibles[0];
+        }
+        catch
+        {
+            // Si la BD no responde, usar valores por defecto
+        }
+
+        inicializado = true;
+    }
+
+    private string ObtenerNombreUsuario()
+    {
+        return AuthState.SesionActual?.Nombre ?? "Invitado";
     }
 
     private void OnTiendaCambiada(string tienda)
     {
         TiendaActual = tienda;
+    }
+
+    private async Task CerrarSesion()
+    {
+        try
+        {
+            await AuthState.CerrarSesionAsync(JS);
+        }
+        catch { }
+        Navigation.NavigateTo("/login", forceLoad: true);
     }
 }

@@ -2,6 +2,8 @@
 @using csharp_app_blazer.Services
 @inject IAuthService AuthService
 @inject NavigationManager Navigation
+@inject AuthStateService AuthState
+@inject IJSRuntime JS
 @page "/"
 @page "/login"
 @layout Layout.EmptyLayout
@@ -101,6 +103,7 @@
                 return;
             }
 
+            await AuthState.IniciarSesionAsync(JS, resultado);
             Navigation.NavigateTo("/dashboard");
         }
         catch (Exception ex)

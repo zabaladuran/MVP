@@ -4,6 +4,16 @@
 -- Este script se ejecuta automáticamente cuando el
 -- contenedor de MySQL se inicia por primera vez
 -- ======================================================
+--
+-- CREDENCIALES DE PRUEBA (todo con contraseña: 123456)
+-- -----------------------------------------------------
+-- Admin global:        admin@tienda.com
+-- Gerente TechZone:    laura@techzone.co
+-- Gerente ModaExpress: diana@modaexpress.co
+-- Gerente Deportes:    jorge@deportestotal.co
+-- Vendedor GamerZone:  miguel@gamerzone.co
+-- Admin web:           admin@mvp.com
+-- ======================================================
 
 -- ======================================================
 -- 1. CONFIGURACIÓN INICIAL
@@ -342,15 +352,15 @@ INSERT IGNORE INTO TDireccion (nDireccionID, cNomenclatura, cBarrio, cNotasAdici
 
 -- Usuarios clientes
 INSERT IGNORE INTO TUsuarioCliente (nUsuarioClienteID, cNombre, cApellido, cDocumento, cContrasena, cCorreo, cTelefono, nDireccionFK) VALUES
-(1, 'Carlos', 'Martínez', '1234567890', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'carlos@email.com', '3001234567', 1),
-(2, 'María', 'González', '9876543210', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'maria@email.com', '3107654321', 4),
-(3, 'Pedro', 'Ramírez', '4567891230', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'pedro@email.com', '3209876543', 7),
-(4, 'Ana', 'Torres', '1112233445', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ana.torres@email.com', '3015544332', 8),
-(5, 'Luis', 'Herrera', '9988776655', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'luis.herrera@email.com', '3156677889', 9),
-(6, 'Camila', 'Rojas', '5544332211', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'camila.rojas@email.com', '3009988776', 10),
-(7, 'Andrés', 'Mendoza', '1234509876', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'andres.mendoza@email.com', '3104455667', 13),
-(8, 'Valentina', 'Ospina', '6677889900', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'valentina.ospina@email.com', '3201122334', 14),
-(9, 'Felipe', 'Castro', '4433221100', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'felipe.castro@email.com', '3012233445', 11);
+(1, 'Carlos', 'Martínez', '1234567890', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'carlos@email.com', '3001234567', 1),
+(2, 'María', 'González', '9876543210', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'maria@email.com', '3107654321', 4),
+(3, 'Pedro', 'Ramírez', '4567891230', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'pedro@email.com', '3209876543', 7),
+(4, 'Ana', 'Torres', '1112233445', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'ana.torres@email.com', '3015544332', 8),
+(5, 'Luis', 'Herrera', '9988776655', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'luis.herrera@email.com', '3156677889', 9),
+(6, 'Camila', 'Rojas', '5544332211', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'camila.rojas@email.com', '3009988776', 10),
+(7, 'Andrés', 'Mendoza', '1234509876', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'andres.mendoza@email.com', '3104455667', 13),
+(8, 'Valentina', 'Ospina', '6677889900', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'valentina.ospina@email.com', '3201122334', 14),
+(9, 'Felipe', 'Castro', '4433221100', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'felipe.castro@email.com', '3012233445', 11);
 
 -- Direcciones de clientes
 INSERT IGNORE INTO TDireccionCliente (nDireccionClienteID, nClienteFK, nDireccionFK, cEtiqueta, cNombreRecibidor, cTelefonoRecibidor) VALUES
@@ -435,13 +445,13 @@ INSERT IGNORE INTO TProductos (nProductoID, nTiendaFK, cDescripcionCorta, cDescr
 
 -- Trabajadores
 INSERT IGNORE INTO TTrabajador (nTrabajadorID, cIdentificacion, cNombre, cApellido, cCorreo, cPassword, cTelefono, nRolFK) VALUES
-(1, '1111111111', 'Admin', 'Sistema', 'admin@tienda.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6000000000', 1),
-(2, '2222222222', 'Laura', 'Castro', 'laura@techzone.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6015550102', 2),
-(3, '3333333333', 'Andrés', 'López', 'andres@techzone.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6015550103', 3),
-(4, '4444444444', 'Diana', 'Pérez', 'diana@modaexpress.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6015550104', 4),
-(5, '5555555555', 'Jorge', 'Mora', 'jorge@deportestotal.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6024440102', 2),
-(6, '6666666666', 'Sofía', 'Arias', 'sofia@deportestotal.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6024440103', 3),
-(7, '7777777777', 'Miguel', 'Rueda', 'miguel@gamerzone.co', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '6013330203', 3);
+(1, '1111111111', 'Admin', 'Sistema', 'admin@tienda.com', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', '6000000000', 1),
+(2, '2222222222', 'Laura', 'Castro', 'laura@techzone.co', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', '6015550102', 2),
+(3, '3333333333', 'Andrés', 'López', 'andres@techzone.co', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', '6015550103', 3),
+(4, '4444444444', 'Diana', 'Pérez', 'diana@modaexpress.co', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', '6015550104', 4),
+(5, '5555555555', 'Jorge', 'Mora', 'jorge@deportestotal.co', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', '6024440102', 2),
+(6, '6666666666', 'Sofía', 'Arias', 'sofia@deportestotal.co', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', '6024440103', 3),
+(7, '7777777777', 'Miguel', 'Rueda', 'miguel@gamerzone.co', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', '6013330203', 3);
 
 -- Trabajadores por tienda
 INSERT IGNORE INTO TTrabajadorTienda (nID, nTiendaFK, nTrabajadorFK) VALUES
@@ -506,9 +516,9 @@ INSERT IGNORE INTO TTransaccionPasarela (nTransaccionID, nPedidoFK, cNombrePasar
 
 -- Usuarios admin
 INSERT IGNORE INTO TUsuarioAdmin (nIdUsuario, cNombre, cApellido, cCorreo, cPassword, eEstado) VALUES
-(1, 'Super', 'Admin', 'admin@mvp.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Activo'),
-(2, 'Admin', 'Tiendas', 'tiendas@mvp.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Activo'),
-(3, 'Admin', 'PQRS', 'pqrs@mvp.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Activo');
+(1, 'Super', 'Admin', 'admin@mvp.com', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'Activo'),
+(2, 'Admin', 'Tiendas', 'tiendas@mvp.com', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'Activo'),
+(3, 'Admin', 'PQRS', 'pqrs@mvp.com', '$2a$11$buk.ZZq1crcZ/QidjQzydOgLqHd3zqAnYlICcRV2YB7UvhqYZYN9W', 'Activo');
 
 -- Tiendas admin (gestión desde el panel admin)
 INSERT IGNORE INTO TTiendaAdmin (nIdTienda, cNombre, cDireccion, cTelefono, eEstado) VALUES
