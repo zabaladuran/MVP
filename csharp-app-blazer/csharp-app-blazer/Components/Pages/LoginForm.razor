@@ -40,12 +40,12 @@
             <DataAnnotationsValidator />
 
             <div class="mb-3">
-                <label class="form-label small fw-semibold text-secondary">Usuario</label>
-                <InputText @bind-Value="Input.Usuario"
+                <label class="form-label small fw-semibold text-secondary">Correo</label>
+                <InputText @bind-Value="Input.Correo"
                            class="form-control"
-                           placeholder="Escribe tu usuario"
+                           placeholder="admin@tienda.com"
                            @onkeydown="OnUsuarioKeyDown" />
-                <ValidationMessage For="() => Input.Usuario" class="text-danger small" />
+                <ValidationMessage For="() => Input.Correo" class="text-danger small" />
             </div>
 
             <div class="mb-3">
@@ -94,7 +94,7 @@
 
         try
         {
-            var resultado = await AuthService.LoginAsync(Input.Usuario, Input.Password);
+            var resultado = await AuthService.LoginAsync(Input.Correo, Input.Password);
 
             if (!resultado.Exitoso)
             {

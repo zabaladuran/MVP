@@ -155,7 +155,8 @@ namespace csharp_app_blazer.Services
             };
 
             cmd.CommandText = @"INSERT INTO TTiendas (cNombreComercial, tDescripcion, cUrlLogo, cCorreoAtencion, cTelefonoAtencion, cRazonSocial, nDireccionFK, cCodigoPostal, eEstadoTienda, nPlanFK, dFechaVencimientoSuscripcion)
-                                VALUES (@nombreComercial, @descripcion, @urlLogo, @correo, @telefono, @razonSocial, @direccionId, @codigoPostal, 'Pendiente', @planId, DATE_ADD(NOW(), INTERVAL 1 YEAR))";
+                                VALUES (@nombreComercial, @descripcion, @urlLogo, @correo, @telefono, @razonSocial, @direccionId, @codigoPostal, 'Pendiente', @planId, DATE_ADD(NOW(), INTERVAL 1 YEAR));
+                                SELECT LAST_INSERT_ID();";
             cmd.Parameters.Clear();
             cmd.Parameters.Add(new MySqlParameter("@nombreComercial", nombreComercial));
             cmd.Parameters.Add(new MySqlParameter("@descripcion", descripcion));
@@ -167,7 +168,6 @@ namespace csharp_app_blazer.Services
             cmd.Parameters.Add(new MySqlParameter("@codigoPostal", codigoPostal));
             cmd.Parameters.Add(new MySqlParameter("@planId", planId));
 
-            cmd.CommandText += "; SELECT LAST_INSERT_ID();";
             return Convert.ToInt32(await cmd.ExecuteScalarAsync());
         }
 
