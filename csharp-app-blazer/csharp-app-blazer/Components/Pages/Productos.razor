@@ -1,6 +1,8 @@
 ﻿@page "/productos"
 @layout Layout.MainLayout
-@using csharp_app_blazer.Models
+@using csharp_app_blazer.Services
+@inject IDashboardService DashboardService
+@inject IProductoService ProductoService
 
 <div class="p-4" style="background:#f8f8fc; min-height:100vh;">
 
@@ -17,99 +19,95 @@
         </div>
     </div>
 
-    @* Tarjetas de métricas *@
-    <div class="row g-3 mb-4">
-        @foreach (var metrica in Metricas)
-        {
-            <div class="col-md-4">
-                <div class="bg-white rounded-3 border p-3" style="border-color:#ebebf0 !important;">
-                    <p class="text-muted mb-1" style="font-size:12px;">@metrica.Titulo</p>
-                    <p class="fw-semibold mb-1" style="font-size:28px; color:#14141e;">@metrica.Valor</p>
-                    <p class="mb-0" style="font-size:12px; color:#8c8ca0;">@metrica.Subtitulo</p>
-                </div>
-            </div>
-        }
-    </div>
+    @if (cargando)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">Cargando productos...</p>
+        </div>
+    }
+    else
+    {
+        @* Barra de filtros y botón nuevo *@
+        <div class="d-flex gap-2 mb-3 flex-wrap">
+            <input type="text"
+                   class="form-control"
+                   style="max-width:220px; font-size:13px;"
+                   placeholder="Buscar productos..."
+                   @bind="textoBusqueda"
+                   @bind:event="oninput" />
 
-    @* Barra de filtros y botón nuevo *@
-    <div class="d-flex gap-2 mb-3 flex-wrap">
-        <input type="text"
-               class="form-control"
-               style="max-width:220px; font-size:13px;"
-               placeholder="Buscar productos..."
-               @bind="textoBusqueda"
-               @bind:event="oninput" />
-
-        <select class="form-select" style="max-width:160px; font-size:13px;" @bind="filtroCategoria">
-            <option value="">Todas las categorías</option>
-            @foreach (var cat in Categorias)
-            {
-                <option value="@cat">@cat</option>
-            }
-        </select>
-
-        <select class="form-select" style="max-width:160px; font-size:13px;" @bind="filtroStock">
-            <option value="">Todo el stock</option>
-            <option value="disponible">Disponible</option>
-            <option value="agotado">Agotado</option>
-        </select>
-
-        <button class="btn text-white fw-semibold ms-auto d-flex align-items-center gap-2"
-                style="background:#6366f1; border-radius:8px; font-size:14px;"
-                @onclick="AbrirModalNuevo">
-            <i class="ti ti-plus" style="font-size:16px;"></i>
-            Nuevo producto
-        </button>
-    </div>
-
-    @* Tabla de productos *@
-    <div class="bg-white rounded-3 border" style="border-color:#ebebf0 !important;">
-        <table class="table table-borderless align-middle mb-0" style="font-size:14px;">
-            <thead>
-                <tr style="border-bottom:1px solid #ebebf0;">
-                    <th class="fw-semibold py-3 px-4" style="font-size:12px; color:#6e6e82; letter-spacing:.05em;">PRODUCTO</th>
-                    <th class="fw-semibold py-3" style="font-size:12px; color:#6e6e82; letter-spacing:.05em;">CATEGORÍA</th>
-                    <th class="fw-semibold py-3" style="font-size:12px; color:#6e6e82; letter-spacing:.05em;">PRECIO</th>
-                    <th class="fw-semibold py-3" style="font-size:12px; color:#6e6e82; letter-spacing:.05em;">STOCK</th>
-                    <th class="py-3"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (!ProductosFiltrados.Any())
+            <select class="form-select" style="max-width:160px; font-size:13px;" @bind="filtroCategoria">
+                <option value="">Todas las categorías</option>
+                @foreach (var cat in Categorias)
                 {
-                    <tr>
-                        <td colspan="5" class="text-center text-muted py-5">
-                            No hay productos registrados
-                        </td>
-                    </tr>
+                    <option value="@cat">@cat</option>
                 }
-                else
-                {
-                    @foreach (var producto in ProductosFiltrados)
+            </select>
+
+            <select class="form-select" style="max-width:160px; font-size:13px;" @bind="filtroStock">
+                <option value="">Todo el stock</option>
+                <option value="disponible">Disponible</option>
+                <option value="agotado">Agotado</option>
+            </select>
+
+            <button class="btn text-white fw-semibold ms-auto d-flex align-items-center gap-2"
+                    style="background:#6366f1; border-radius:8px; font-size:14px;"
+                    @onclick="AbrirModalNuevo">
+                <i class="ti ti-plus" style="font-size:16px;"></i>
+                Nuevo producto
+            </button>
+        </div>
+
+        @* Tabla de productos *@
+        <div class="bg-white rounded-3 border" style="border-color:#ebebf0 !important;">
+            <table class="table table-borderless align-middle mb-0" style="font-size:14px;">
+                <thead>
+                    <tr style="border-bottom:1px solid #ebebf0;">
+                        <th class="fw-semibold py-3 px-4" style="font-size:12px; color:#6e6e82; letter-spacing:.05em;">PRODUCTO</th>
+                        <th class="fw-semibold py-3" style="font-size:12px; color:#6e6e82; letter-spacing:.05em;">CATEGORÍA</th>
+                        <th class="fw-semibold py-3" style="font-size:12px; color:#6e6e82; letter-spacing:.05em;">PRECIO</th>
+                        <th class="fw-semibold py-3" style="font-size:12px; color:#6e6e82; letter-spacing:.05em;">STOCK</th>
+                        <th class="py-3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!ProductosFiltrados.Any())
                     {
-                        <tr style="border-bottom:1px solid #f3f3f6;">
-                            <td class="px-4">@producto.Nombre</td>
-                            <td>@producto.Categoria</td>
-                            <td style="color:#6366f1; font-weight:500;">@producto.Precio.ToString("C0")</td>
-                            <td>@producto.Stock</td>
-                            <td class="text-end pe-4">
-                                <button class="btn btn-sm text-white me-1"
-                                        style="background:#6366f1; border-radius:6px; font-size:12px; padding:4px 14px;"
-                                        @onclick="() => EditarProducto(producto)">
-                                    Edit
-                                </button>
-                                <button class="btn btn-sm text-white"
-                                        style="background:#ef4444; border-radius:6px; font-size:12px; padding:4px 14px;"
-                                        @onclick="() => EliminarProducto(producto)">
-                                    Elim
-                                </button>
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-5">
+                                No hay productos registrados
                             </td>
                         </tr>
                     }
-                }
-            </tbody>
-        </table>
-    </div>
+                    else
+                    {
+                        @foreach (var producto in ProductosFiltrados)
+                        {
+                            <tr style="border-bottom:1px solid #f3f3f6;">
+                                <td class="px-4">@producto.Nombre</td>
+                                <td>@producto.Categoria</td>
+                                <td style="color:#6366f1; font-weight:500;">@producto.Precio.ToString("C0")</td>
+                                <td>@producto.Stock</td>
+                                <td class="text-end pe-4">
+                                    <button class="btn btn-sm text-white me-1"
+                                            style="background:#6366f1; border-radius:6px; font-size:12px; padding:4px 14px;"
+                                            @onclick="() => EditarProducto(producto)">
+                                        Edit
+                                    </button>
+                                    <button class="btn btn-sm text-white"
+                                            style="background:#ef4444; border-radius:6px; font-size:12px; padding:4px 14px;"
+                                            @onclick="() => EliminarProducto(producto)">
+                                        Elim
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 
     @* Modal nuevo / editar producto *@
     @if (mostrarModal)
@@ -132,7 +130,13 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label small fw-semibold text-secondary">Categoría</label>
-                    <input class="form-control" @bind="formCategoria" placeholder="Categoría" />
+                    <select class="form-select" @bind="formCategoriaId">
+                        <option value="0">Seleccionar categoría</option>
+                        @foreach (var cat in CategoriasConId)
+                        {
+                            <option value="@cat.Id">@cat.Nombre</option>
+                        }
+                    </select>
                 </div>
                 <div class="row g-2 mb-3">
                     <div class="col">
@@ -161,36 +165,27 @@
 </div>
 
 @code {
-    [CascadingParameter(Name = "TiendaActual")] public string TiendaActual { get; set; } = "Tienda Norte";
+    [CascadingParameter(Name = "TiendaActual")] public string TiendaActual { get; set; } = "TechZone Colombia";
 
+    private bool cargando = true;
     private string SuscripcionVence = "31 dic 2025";
     private string textoBusqueda = "";
     private string filtroCategoria = "";
     private string filtroStock = "";
     private bool mostrarModal = false;
+    private int? tiendaIdActual;
 
-    // Formulario modal
     private string formNombre = "";
-    private string formCategoria = "";
+    private int formCategoriaId = 0;
     private decimal formPrecio = 0;
     private int formStock = 0;
-    private ProductoItem? productoEditando = null;
+    private ProductoDbItem? productoEditando = null;
 
-    private List<MetricaItem> Metricas = new()
-    {
-        new("Título", 0, "pruebaaa"),
-        new("Título", 0, "pruebaaa"),
-        new("Título", 0, "pruebaaa"),
-    };
+    private List<string> Categorias { get; set; } = new();
+    private List<CategoriaFull> CategoriasConId { get; set; } = new();
+    private List<ProductoDbItem> ListaProductos { get; set; } = new();
 
-    private List<string> Categorias = new() { "Categoría A", "Categoría B" };
-
-    private List<ProductoItem> ListaProductos = new()
-    {
-        new(1, "Producto", "Categoría", 0, 0),
-    };
-
-    private IEnumerable<ProductoItem> ProductosFiltrados => ListaProductos.Where(p =>
+    private IEnumerable<ProductoDbItem> ProductosFiltrados => ListaProductos.Where(p =>
         (string.IsNullOrEmpty(textoBusqueda) || p.Nombre.Contains(textoBusqueda, StringComparison.OrdinalIgnoreCase)) &&
         (string.IsNullOrEmpty(filtroCategoria) || p.Categoria == filtroCategoria) &&
         (filtroStock == "" ||
@@ -198,52 +193,80 @@
          (filtroStock == "agotado" && p.Stock == 0))
     );
 
+    protected override async Task OnParametersSetAsync()
+    {
+        var tienda = await DashboardService.ObtenerTiendaPorNombreAsync(TiendaActual);
+        if (tienda != null)
+        {
+            tiendaIdActual = tienda.Id;
+            ListaProductos = await ProductoService.ObtenerProductosAsync(tienda.Id);
+            Categorias = await ProductoService.ObtenerCategoriasAsync(tienda.Id);
+            CategoriasConId = await ProductoService.ObtenerCategoriasConIdAsync(tienda.Id);
+        }
+        else
+        {
+            tiendaIdActual = null;
+            ListaProductos = new();
+            Categorias = new();
+            CategoriasConId = new();
+        }
+        cargando = false;
+    }
+
     private void AbrirModalNuevo()
     {
         productoEditando = null;
         formNombre = "";
-        formCategoria = "";
+        formCategoriaId = 0;
         formPrecio = 0;
         formStock = 0;
         mostrarModal = true;
     }
 
-    private void EditarProducto(ProductoItem p)
+    private void EditarProducto(ProductoDbItem p)
     {
         productoEditando = p;
         formNombre = p.Nombre;
-        formCategoria = p.Categoria;
+        var match = CategoriasConId.FirstOrDefault(c => c.Nombre == p.Categoria);
+        formCategoriaId = match?.Id ?? 0;
         formPrecio = p.Precio;
         formStock = p.Stock;
         mostrarModal = true;
     }
 
-    private void GuardarProducto()
+    private async Task GuardarProducto()
     {
+        if (tiendaIdActual == null || formCategoriaId == 0) return;
         if (productoEditando == null)
         {
-            var nuevoId = ListaProductos.Any() ? ListaProductos.Max(p => p.Id) + 1 : 1;
-            ListaProductos.Add(new(nuevoId, formNombre, formCategoria, formPrecio, formStock));
+            var nuevoId = await ProductoService.CrearProductoAsync(tiendaIdActual.Value, formNombre, formCategoriaId, formPrecio, formStock);
+            var catNombre = CategoriasConId.FirstOrDefault(c => c.Id == formCategoriaId)?.Nombre ?? "";
+            ListaProductos.Add(new(nuevoId, formNombre, catNombre, formPrecio, formStock));
         }
         else
         {
-            var idx = ListaProductos.IndexOf(productoEditando);
-            ListaProductos[idx] = productoEditando with
+            await ProductoService.ActualizarProductoAsync(productoEditando.Id, formNombre, formCategoriaId, formPrecio, formStock);
+            var idx = ListaProductos.FindIndex(p => p.Id == productoEditando.Id);
+            if (idx >= 0)
             {
-                Nombre = formNombre,
-                Categoria = formCategoria,
-                Precio = formPrecio,
-                Stock = formStock
-            };
+                var catNombre = CategoriasConId.FirstOrDefault(c => c.Id == formCategoriaId)?.Nombre ?? "";
+                ListaProductos[idx] = new(productoEditando.Id, formNombre, catNombre, formPrecio, formStock);
+            }
         }
         CerrarModal();
     }
 
-    private void EliminarProducto(ProductoItem p) => ListaProductos.Remove(p);
+    private async Task EliminarProducto(ProductoDbItem p)
+    {
+        await ProductoService.EliminarProductoAsync(p.Id);
+        ListaProductos.Remove(p);
+    }
 
     private void CerrarModal()
     {
         mostrarModal = false;
         productoEditando = null;
     }
+
+
 }
