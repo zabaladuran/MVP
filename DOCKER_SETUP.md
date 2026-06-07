@@ -1,6 +1,6 @@
 # Configuración Multi-Contenedor MVP
 
-Este proyecto utiliza Docker Compose para ejecutar 3 aplicaciones simultáneamente con una base de datos compartida.
+Este proyecto utiliza Docker Compose para ejecutar 2 aplicaciones simultáneamente con una base de datos compartida.
 
 ## Arquitectura
 
@@ -9,11 +9,12 @@ Este proyecto utiliza Docker Compose para ejecutar 3 aplicaciones simultáneamen
 │           Docker Network (mvp_network)              │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
-│  ┌──────────────┐  ┌──────────────┐  ┌───────────┐  │
-│  │  PHP App     │  │  C# Blazor   │  │ Android   │  │
-│  │  :8000       │  │  :5010       │  │ App :5037 │  │
-│  └──────────────┘  └──────────────┘  └───────────┘  │
-│         │                 │                │        │
+│  ┌──────────────┐  ┌──────────────┐                 │
+│  │  PHP App     │  │  C# App      │                 │
+│  │  :8000       │  │  :5000       │                 │
+│  └──────────────┘  └──────────────┘                 │
+│         │                 │                        │
+>>>>>>> 6378830 (aprendiendo android)
 │         └─────────────────┼────────────────┘        │
 │                           │                         │
 │                    ┌──────────────┐                 │
@@ -65,7 +66,7 @@ Para más detalles sobre:
 docker-compose ps
 ```
 
-Deberías ver 5 contenedores (mysql, php-app, csharp-app-blazer, android-app, phpmyadmin).
+Deberías ver 4 contenedores (mysql, php-app, csharp-app-blazer, phpmyadmin).
 
 ### 3. Acceder a las aplicaciones
 
@@ -80,14 +81,6 @@ Cada aplicación tiene 3 puertos disponibles (en caso de que alguno esté ocupad
 - http://localhost:5010
 - http://localhost:5011
 - http://localhost:5012
-
-**Android App:**
-- http://localhost:5037 (ADB)
-- http://localhost:5038 (ADB alternativo)
-- http://localhost:5039 (ADB alternativo)
-- http://localhost:8003 (API)
-- http://localhost:8004 (API alternativo)
-- http://localhost:8005 (API alternativo)
 
 **PhpMyAdmin:**
 - http://localhost:8080
@@ -136,15 +129,6 @@ $pass = getenv('DB_PASSWORD');
 string connectionString = "Server=mysql;Database=mvp_db;Uid=mvp_user;Pwd=mvp_password;";
 ```
 
-### Para Android
-
-```java
-String host = "mysql";  // conectar a través de la red Docker
-int port = 3306;
-String database = "mvp_db";
-String user = "mvp_user";
-String password = "mvp_password";
-```
 
 ## Sincronización de Datos
 
@@ -208,7 +192,6 @@ Docker Compose crea automáticamente una red interna (`mvp_network`) donde los c
 
 - `php-app` se conecta a `mysql:3306`
 - `csharp-app-blazer` se conecta a `mysql:3306`
-- `android-app` se conecta a `mysql:3306`
 
 No necesitas usar direcciones IP, los nombres de los servicios se resuelven automáticamente.
 

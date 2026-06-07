@@ -1,6 +1,6 @@
-# MVP - Mercado Shop (Desktop, Web, Android)
+# MVP - Mercado Shop (Desktop, Web)
 
-Solución completa multi-plataforma para gestión de tiendas con 3 aplicaciones sincronizadas en una base de datos compartida.
+Solución multi-plataforma para gestión de tiendas con aplicaciones web y desktop sincronizadas en una base de datos compartida. El proyecto conserva los archivos PWA necesarios para integración web progresiva.
 
 ## Tabla de Contenidos
 
@@ -169,7 +169,7 @@ Usa las mismas opciones 1-6 descritas arriba.
 
 ---
 
-## Acceder a las Aplicaciones
+# Acceder a las aplicaciones
 
 Una vez iniciado, accede a:
 
@@ -177,7 +177,6 @@ Una vez iniciado, accede a:
 |-----------|-----|--------|
 | **PHP Web** | http://localhost:8000 | 8000, 8001, 8002 |
 | **C# Desktop** | http://localhost:5000 | 5000, 5001, 5002 |
-| **Android** | http://localhost:5037 | 5037-5039, 8003-8005 |
 | **PhpMyAdmin** | http://localhost:8080 | 8080, 8081, 8082 |
 
 **Credenciales BD:**
@@ -219,7 +218,6 @@ powershell -ExecutionPolicy Bypass -File switch-env.ps1
 # 5. Accede a las aplicaciones
 # PHP:        http://localhost:8000
 # C#:         http://localhost:5000
-# Android:    http://localhost:5037
 # PhpMyAdmin: http://localhost:8080
 
 # 6. Ver estado de contenedores
@@ -299,7 +297,6 @@ docker-compose logs php-app  # Errores PHP
 
 - **PHP 8.1** - Aplicación web
 - **C# .NET 9** - Aplicación desktop
-- **Android API 30** - Aplicación móvil
 - **MySQL 8.0** - Base de datos compartida
 - **Docker Compose** - Orquestación de contenedores
 
@@ -322,7 +319,7 @@ MVP/
 │   └── init.sql                ← Script SQL inicial
 ├── php-app/                    ← Aplicación PHP
 ├── csharp-app/                 ← Aplicación C#
-└── android-app/                ← Aplicación Android
+└── android-app/                ← Archivos PWA estáticos (manifest, pwa.js, service-worker.js)
 ```
 
 ---

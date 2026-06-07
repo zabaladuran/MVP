@@ -1,5 +1,4 @@
 android-app/
-  Dockerfile
   manifest.json
   pwa.js
   service-worker.js
