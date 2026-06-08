@@ -8,7 +8,9 @@
     <title>Inicio - Tienda</title>
     <link rel="manifest" href="android-app/manifest.json">
     <link rel="icon" href="android-app/icons/shopp1.svg" type="image/svg+xml">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="views/CSS/homeCss1.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="android-app/pwa.js" defer></script>
 </head>
 
@@ -35,7 +37,10 @@
                     <a href="#catalogo" class="button button-primary">Ver catálogo</a>
                 </div>
                 <div class="hero-visual">
-                    <div class="hero-card">Productos en oferta</div>
+                    <div class="hero-card">
+                        <span class="hero-card-text">Productos en oferta</span>
+                        <img src="android-app/icons/shopp1.svg" alt="Tienda" class="hero-visual-img">
+                    </div>
                 </div>
             </section>
 
@@ -114,6 +119,27 @@
             </section>
         </main>
     </div>
+    <script>
+        // Inicializar ScrollSpy para mantener activas las secciones en la navbar
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof bootstrap !== 'undefined') {
+                try {
+                    new bootstrap.ScrollSpy(document.body, { target: '.nav-links', offset: 100 });
+                } catch(e) { console.warn(e); }
+            }
+
+            // IntersectionObserver para animaciones slide-in
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            document.querySelectorAll('.slide-in, .product-card, .features article, .hero-card').forEach(el => io.observe(el));
+        });
+    </script>
 </body>
 
 </html>
