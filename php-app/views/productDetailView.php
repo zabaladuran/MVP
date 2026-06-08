@@ -27,7 +27,14 @@
 
         <main class="product-detail-page">
             <section class="product-detail">
-                <div class="detail-image" style="background-image: url('<?= htmlspecialchars($producto['cUrlImagenPrincipal'] ?: 'icons/shopp1.svg', ENT_QUOTES, 'UTF-8'); ?>');"></div>
+                <?php
+                    $detalleImagen = $producto['cUrlImagenPrincipal'] ?? '';
+                    $detalleImagen = ltrim($detalleImagen, '/');
+                    if (empty($detalleImagen)) {
+                        $detalleImagen = '../android-app/icons/shopp1.svg';
+                    }
+                ?>
+                <div class="detail-image" style="background-image: url('<?= htmlspecialchars($detalleImagen, ENT_QUOTES, 'UTF-8'); ?>');"></div>
                 <div class="detail-content">
                     <span class="eyebrow">Detalle del producto</span>
                     <h1><?= htmlspecialchars($producto['cNombreProducto'] ?? $producto['cDescripcionCorta'] ?? 'Sin nombre', ENT_QUOTES, 'UTF-8'); ?></h1>

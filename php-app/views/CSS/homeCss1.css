@@ -236,8 +236,9 @@ body {
 
 .product-image {
     width: 100%;
-    min-height: 180px;
+    min-height: 220px;
     border-radius: 22px;
+    background-color: #ede9fe;
     background-size: cover;
     background-position: center;
 }

@@ -93,8 +93,15 @@
                 <?php else : ?>
                     <div class="product-grid">
                         <?php foreach ($productos as $producto) : ?>
+                            <?php
+                                $imagenUrl = $producto['cUrlImagenPrincipal'] ?? '';
+                                $imagenUrl = ltrim($imagenUrl, '/');
+                                if (empty($imagenUrl)) {
+                                    $imagenUrl = '../android-app/icons/shopp1.svg';
+                                }
+                            ?>
                             <article class="product-card">
-                                <div class="product-image" style="background-image: url('<?= htmlspecialchars($producto['cUrlImagenPrincipal'] ?: 'icons/shopp1.svg', ENT_QUOTES, 'UTF-8'); ?>');"></div>
+                                <div class="product-image" style="background-image: url('<?= htmlspecialchars($imagenUrl, ENT_QUOTES, 'UTF-8'); ?>');"></div>
                                 <h3><?= htmlspecialchars($producto['cNombreProducto'] ?? $producto['cDescripcionCorta'] ?? 'Sin nombre', ENT_QUOTES, 'UTF-8'); ?></h3>
                                 <p><?= htmlspecialchars($producto['cDescripcionCorta'] ?: 'Sin descripción corta', ENT_QUOTES, 'UTF-8'); ?></p>
                                 <p><strong>Precio:</strong> $<?= number_format($producto['nPrecioUnitario'], 2); ?></p>
