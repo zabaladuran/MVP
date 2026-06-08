@@ -1,0 +1,126 @@
+:root {
+    color-scheme: light;
+    font-family: Inter, Arial, sans-serif;
+    --purple-50: #f5f3ff;
+    --purple-100: #ede9fe;
+    --purple-200: #ddd6fe;
+    --purple-300: #c4b5fd;
+    --purple-400: #a78bfa;
+    --purple-500: #8b5cf6;
+    --purple-600: #7c3aed;
+    --purple-700: #6d28d9;
+    --purple-800: #5b21b6;
+    --purple-900: #4c1d95;
+    --text-color: #111827;
+    --muted-color: #4b5563;
+    --surface: #ffffff;
+    --surface-alt: #f8f5ff;
+    --border-color: rgba(124, 58, 237, 0.18);
+    --shadow: 0 24px 60px rgba(79, 70, 229, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Inter, Arial, sans-serif;
+    color: var(--text-color);
+    background: radial-gradient(circle at top, #f8f5ff 0%, #eef2ff 45%, #f6f3ff 100%);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button-primary,
+.btn-primary {
+    background-color: var(--purple-600);
+    color: white;
+    border: none;
+}
+
+.button-primary:hover,
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--purple-700);
+}
+
+.button-secondary,
+.btn-outline-secondary {
+    background-color: white;
+    color: var(--purple-800);
+    border: 1px solid rgba(124, 58, 237, 0.22);
+}
+
+.button-secondary:hover,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+    background-color: var(--purple-50);
+}
+
+.card-surface {
+    background: var(--surface);
+    border: 1px solid rgba(124, 58, 237, 0.12);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+
+.auth-card,
+.card-surface {
+    width: min(100%, 480px);
+    padding: 32px;
+}
+
+.auth-card {
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.96);
+}
+
+.input-field {
+    border-radius: 14px;
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    background: #fbf8ff;
+}
+
+.input-field:focus {
+    border-color: var(--purple-500);
+    box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.14);
+}
+
+.alert-custom {
+    border-radius: 16px;
+}
+
+.link-primary {
+    color: var(--purple-600);
+}
+
+.link-primary:hover,
+.link-primary:focus {
+    color: var(--purple-700);
+    text-decoration: underline;
+}
+
+.form-heading {
+    color: var(--purple-800);
+}
+
+.form-subtitle {
+    color: var(--muted-color);
+}
+
+@media (max-width: 520px) {
+    .auth-card {
+        padding: 24px;
+    }
+}

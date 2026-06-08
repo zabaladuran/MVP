@@ -1,78 +1,68 @@
+@import url('global.css');
+
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     min-height: 100vh;
-    background: #f4f7fb;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 24px;
+    background: radial-gradient(circle at top, #f8f5ff 0%, #ede9fe 45%, #f6f3ff 100%);
 }
 
 form {
-    width: min(100%, 420px);
-    background: #ffffff;
-    border: 1px solid #d9d9d9;
-    border-radius: 16px;
-    padding: 28px 28px 24px;
-    box-shadow: 0 18px 40px rgba(14, 30, 60, 0.08);
+    width: min(100%, 460px);
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(124, 58, 237, 0.12);
+    border-radius: 28px;
+    padding: 34px;
+    box-shadow: var(--shadow);
 }
 
 h1 {
     margin-top: 0;
     margin-bottom: 24px;
-    font-size: 1.9rem;
-    color: #1f2937;
+    font-size: 1.95rem;
+    color: var(--purple-800);
     text-align: center;
 }
 
-input {
+.input-field,
+.form-control {
     width: 100%;
     padding: 14px 14px;
-    margin: 0 0 16px;
-    border: 1px solid #ced4da;
-    border-radius: 12px;
-    font-size: 1rem;
-    background: #f8fafc;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    background: #fbf8ff;
     box-sizing: border-box;
 }
 
-input:focus {
+.input-field:focus,
+.form-control:focus {
     outline: none;
-    border-color: #4caf50;
-    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.12);
+    border-color: var(--purple-500);
+    box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.14);
+    background: #ffffff;
 }
 
 button {
     width: 100%;
     padding: 14px 16px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-button:hover,
-button:focus {
-    background-color: #45a049;
+    border-radius: 14px;
 }
 
 .error,
 .exito {
-    margin: 0 0 16px;
-    font-size: 0.98rem;
-    line-height: 1.5;
+    margin: 0 0 18px;
 }
 
 .error {
-    color: #dc2626;
+    color: #b91c1c;
 }
 
 .exito {
-    color: #16a34a;
+    color: #15803d;
 }
 
 .link {
@@ -81,12 +71,13 @@ button:focus {
 }
 
 a {
-    color: #2563eb;
+    color: var(--purple-600);
     text-decoration: none;
 }
 
 a:hover,
 a:focus {
+    color: var(--purple-700);
     text-decoration: underline;
 }
 
@@ -96,15 +87,10 @@ a:focus {
     }
 
     form {
-        padding: 22px;
+        padding: 26px;
     }
 
     h1 {
-        font-size: 1.6rem;
-    }
-
-    input,
-    button {
-        font-size: 0.98rem;
+        font-size: 1.75rem;
     }
 }
