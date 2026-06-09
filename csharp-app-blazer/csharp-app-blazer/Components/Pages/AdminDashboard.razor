@@ -1,0 +1,393 @@
+@page "/admin/dashboard"
+@layout Layout.AdminLayout
+@using csharp_app_blazer.Services
+@inject AuthStateService AuthState
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@inject IAdminDashboardService AdminService
+
+<div class="min-vh-100 p-4" style="background:#0f0f23;">
+
+    @* Header *@
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-semibold mb-1" style="font-size:22px; color:#fff;">
+                Panel de Administración
+            </h2>
+            <p class="mb-0" style="color:#8c8ca0; font-size:13px;">
+                Bienvenido, @AuthState.SesionActual?.Nombre
+            </p>
+        </div>
+        <button class="btn text-white btn-sm" style="background:#e94560; border-radius:8px;"
+                @onclick="CerrarSesion">
+            Cerrar sesión
+        </button>
+    </div>
+
+    @if (cargando)
+    {
+        <div class="d-flex align-items-center justify-content-center" style="min-height:40vh;">
+            <div class="text-center">
+                <div class="spinner-border text-light" role="status"></div>
+                <p class="mt-2" style="color:#8c8ca0;">Cargando...</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        @* Tarjetas de resumen *@
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="rounded-3 p-3" style="background:#1a1a2e; border:1px solid #2a2a4a;">
+                    <p class="mb-1" style="color:#8c8ca0; font-size:12px;">Tiendas Registradas</p>
+                    <p class="fw-semibold mb-0" style="font-size:28px; color:#fff;">@Tiendas.Count</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="rounded-3 p-3" style="background:#1a1a2e; border:1px solid #2a2a4a;">
+                    <p class="mb-1" style="color:#8c8ca0; font-size:12px;">Trabajadores</p>
+                    <p class="fw-semibold mb-0" style="font-size:28px; color:#fff;">@Trabajadores.Count</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="rounded-3 p-3" style="background:#1a1a2e; border:1px solid #2a2a4a;">
+                    <p class="mb-1" style="color:#8c8ca0; font-size:12px;">PQRS</p>
+                    <p class="fw-semibold mb-0" style="font-size:28px; color:#fff;">@PqrsList.Count</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="rounded-3 p-3" style="background:#1a1a2e; border:1px solid #2a2a4a;">
+                    <p class="mb-1" style="color:#8c8ca0; font-size:12px;">PQRS Activos</p>
+                    <p class="fw-semibold mb-0" style="font-size:28px; color:#fff;">
+                        @PqrsList.Count(p => p.Estado == "Activo" || p.Estado == "Pendiente")</p>
+                </div>
+            </div>
+        </div>
+
+        @* Pestañas de navegación *@
+        <ul class="nav nav-tabs mb-4" style="border-bottom-color:#2a2a4a;">
+            <li class="nav-item">
+                <button class="nav-link @(tabActivo == "tiendas" ? "active" : "")"
+                        style="color:@(tabActivo == "tiendas" ? "#fff" : "#8c8ca0"); background:transparent; border-color:#2a2a4a;"
+                        @onclick='() => CambiarTab("tiendas")'>
+                    Tiendas (@Tiendas.Count)
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link @(tabActivo == "pqrs" ? "active" : "")"
+                        style="color:@(tabActivo == "pqrs" ? "#fff" : "#8c8ca0"); background:transparent; border-color:#2a2a4a;"
+                        @onclick='() => CambiarTab("pqrs")'>
+                    PQRS (@PqrsList.Count)
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link @(tabActivo == "usuarios" ? "active" : "")"
+                        style="color:@(tabActivo == "usuarios" ? "#fff" : "#8c8ca0"); background:transparent; border-color:#2a2a4a;"
+                        @onclick='() => CambiarTab("usuarios")'>
+                    Usuarios (@Trabajadores.Count)
+                </button>
+            </li>
+        </ul>
+
+        @* Tab: Tiendas *@
+        @if (tabActivo == "tiendas")
+        {
+            <div class="rounded-3" style="background:#1a1a2e; border:1px solid #2a2a4a; overflow:auto;">
+                <table class="table table-dark table-borderless align-middle mb-0" style="font-size:13px;">
+                    <thead>
+                        <tr style="border-bottom:1px solid #2a2a4a; color:#8c8ca0;">
+                            <th class="fw-semibold py-3 ps-3">Tienda</th>
+                            <th class="fw-semibold py-3">Estado</th>
+                            <th class="fw-semibold py-3">Admin</th>
+                            <th class="fw-semibold py-3">Correo Admin</th>
+                            <th class="fw-semibold py-3">Trabajadores</th>
+                            <th class="fw-semibold py-3">Suscripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var t in Tiendas)
+                        {
+                            <tr style="border-bottom:1px solid #2a2a4a;">
+                                <td class="py-3 ps-3" style="color:#fff;">@t.Nombre</td>
+                                <td class="py-3">
+                                    <span class="badge" style="background:@(t.Estado switch { "Activa" => "#2ecc71", "Inactiva" => "#95a5a6", "Suspendida" => "#e74c3c", _ => "#f39c12" });">
+                                        @t.Estado
+                                    </span>
+                                </td>
+                                <td class="py-3" style="color:#c0c0e0;">@(t.AdminNombre ?? "—")</td>
+                                <td class="py-3" style="color:#c0c0e0;">@(t.AdminCorreo ?? "—")</td>
+                                <td class="py-3" style="color:#fff;">@t.Trabajadores</td>
+                                <td class="py-3" style="color:#c0c0e0;">
+                                    @if (t.SuscripcionVence.HasValue)
+                                    {
+                                        @t.SuscripcionVence.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span style="color:#8c8ca0;">—</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @* Tab: PQRS *@
+        @if (tabActivo == "pqrs")
+        {
+            <div class="rounded-3" style="background:#1a1a2e; border:1px solid #2a2a4a; overflow:auto;">
+                <table class="table table-dark table-borderless align-middle mb-0" style="font-size:13px;">
+                    <thead>
+                        <tr style="border-bottom:1px solid #2a2a4a; color:#8c8ca0;">
+                            <th class="fw-semibold py-3 ps-3">Ticket</th>
+                            <th class="fw-semibold py-3">Tipo</th>
+                            <th class="fw-semibold py-3">Estado</th>
+                            <th class="fw-semibold py-3">Asunto</th>
+                            <th class="fw-semibold py-3">Creador</th>
+                            <th class="fw-semibold py-3">Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in PqrsList)
+                        {
+                            <tr style="border-bottom:1px solid #2a2a4a;">
+                                <td class="py-3 ps-3" style="color:#e94560; font-weight:500;">@p.Ticket</td>
+                                <td class="py-3" style="color:#c0c0e0;">@p.Tipo</td>
+                                <td class="py-3">
+                                    <span class="badge" style="background:@(p.Estado switch { "Activo" => "#e94560", "Resuelto" => "#2ecc71", _ => "#f39c12" });">
+                                        @p.Estado
+                                    </span>
+                                </td>
+                                <td class="py-3" style="color:#fff; max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                    @p.Asunto
+                                </td>
+                                <td class="py-3" style="color:#c0c0e0;">
+                                    @p.Creador
+                                    <small style="color:#8c8ca0;">(@p.TipoCreador)</small>
+                                </td>
+                                <td class="py-3" style="color:#c0c0e0;">@p.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @* Tab: Usuarios *@
+        @if (tabActivo == "usuarios")
+        {
+            <div class="rounded-3" style="background:#1a1a2e; border:1px solid #2a2a4a; overflow:auto;">
+                <table class="table table-dark table-borderless align-middle mb-0" style="font-size:13px;">
+                    <thead>
+                        <tr style="border-bottom:1px solid #2a2a4a; color:#8c8ca0;">
+                            <th class="fw-semibold py-3 ps-3">Nombre</th>
+                            <th class="fw-semibold py-3">Correo</th>
+                            <th class="fw-semibold py-3">Rol</th>
+                            <th class="fw-semibold py-3">Documento</th>
+                            <th class="fw-semibold py-3">Teléfono</th>
+                            <th class="fw-semibold py-3">Tiendas</th>
+                            <th class="fw-semibold py-3"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var u in Trabajadores)
+                        {
+                            <tr style="border-bottom:1px solid #2a2a4a;">
+                                <td class="py-3 ps-3" style="color:#fff;">@u.Nombre @u.Apellido</td>
+                                <td class="py-3" style="color:#c0c0e0;">@u.Correo</td>
+                                <td class="py-3">
+                                    <span class="badge" style="background:#6366f1;">@u.Rol</span>
+                                </td>
+                                <td class="py-3" style="color:#c0c0e0;">@(string.IsNullOrEmpty(u.Documento) ? "—" : u.Documento)</td>
+                                <td class="py-3" style="color:#c0c0e0;">@(string.IsNullOrEmpty(u.Telefono) ? "—" : u.Telefono)</td>
+                                <td class="py-3" style="color:#c0c0e0;">@(u.Tienda ?? "—")</td>
+                                <td class="py-3 text-end pe-3">
+                                    <button class="btn btn-sm text-white"
+                                            style="background:#e94560; border-radius:6px;"
+                                            @onclick="() => AbrirCambioPassword(u)">
+                                        Cambiar contraseña
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+
+    @* Modal cambio de contraseña *@
+    @if (mostrarModalPassword && usuarioSeleccionado is not null)
+    {
+        <div class="modal d-block" tabindex="-1" style="background:rgba(0,0,0,0.6);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background:#1a1a2e; border:1px solid #2a2a4a; border-radius:12px;">
+                    <div class="modal-header" style="border-bottom-color:#2a2a4a;">
+                        <h5 class="modal-title" style="color:#fff;">
+                            Cambiar contraseña
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" @onclick="CerrarModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color:#c0c0e0; font-size:14px;">
+                            Usuario: <strong style="color:#fff;">@usuarioSeleccionado.Nombre @usuarioSeleccionado.Apellido</strong>
+                            (@usuarioSeleccionado.Correo)
+                        </p>
+
+                        @if (!string.IsNullOrEmpty(errorPassword))
+                        {
+                            <div class="alert alert-danger py-2 px-3 small">@errorPassword</div>
+                        }
+                        @if (!string.IsNullOrEmpty(exitoPassword))
+                        {
+                            <div class="alert alert-success py-2 px-3 small">@exitoPassword</div>
+                        }
+
+                        <div class="mb-3">
+                            <label class="form-label small" style="color:#8c8ca0;">Nueva contraseña</label>
+                            <input type="password" class="form-control"
+                                   style="background:#16213e; color:#fff; border-color:#2a2a4a;"
+                                   @bind="nuevaPassword" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small" style="color:#8c8ca0;">Confirmar contraseña</label>
+                            <input type="password" class="form-control"
+                                   style="background:#16213e; color:#fff; border-color:#2a2a4a;"
+                                   @bind="confirmarPassword" />
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border-top-color:#2a2a4a;">
+                        <button class="btn btn-secondary btn-sm" @onclick="CerrarModal">Cancelar</button>
+                        <button class="btn btn-sm text-white" style="background:#e94560;"
+                                disabled="@guardandoPassword" @onclick="GuardarPassword">
+                            @if (guardandoPassword)
+                            {
+                                <span class="spinner-border spinner-border-sm me-1"></span>
+                            }
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        if (AuthState.SesionActual?.Tipo != "admin")
+        {
+            Navigation.NavigateTo("/admin/login");
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarDatos();
+    }
+
+    private bool cargando = true;
+    private string tabActivo = "tiendas";
+
+    private void CambiarTab(string tab)
+    {
+        tabActivo = tab;
+    }
+
+    private List<AdminTiendaInfo> Tiendas = new();
+    private List<AdminPqrsItem> PqrsList = new();
+    private List<AdminTrabajadorItem> Trabajadores = new();
+
+    private AdminTrabajadorItem? usuarioSeleccionado;
+    private bool mostrarModalPassword = false;
+    private string nuevaPassword = "";
+    private string confirmarPassword = "";
+    private string errorPassword = "";
+    private string exitoPassword = "";
+    private bool guardandoPassword = false;
+
+    private async Task CargarDatos()
+    {
+        try
+        {
+            Tiendas = await AdminService.ObtenerTiendasAsync();
+            PqrsList = await AdminService.ObtenerPqrsAsync();
+            Trabajadores = await AdminService.ObtenerTrabajadoresAsync();
+        }
+        catch
+        {
+            // Si la BD falla, listas vacías
+        }
+        cargando = false;
+    }
+
+    private void AbrirCambioPassword(AdminTrabajadorItem usuario)
+    {
+        usuarioSeleccionado = usuario;
+        nuevaPassword = "";
+        confirmarPassword = "";
+        errorPassword = "";
+        exitoPassword = "";
+        mostrarModalPassword = true;
+    }
+
+    private async Task GuardarPassword()
+    {
+        errorPassword = "";
+        exitoPassword = "";
+
+        if (string.IsNullOrWhiteSpace(nuevaPassword) || nuevaPassword.Length < 6)
+        {
+            errorPassword = "La contraseña debe tener al menos 6 caracteres.";
+            return;
+        }
+
+        if (nuevaPassword != confirmarPassword)
+        {
+            errorPassword = "Las contraseñas no coinciden.";
+            return;
+        }
+
+        if (usuarioSeleccionado is null) return;
+
+        guardandoPassword = true;
+        try
+        {
+            var ok = await AdminService.CambiarPasswordAsync(usuarioSeleccionado.Id, nuevaPassword);
+            if (ok)
+            {
+                exitoPassword = "Contraseña actualizada correctamente.";
+                await Task.Delay(1500);
+                CerrarModal();
+            }
+            else
+            {
+                errorPassword = "No se pudo actualizar la contraseña.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorPassword = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            guardandoPassword = false;
+        }
+    }
+
+    private void CerrarModal()
+    {
+        mostrarModalPassword = false;
+        usuarioSeleccionado = null;
+    }
+
+    private async Task CerrarSesion()
+    {
+        await AuthState.CerrarSesionAsync(JS);
+        Navigation.NavigateTo("/admin/login");
+    }
+}

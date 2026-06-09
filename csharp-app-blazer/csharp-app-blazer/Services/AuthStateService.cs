@@ -25,9 +25,29 @@ namespace csharp_app_blazer.Services
                 TrabajadorId = resultado.UsuarioId ?? 0,
                 Nombre = resultado.Nombre ?? "",
                 Correo = "",
+                Tipo = "trabajador",
                 Expiracion = DateTime.UtcNow.AddDays(7)
             };
 
+            await GuardarSesionAsync(js, sesion);
+        }
+
+        public async Task IniciarSesionAdminAsync(IJSRuntime js, LoginResultado resultado)
+        {
+            var sesion = new SesionUsuario
+            {
+                TrabajadorId = resultado.UsuarioId ?? 0,
+                Nombre = resultado.Nombre ?? "",
+                Correo = "",
+                Tipo = "admin",
+                Expiracion = DateTime.UtcNow.AddDays(7)
+            };
+
+            await GuardarSesionAsync(js, sesion);
+        }
+
+        private async Task GuardarSesionAsync(IJSRuntime js, SesionUsuario sesion)
+        {
             _token = _tokenStore.GenerarToken(sesion);
             _sesion = sesion;
 

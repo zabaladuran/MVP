@@ -1,18 +1,17 @@
-﻿@using csharp_app_blazer.Models
+@page "/admin/login"
 @using csharp_app_blazer.Services
-@inject IAuthService AuthService
+@using csharp_app_blazer.Models
+@inject IAuthAdminService AuthAdminService
 @inject NavigationManager Navigation
 @inject AuthStateService AuthState
 @inject IJSRuntime JS
-@page "/"
-@page "/login"
 @layout Layout.EmptyLayout
 
 <div class="min-vh-100 d-flex align-items-center justify-content-center"
-     style="background-color: #f1f2fa;">
+     style="background-color: #0f0f23;">
 
-    <div class="card border-0 shadow-sm p-4"
-         style="width: 420px; border-radius: 16px;">
+    <div class="card border-0 shadow p-4"
+         style="width: 420px; border-radius: 16px; background:#1a1a2e;">
 
         @if (!string.IsNullOrEmpty(errorMensaje))
         {
@@ -24,43 +23,43 @@
 
         <div class="d-flex justify-content-center mb-3">
             <div class="rounded-circle d-flex align-items-center justify-content-center"
-                 style="width:72px; height:72px; background-color:#6366f1;">
-                <i class="bi bi-person-fill fs-2 text-white"></i>
+                 style="width:72px; height:72px; background-color:#e94560;">
+                <i class="bi bi-shield-lock-fill fs-2 text-white"></i>
             </div>
         </div>
 
-        <h1 class="text-center fs-4 fw-semibold mb-1">Bienvenido</h1>
-        <p class="text-center text-muted small mb-2">Ingresa tus credenciales para continuar</p>
+        <h1 class="text-center fs-4 fw-semibold mb-1" style="color:#fff;">Admin Panel</h1>
+        <p class="text-center mb-2" style="color:#8c8ca0; font-size:13px;">Ingresa tus credenciales de administrador</p>
 
         <div class="mx-auto mb-4"
-             style="width:48px; height:3px; background-color:#6366f1; border-radius:2px;">
+             style="width:48px; height:3px; background-color:#e94560; border-radius:2px;">
         </div>
 
         <EditForm Model="Input" OnValidSubmit="HandleLogin">
             <DataAnnotationsValidator />
 
             <div class="mb-3">
-                <label class="form-label small fw-semibold text-secondary">Correo</label>
+                <label class="form-label small fw-semibold" style="color:#8c8ca0;">Correo</label>
                 <InputText @bind-Value="Input.Correo"
                            class="form-control"
-                           placeholder="admin@tienda.com"
-                           @onkeydown="OnUsuarioKeyDown" />
+                           placeholder="admin@mvp.com"
+                           style="background:#16213e; color:#fff; border-color:#2a2a4a;" />
                 <ValidationMessage For="() => Input.Correo" class="text-danger small" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label small fw-semibold text-secondary">Contraseña</label>
+                <label class="form-label small fw-semibold" style="color:#8c8ca0;">Contraseña</label>
                 <InputText @bind-Value="Input.Password"
                            type="password"
                            class="form-control"
                            placeholder="Escribe tu contraseña"
-                           @onkeydown="OnPasswordKeyDown" />
+                           style="background:#16213e; color:#fff; border-color:#2a2a4a;" />
                 <ValidationMessage For="() => Input.Password" class="text-danger small" />
             </div>
 
             <button type="submit"
                     class="btn w-100 text-white fw-semibold py-2 mt-2"
-                    style="background-color:#6366f1; border-radius:8px;"
+                    style="background-color:#e94560; border-radius:8px;"
                     disabled="@cargando">
                 @if (cargando)
                 {
@@ -71,23 +70,19 @@
 
         </EditForm>
 
-        <a href="/registro" class="d-block text-center mt-3 small" style="color:#6366f1;">
-            ¿No tienes cuenta? Regístrate aquí
+        <a href="/login" class="d-block text-center mt-3 small" style="color:#e94560;">
+            ← Volver al inicio de sesión de tienda
         </a>
 
-        <a href="/admin/login" class="d-block text-center mt-2 small" style="color:#6366f1;">
-            Acceso administradores →
-        </a>
-
-        <p class="text-center text-muted mb-0" style="font-size: 11px;">
-            v1.0.0 · Sistema de gestión
+        <p class="text-center mb-0 mt-2" style="font-size: 11px; color:#4a4a6a;">
+            v1.0.0 · Panel de administración
         </p>
 
     </div>
 </div>
 
 @code {
-    private LoginViewModel Input { get; set; } = new();
+    private AdminLoginViewModel Input { get; set; } = new();
     private string errorMensaje = string.Empty;
     private bool cargando = false;
 
@@ -98,7 +93,7 @@
 
         try
         {
-            var resultado = await AuthService.LoginAsync(Input.Correo, Input.Password);
+            var resultado = await AuthAdminService.LoginAsync(Input.Correo, Input.Password);
 
             if (!resultado.Exitoso)
             {
@@ -107,8 +102,8 @@
                 return;
             }
 
-            await AuthState.IniciarSesionAsync(JS, resultado);
-            Navigation.NavigateTo("/dashboard");
+            await AuthState.IniciarSesionAdminAsync(JS, resultado);
+            Navigation.NavigateTo("/admin/dashboard");
         }
         catch (Exception ex)
         {
@@ -118,24 +113,5 @@
         {
             cargando = false;
         }
-    }
-
-    private void OnUsuarioKeyDown(KeyboardEventArgs e)
-    {
-        // El foco al siguiente campo lo maneja Bootstrap/browser con Tab
-        // Enter avanza al campo contraseña via JS si se necesita
-    }
-
-    private void OnPasswordKeyDown(KeyboardEventArgs e)
-    {
-        if (e.Key == "Enter")
-        {
-            // Submit se dispara automáticamente por el EditForm
-        }
-    }
-
-    private void IrARegistro()
-    {
-        Navigation.NavigateTo("/registro");
     }
 }

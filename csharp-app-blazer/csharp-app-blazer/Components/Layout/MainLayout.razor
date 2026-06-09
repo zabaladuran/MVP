@@ -85,7 +85,7 @@
         }
 
         var uri = Navigation.Uri.ToLowerInvariant();
-        bool esRutaPublica = uri.Contains("/pwa-info") || uri.Contains("/login") || uri.Contains("/registro");
+        bool esRutaPublica = uri.Contains("/pwa-info") || uri.Contains("/login") || uri.Contains("/registro") || uri.Contains("/admin/");
 
         if (!AuthState.EstaAutenticado && !esRutaPublica)
         {

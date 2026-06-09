@@ -12,6 +12,8 @@ builder.Services.AddScoped<IRegistroService, RegistroService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<IAuthAdminService, AuthAdminService>();
+builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
 
 builder.Services.AddSingleton<TokenStore>();
 builder.Services.AddScoped<AuthStateService>();
