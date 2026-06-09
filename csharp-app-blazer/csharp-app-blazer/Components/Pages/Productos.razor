@@ -165,15 +165,25 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var tienda = await DashboardService.ObtenerTiendaPorNombreAsync(TiendaActual);
-        if (tienda != null)
+        try
         {
-            tiendaIdActual = tienda.Id;
-            ListaProductos = await ProductoService.ObtenerProductosAsync(tienda.Id);
-            Categorias = await ProductoService.ObtenerCategoriasAsync(tienda.Id);
-            CategoriasConId = await ProductoService.ObtenerCategoriasConIdAsync(tienda.Id);
+            var tienda = await DashboardService.ObtenerTiendaPorNombreAsync(TiendaActual);
+            if (tienda != null)
+            {
+                tiendaIdActual = tienda.Id;
+                ListaProductos = await ProductoService.ObtenerProductosAsync(tienda.Id);
+                Categorias = await ProductoService.ObtenerCategoriasAsync(tienda.Id);
+                CategoriasConId = await ProductoService.ObtenerCategoriasConIdAsync(tienda.Id);
+            }
+            else
+            {
+                tiendaIdActual = null;
+                ListaProductos = new();
+                Categorias = new();
+                CategoriasConId = new();
+            }
         }
-        else
+        catch
         {
             tiendaIdActual = null;
             ListaProductos = new();

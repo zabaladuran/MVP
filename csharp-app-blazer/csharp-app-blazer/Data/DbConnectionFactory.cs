@@ -14,7 +14,7 @@ namespace csharp_app_blazer.Data
             var user = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
             var password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "";
 
-            _connectionString = $"Server={host};Port={port};Database={database};Uid={user};Pwd={password};";
+            _connectionString = $"Server={host};Port={port};Database={database};Uid={user};Pwd={password};AllowPublicKeyRetrieval=True;AllowUserVariables=True;ConnectionTimeout=30;";
         }
 
         public MySqlConnection CreateConnection()

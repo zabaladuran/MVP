@@ -105,13 +105,21 @@
     protected override async Task OnParametersSetAsync()
     {
         cargando = true;
-        var tienda = await DashboardService.ObtenerTiendaPorNombreAsync(TiendaActual);
-        if (tienda != null)
+        try
         {
-            Metricas = await DashboardService.ObtenerMetricasAsync(tienda.Id);
-            PedidosRecientes = await DashboardService.ObtenerPedidosRecientesAsync(tienda.Id);
+            var tienda = await DashboardService.ObtenerTiendaPorNombreAsync(TiendaActual);
+            if (tienda != null)
+            {
+                Metricas = await DashboardService.ObtenerMetricasAsync(tienda.Id);
+                PedidosRecientes = await DashboardService.ObtenerPedidosRecientesAsync(tienda.Id);
+            }
+            else
+            {
+                Metricas = new();
+                PedidosRecientes = new();
+            }
         }
-        else
+        catch
         {
             Metricas = new();
             PedidosRecientes = new();
