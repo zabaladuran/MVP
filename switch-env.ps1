@@ -47,10 +47,11 @@ do {
     Write-Host "4) Ver logs en tiempo real"
     Write-Host "5) Detener contenedores"
     Write-Host "6) Eliminar contenedores"
-    Write-Host "7) Salir"
+    Write-Host "7) Eliminar imagenes Docker (forza reconstruccion completa)"
+    Write-Host "8) Salir"
     Write-Host ""
-
-    $choice = Read-Host "Opcion [1-7]"
+ 
+    $choice = Read-Host "Opcion [1-8]"
 
     switch ($choice) {
 
@@ -66,7 +67,7 @@ do {
             }
 
             Print-Success "Levantando contenedores con .env.local"
-            docker compose --env-file .env.local up -d
+            docker compose --env-file .env.local up -d --build
 
             Print-Success "Entorno local iniciado"
 
@@ -105,7 +106,7 @@ do {
             }
 
             Print-Success "Levantando contenedores con .env.production"
-            docker compose --env-file .env.production up -d
+            docker compose --env-file .env.production up -d --build
 
             Print-Success "Entorno de produccion iniciado"
 
@@ -192,6 +193,24 @@ do {
         }
 
         "7" {
+
+            Print-Header "Eliminando imagenes Docker"
+
+            $confirm = Read-Host "Esto eliminara TODAS las imagenes del proyecto. Continuar? (s/n)"
+
+            if ($confirm -ne "s" -and $confirm -ne "S") {
+                Print-Error "Operacion cancelada"
+                continue
+            }
+
+            docker compose down -v --rmi all
+            Print-Success "Contenedores, volumenes e imagenes eliminados"
+
+            Write-Host ""
+            Write-Host "Para reconstruir y arrancar de nuevo, usa la opcion 1 o 2." -ForegroundColor Yellow
+        }
+
+        "8" {
             Write-Host "Saliendo..."
         }
 
@@ -206,7 +225,7 @@ do {
         }
     }
 
-    if ($choice -ne "7") {
+    if ($choice -ne "8") {
         Write-Host ""
         Write-Host "Presiona Enter para volver al menu..." -NoNewline
         $null = Read-Host
