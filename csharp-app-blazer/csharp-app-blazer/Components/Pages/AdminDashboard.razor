@@ -116,7 +116,12 @@
                                 </td>
                                 <td class="py-3" style="color:#c0c0e0;">@(t.AdminNombre ?? "—")</td>
                                 <td class="py-3" style="color:#c0c0e0;">@(t.AdminCorreo ?? "—")</td>
-                                <td class="py-3" style="color:#fff;">@t.Trabajadores</td>
+                                <td class="py-3">
+                                    <button class="btn btn-sm text-white" style="background:#2a2a4a; border-radius:6px;"
+                                            @onclick="() => VerTrabajadores(t)">
+                                        @t.Trabajadores <small style="color:#8c8ca0;">ver</small>
+                                    </button>
+                                </td>
                                 <td class="py-3" style="color:#c0c0e0;">
                                     @if (t.SuscripcionVence.HasValue)
                                     {
@@ -276,6 +281,66 @@
 
 </div>
 
+    @* Modal: Trabajadores de una tienda *@
+    @if (mostrarTrabajadoresTienda && tiendaSeleccionada is not null)
+    {
+        <div class="modal d-block" tabindex="-1" style="background:rgba(0,0,0,0.6);">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content" style="background:#1a1a2e; border:1px solid #2a2a4a; border-radius:12px;">
+                    <div class="modal-header" style="border-bottom-color:#2a2a4a;">
+                        <h5 class="modal-title" style="color:#fff;">
+                            Trabajadores · @tiendaSeleccionada.Nombre
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" @onclick="CerrarModalTrabajadores"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if (trabajadoresTiendaCargando)
+                        {
+                            <div class="text-center py-4">
+                                <div class="spinner-border text-light" role="status"></div>
+                            </div>
+                        }
+                        else if (!trabajadoresTienda.Any())
+                        {
+                            <p class="text-center py-4" style="color:#8c8ca0;">No hay trabajadores asignados a esta tienda.</p>
+                        }
+                        else
+                        {
+                            <table class="table table-dark table-borderless align-middle mb-0" style="font-size:13px;">
+                                <thead>
+                                    <tr style="border-bottom:1px solid #2a2a4a; color:#8c8ca0;">
+                                        <th class="fw-semibold py-2 ps-2">Nombre</th>
+                                        <th class="fw-semibold py-2">Correo</th>
+                                        <th class="fw-semibold py-2">Rol</th>
+                                        <th class="fw-semibold py-2">Documento</th>
+                                        <th class="fw-semibold py-2">Teléfono</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var w in trabajadoresTienda)
+                                    {
+                                        <tr style="border-bottom:1px solid #2a2a4a;">
+                                            <td class="py-2 ps-2" style="color:#fff;">@w.Nombre @w.Apellido</td>
+                                            <td class="py-2" style="color:#c0c0e0;">@w.Correo</td>
+                                            <td class="py-2">
+                                                <span class="badge" style="background:#6366f1;">@w.Rol</span>
+                                            </td>
+                                            <td class="py-2" style="color:#c0c0e0;">@(string.IsNullOrEmpty(w.Documento) ? "—" : w.Documento)</td>
+                                            <td class="py-2" style="color:#c0c0e0;">@(string.IsNullOrEmpty(w.Telefono) ? "—" : w.Telefono)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <div class="modal-footer" style="border-top-color:#2a2a4a;">
+                        <button class="btn btn-secondary btn-sm" @onclick="CerrarModalTrabajadores">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
 @code {
     protected override void OnInitialized()
     {
@@ -303,6 +368,11 @@
     private List<AdminTrabajadorItem> Trabajadores = new();
 
     private AdminTrabajadorItem? usuarioSeleccionado;
+
+    private bool mostrarTrabajadoresTienda = false;
+    private AdminTiendaInfo? tiendaSeleccionada;
+    private List<AdminTrabajadorItem> trabajadoresTienda = new();
+    private bool trabajadoresTiendaCargando = false;
     private bool mostrarModalPassword = false;
     private string nuevaPassword = "";
     private string confirmarPassword = "";
@@ -323,6 +393,29 @@
             // Si la BD falla, listas vacías
         }
         cargando = false;
+    }
+
+    private async Task VerTrabajadores(AdminTiendaInfo tienda)
+    {
+        tiendaSeleccionada = tienda;
+        trabajadoresTiendaCargando = true;
+        mostrarTrabajadoresTienda = true;
+        try
+        {
+            trabajadoresTienda = await AdminService.ObtenerTrabajadoresPorTiendaAsync(tienda.Id);
+        }
+        catch
+        {
+            trabajadoresTienda = new();
+        }
+        trabajadoresTiendaCargando = false;
+    }
+
+    private void CerrarModalTrabajadores()
+    {
+        mostrarTrabajadoresTienda = false;
+        tiendaSeleccionada = null;
+        trabajadoresTienda = new();
     }
 
     private void AbrirCambioPassword(AdminTrabajadorItem usuario)

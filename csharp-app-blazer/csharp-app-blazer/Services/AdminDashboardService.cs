@@ -156,6 +156,45 @@ namespace csharp_app_blazer.Services
             return result;
         }
 
+        public async Task<List<AdminTrabajadorItem>> ObtenerTrabajadoresPorTiendaAsync(int tiendaId)
+        {
+            var result = new List<AdminTrabajadorItem>();
+            using var conn = _db.CreateConnection();
+            await conn.OpenAsync();
+
+            using var cmd = new MySqlCommand(@"
+                SELECT
+                    tr.nTrabajadorID,
+                    tr.cIdentificacion,
+                    tr.cNombre,
+                    tr.cApellido,
+                    tr.cCorreo,
+                    tr.cTelefono,
+                    r.cNombre AS Rol
+                FROM TTrabajador tr
+                INNER JOIN TTrabajadorTienda tt ON tr.nTrabajadorID = tt.nTrabajadorFK
+                INNER JOIN TRoles r ON tr.nRolFK = r.nRolID
+                WHERE tt.nTiendaFK = @tiendaId
+                ORDER BY tr.cNombre, tr.cApellido", conn);
+            cmd.Parameters.AddWithValue("@tiendaId", tiendaId);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                result.Add(new AdminTrabajadorItem(
+                    reader.GetInt32(0),
+                    reader.IsDBNull(1) ? "" : reader.GetString(1),
+                    reader.GetString(2),
+                    reader.GetString(3),
+                    reader.GetString(4),
+                    reader.IsDBNull(5) ? "" : reader.GetString(5),
+                    reader.GetString(6),
+                    null
+                ));
+            }
+            return result;
+        }
+
         public async Task<bool> CambiarPasswordAsync(int trabajadorId, string nuevaPassword)
         {
             using var conn = _db.CreateConnection();

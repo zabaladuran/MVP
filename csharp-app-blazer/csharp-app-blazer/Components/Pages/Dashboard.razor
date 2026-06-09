@@ -1,6 +1,9 @@
 ﻿@page "/dashboard"
 @layout Layout.MainLayout
 @inject IDashboardService DashboardService
+@inject AuthStateService AuthState
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
 @using csharp_app_blazer.Services
 
 <div class="p-4" style="background:#f8f8fc; min-height:100vh;">
@@ -13,8 +16,14 @@
             </h2>
             <p class="text-muted mb-0" style="font-size:13px;">Resumen general de la tienda</p>
         </div>
-        <div class="px-3 py-2 rounded-3 border" style="font-size:13px; color:#333; background:#fff;">
-            Suscripción vence: @SuscripcionVence
+        <div class="d-flex align-items-center gap-2">
+            <div class="px-3 py-2 rounded-3 border" style="font-size:13px; color:#333; background:#fff;">
+                Suscripción vence: @SuscripcionVence
+            </div>
+            <button class="btn text-white btn-sm" style="background:#e94560; border-radius:8px;"
+                    @onclick="CerrarSesion">
+                Cerrar sesión
+            </button>
         </div>
     </div>
 
@@ -125,6 +134,12 @@
             PedidosRecientes = new();
         }
         cargando = false;
+    }
+
+    private async Task CerrarSesion()
+    {
+        await AuthState.CerrarSesionAsync(JS);
+        Navigation.NavigateTo("/login", forceLoad: true);
     }
 
     private string ObtenerClaseEstado(string estado) => estado switch

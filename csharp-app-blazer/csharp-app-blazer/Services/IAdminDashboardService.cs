@@ -10,6 +10,7 @@ namespace csharp_app_blazer.Services
         Task<List<AdminPqrsItem>> ObtenerPqrsAsync();
         Task<List<AdminTrabajadorItem>> ObtenerTrabajadoresAsync();
         Task<List<AdminTrabajadorItem>> ObtenerTrabajadoresEditablesAsync(int adminRolId);
+        Task<List<AdminTrabajadorItem>> ObtenerTrabajadoresPorTiendaAsync(int tiendaId);
         Task<bool> CambiarPasswordAsync(int trabajadorId, string nuevaPassword);
     }
 }
