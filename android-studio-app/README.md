@@ -59,10 +59,10 @@ En Android Studio:
 1. Build → Build Bundle(s) / APK(s) → Build APK(s)
 2. O presiona Shift+F10 para ejecutar directamente
 
-### 5. Prueba en el Emulador
+### 5. Prueba en el Emulador o en tu celular
 
-- El emulador cargará automáticamente: `http://10.0.2.2:8000`
-- `10.0.2.2` es la IP especial del emulador para acceder al host local
+- Para emulador Android: `http://10.0.2.2:8000`
+- Para un dispositivo real en tu red Wi‑Fi: `http://192.168.224.123:8000`
 
 ## Configuración de Conectividad
 
@@ -72,15 +72,21 @@ En Android Studio:
 URL: http://10.0.2.2:8000
 ```
 
+### Dispositivo real (tu red)
+
+```
+URL: http://192.168.224.123:8000
+```
+
 ### Dispositivo Físico
 
 Si quieres usar un celular real:
 1. Obtén la IP local de tu PC: `ipconfig` (busca IPv4)
-2. Usa esa IP en lugar de `10.0.2.2`
+2. Usa la IP de tu PC en la red Wi‑Fi, por ejemplo `192.168.224.123`.
 
 Ejemplo:
 ```kotlin
-webView.loadUrl("http://192.168.1.100:8000")
+webView.loadUrl("http://192.168.224.123:8000")
 ```
 
 ### Cambiar Puerto
@@ -89,13 +95,13 @@ Si quieres usar otro puerto (8001 o 8002):
 
 **En `MainActivity.kt`**, cambia:
 ```kotlin
-webView.loadUrl("http://10.0.2.2:8000")
+webView.loadUrl("http://192.168.224.123:8000")
 ```
 
 por:
 
 ```kotlin
-webView.loadUrl("http://10.0.2.2:8001")  // o 8002
+webView.loadUrl("http://192.168.224.123:8001")  // o 8002
 ```
 
 ## Troubleshooting
@@ -104,7 +110,8 @@ webView.loadUrl("http://10.0.2.2:8001")  // o 8002
 
 1. Verifica que Docker está en marcha: `docker ps`
 2. Verifica que PHP está disponible: `http://localhost:8000` en tu navegador
-3. En el emulador, abre Chrome y prueba: `http://10.0.2.2:8000`
+3. En el emulador, abre Chrome y prueba: `http://10.0.2.2:8000`.
+   En un celular real, prueba: `http://192.168.224.123:8000`.
 
 ### Errores de permisos
 

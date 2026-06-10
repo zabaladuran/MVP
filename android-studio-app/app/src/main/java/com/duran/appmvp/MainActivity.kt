@@ -32,9 +32,9 @@ class MainActivity : AppCompatActivity() {
         webView.settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
 
         // Conectar a Docker PHP
-        // 10.0.2.2 es la IP especial del emulador para acceder al host local
-        // Puerto 8000 es el que configuramos en .env.local para PHP_PORT_1
-        webView.loadUrl("http://192.168.101.10:8000")
+        // Usa la IP LAN del equipo para abrir la app en un dispositivo real.
+        // Puerto 8000 es el que configuramos en .env.local para PHP_PORT_1.
+        webView.loadUrl("http://192.168.224.123:8000")
 
         // Manejo del botón atrás
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {

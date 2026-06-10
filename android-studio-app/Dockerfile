@@ -1,6 +1,6 @@
 FROM gradle:8.5-jdk17 AS builder
 
-ARG PHP_URL=http://10.0.2.2:8000
+ARG PHP_URL=http://192.168.224.123:8000
 
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 ENV ANDROID_HOME=/opt/android-sdk
