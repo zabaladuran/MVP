@@ -74,6 +74,18 @@ services:
     networks:
       - mvp_network
 
+  # Android APK Builder — compila y sirve app-release.apk
+  android-builder:
+    build:
+      context: ./android-studio-app
+      args:
+        PHP_URL: ${ANDROID_PHP_URL:-http://10.0.2.2:8000}
+    container_name: mvp_android_builder
+    ports:
+      - "${ANDROID_BUILDER_PORT:-8080}:5000"
+    networks:
+      - mvp_network
+
   # PhpMyAdmin para gestionar la base de datos
   phpmyadmin:
     image: phpmyadmin:latest
