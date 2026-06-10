@@ -26,7 +26,7 @@ WORKDIR /app
 COPY . .
 
 # Eliminar archivo local.properties (apunta a SDK de otra máquina)
-RUN rm -f local.properties && chmod +x gradlew
+RUN rm -f local.properties
 
 # Reemplazar URL en el código fuente
 RUN sed -i "s|http://[0-9.]*:[0-9]*|${PHP_URL}|g" app/src/main/java/com/duran/appmvp/MainActivity.kt
@@ -35,8 +35,8 @@ RUN sed -i "s|http://[0-9.]*:[0-9]*|${PHP_URL}|g" app/src/main/java/com/duran/ap
 RUN echo "PHP_URL configurado: ${PHP_URL}" && \
     grep "loadUrl" app/src/main/java/com/duran/appmvp/MainActivity.kt
 
-# Compilar APK debug (no necesita firma)
-RUN ./gradlew assembleDebug --no-daemon --stacktrace
+# Compilar APK debug (no necesita firma) — usar gradle del sistema, no wrapper
+RUN gradle assembleDebug --no-daemon --stacktrace
 
 # Verificar que el APK se generó
 RUN ls -la app/build/outputs/apk/debug/ || echo "No se encontró APK"
